@@ -13,7 +13,7 @@ import static utilities.TimeConv.stringToCalendar;
 public class UserDAOImp {
     public static User getUser(String userName) throws SQLException, Exception{
         DBConnection.openConnection();
-        String sqlStatement = "select * FROM user WHERE User_Name = '" + userName + "'";
+        String sqlStatement = "select * FROM users WHERE User_Name = '" + userName + "'";
         Query.makeQuery(sqlStatement);
         User userResult;
         ResultSet result=Query.getResults();
@@ -24,10 +24,10 @@ public class UserDAOImp {
             String createDate = result.getString("Create_Date");
             String createdBy = result.getString("Created_By");
             String lastUpdate = result.getString("Last_Update");
-            String lastUpdatedBy = result.getString("Last_Update_By");
+            String lastUpdatedBy = result.getString("Last_Updated_By");
             Calendar createDateCalendar = stringToCalendar(createDate);
             Calendar lastUpdateCalendar = stringToCalendar(lastUpdate);
-            userResult = new User(userId, userName,password,createDateCalendar,createdBy,lastUpdateCalendar,lastUpdatedBy);
+            userResult = new User(userId, UserName,password,createDateCalendar,createdBy,lastUpdateCalendar,lastUpdatedBy);
             return userResult;
         }
         DBConnection.closeConnection();

@@ -14,7 +14,7 @@
    <children>
       <AnchorPane prefHeight="403.0" prefWidth="418.0">
          <children>
-            <Text layoutX="165.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="88.443359375">
+            <Text layoutX="159.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Form" textAlignment="CENTER" wrappingWidth="122.39999999999992">
                <font>
                   <Font size="24.0" />
                </font>
