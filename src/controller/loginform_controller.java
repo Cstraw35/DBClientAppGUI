@@ -55,36 +55,25 @@ public class loginform_controller implements Initializable {
         stage = (Stage)((Button) event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/main_form.fxml"));
         String loginUser;
-        String loginPassword = "";
         String username = loginUserTxt.getText();
         String password = loginPasswordTxt.getText();
-        System.out.println(password);
-        System.out.println(username);
         User user = UserDAOImp.getUser(username);
+
+
         if (username == "" || password == "") {
             Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
-
         }
-        try{
-            loginUser = user.getUserName();
-        } catch(Exception e){
-            Alerts.errorAlert("Invalid User", "username does not exist");
+        else {
+            try {
+                loginUser = user.getUserName();
+                if (user.getPassword().equals(password)) {
+                    stage.setScene(new Scene(scene));
+                    stage.show();
+                }
+            } catch (Exception e) {
+                Alerts.errorAlert("Invalid User", "username does not exist");
+            }
         }
-        try{
-            loginPassword = user.getPassword();
-        } catch(Exception e){
-
-        }
-        if(loginPassword == password){
-            stage.setScene(new Scene(scene));
-        }
-
-
-
-        System.out.println(user.getUserName());
-        System.out.println(user.getPassword());
-
-
         }
 }
 

@@ -36,7 +36,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <PasswordField fx:id="loginPasswordTxt" layoutX="159.0" layoutY="176.0" />
+            <PasswordField fx:id="loginPasswordTxt" accessibleRole="TEXT_FIELD" layoutX="159.0" layoutY="176.0" />
             <TextField fx:id="loginUserTxt" layoutX="159.0" layoutY="96.0" />
             <Button fx:id="loginBtn" layoutX="256.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginBtnAction" text="Login" />
             <Label fx:id="loginZoneLbl" layoutX="75.0" layoutY="264.0" prefHeight="24.0" prefWidth="122.0" text="Zone" />
