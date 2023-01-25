@@ -14,6 +14,8 @@ import model.User;
 import utilities.Alerts;
 
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -22,12 +24,6 @@ import java.util.ResourceBundle;
 public class loginform_controller implements Initializable {
     Stage stage;
     Parent scene;
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
 
     @FXML
     private Button loginBtn;
@@ -50,18 +46,27 @@ public class loginform_controller implements Initializable {
     @FXML
     private Text usernameLbl;
 
+    /**
+     * Login button action script to check login and load main form if successful.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void loginBtnAction(ActionEvent event) throws Exception {
+        ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
         stage = (Stage)((Button) event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("../view/main_form.fxml"));
         String loginUser;
         String username = loginUserTxt.getText();
         String password = loginPasswordTxt.getText();
         User user = UserDAOImp.getUser(username);
-
-
         if (username == "" || password == "") {
-            Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
+            if(Locale.getDefault().getLanguage().equals("fr")){
+                Alerts.errorAlert(RB.getString("Empty"),RB.getString("FillFields"));
+            }
+            else {
+                Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
+            }
         }
         else {
             try {
@@ -71,11 +76,42 @@ public class loginform_controller implements Initializable {
                     stage.show();
                 }
             } catch (Exception e) {
-                Alerts.errorAlert("Invalid User", "username does not exist");
+                if (Locale.getDefault().getLanguage().equals("fr")) {
+                    Alerts.errorAlert(RB.getString("InvalidUser"), RB.getString("UserNameExist"));
+                } else {
+
+                    Alerts.errorAlert("Invalid User", "username does not exist");
+                }
             }
         }
+    }
+
+
+    /**
+     * Initialize labels based on locale.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
+        if (Locale.getDefault().getLanguage().equals("fr")) {
+            loginTitleLbl.setText(RB.getString("Login"));
+            passwordLbl.setText(RB.getString("Password"));
+            usernameLbl.setText(RB.getString("Username"));
+            loginBtn.setText(RB.getString("Login"));
+            loginZoneLbl.setText(String.valueOf(ZoneId.systemDefault()));
+
         }
+    }
+
+
 }
+
+
+
+
+
 
 
 
