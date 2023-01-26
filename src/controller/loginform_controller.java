@@ -101,13 +101,12 @@ public class loginform_controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
+        loginZoneLbl.setText(String.valueOf(ZoneId.systemDefault()));
         if (Locale.getDefault().getLanguage().equals("fr")) {
             loginTitleLbl.setText(RB.getString("Login"));
             passwordLbl.setText(RB.getString("Password"));
             usernameLbl.setText(RB.getString("Username"));
             loginBtn.setText(RB.getString("Login"));
-            loginZoneLbl.setText(String.valueOf(ZoneId.systemDefault()));
-
         }
     }
 
