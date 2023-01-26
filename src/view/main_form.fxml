@@ -12,27 +12,25 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="403.0" prefWidth="418.0">
+      <AnchorPane prefHeight="502.0" prefWidth="763.0">
          <children>
-            <Text layoutX="159.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Form" textAlignment="CENTER" wrappingWidth="122.39999999999992">
+            <Text layoutX="320.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Form" textAlignment="CENTER" wrappingWidth="122.39999999999992">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="47.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="88.443359375">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="51.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="81.443359375">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <PasswordField fx:id="loginPasswordField" layoutX="159.0" layoutY="176.0" />
-            <TextField fx:id="loginUserField" layoutX="159.0" layoutY="96.0" />
-            <Button fx:id="loginButton" layoutX="256.0" layoutY="263.0" mnemonicParsing="false" text="Login" />
-            <Label fx:id="loginZone" layoutX="75.0" layoutY="264.0" prefHeight="24.0" prefWidth="122.0" text="Zone" />
+            <Label fx:id="mainFormUserlbl" layoutX="566.0" layoutY="31.0" prefHeight="24.0" prefWidth="122.0" text="User: " />
+            <RadioButton fx:id="mainFormMonthRb" layoutX="44.0" layoutY="88.0" mnemonicParsing="false" text="Month" />
+            <RadioButton fx:id="mainFormWeekRb" layoutX="112.0" layoutY="88.0" mnemonicParsing="false" text="Week" />
+            <TableView layoutX="44.0" layoutY="130.0" prefHeight="314.0" prefWidth="344.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <Button fx:id="mainFormAddCustBtn" layoutX="477.0" layoutY="117.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="26.0" prefWidth="222.0" text="Add Customer" />
+            <Button fx:id="mainFormAddAppointBtn" layoutX="477.0" layoutY="171.0" mnemonicParsing="false" onAction="#addApointment" prefHeight="26.0" prefWidth="222.0" text="Add Appointment" />
+            <Button fx:id="mainFormLogoutBtn" layoutX="689.0" layoutY="30.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
          </children>
       </AnchorPane>
    </children>

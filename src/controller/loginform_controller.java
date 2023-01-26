@@ -23,7 +23,8 @@ import java.util.ResourceBundle;
  */
 public class loginform_controller implements Initializable {
     Stage stage;
-    Parent scene;
+    Scene scene;
+    Parent root;
 
     @FXML
     private Button loginBtn;
@@ -46,6 +47,7 @@ public class loginform_controller implements Initializable {
     @FXML
     private Text usernameLbl;
 
+
     /**
      * Login button action script to check login and load main form if successful.
      * @param event
@@ -55,7 +57,10 @@ public class loginform_controller implements Initializable {
     void loginBtnAction(ActionEvent event) throws Exception {
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
         stage = (Stage)((Button) event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("../view/main_form.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
+        root = loader.load();
+        scene = new Scene(root);
+        mainform_controller mainFormController = loader.getController();
         String loginUser;
         String username = loginUserTxt.getText();
         String password = loginPasswordTxt.getText();
@@ -72,7 +77,8 @@ public class loginform_controller implements Initializable {
             try {
                 loginUser = user.getUserName();
                 if (user.getPassword().equals(password)) {
-                    stage.setScene(new Scene(scene));
+                    mainFormController.getUser(loginUser);
+                    stage.setScene(scene);
                     stage.show();
                 }
             } catch (Exception e) {
