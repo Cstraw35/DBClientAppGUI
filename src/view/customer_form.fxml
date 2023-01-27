@@ -26,5 +26,7 @@
       <Button fx:id="customerFormAddBtn" layoutX="325.0" layoutY="316.0" mnemonicParsing="false" onAction="#addUpdateBtn" prefHeight="26.0" prefWidth="149.0" text="Add/Update" />
       <Button fx:id="customerFormDeleteBtn" layoutX="325.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="26.0" prefWidth="149.0" text="Delete" />
       <Label layoutX="413.0" layoutY="23.0" prefHeight="18.0" prefWidth="38.0" text="User:" />
+      <Label layoutX="14.0" layoutY="437.0" prefHeight="18.0" prefWidth="70.0" text="Customer ID:" />
+      <TextField fx:id="customerFormCustomerID" editable="false" layoutX="104.0" layoutY="433.0" promptText="Auto-Generated" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package model;
 
+import javax.annotation.processing.Generated;
 import java.util.Calendar;
 
 /**
