@@ -1,7 +1,7 @@
 package model;
 
 import javax.annotation.processing.Generated;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Object Class for customers
@@ -12,16 +12,16 @@ public class Customer {
     private String address;
     private String postalCode;
     private String phone;
-    private Calendar createDate;
+    private Date createDate;
     private String createdBy;
-    private Calendar lastUpdate;
+    private Date lastUpdate;
     private String lastUpdatedBy;
     private int divisionID;
 
     public Customer() {
     }
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phone, Calendar createDate, String createdBy, Calendar lastUpdate, String lastUpdatedBy, int divisionID) {
+    public Customer(int customerId, String customerName, String address, String postalCode, String phone, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int divisionID) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -74,11 +74,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Calendar getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Calendar createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -90,11 +90,11 @@ public class Customer {
         this.createdBy = createdBy;
     }
 
-    public Calendar getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Calendar lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

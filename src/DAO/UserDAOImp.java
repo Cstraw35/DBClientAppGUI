@@ -6,8 +6,9 @@ import model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
-import static utilities.TimeConv.stringToCalendar;
+import static utilities.TimeConv.stringToDate;
 
 /** class for accessing user data. This is read only data per specifications **/
 public class UserDAOImp {
@@ -25,9 +26,9 @@ public class UserDAOImp {
             String createdBy = result.getString("Created_By");
             String lastUpdate = result.getString("Last_Update");
             String lastUpdatedBy = result.getString("Last_Updated_By");
-            Calendar createDateCalendar = stringToCalendar(createDate);
-            Calendar lastUpdateCalendar = stringToCalendar(lastUpdate);
-            userResult = new User(userId, UserName,password,createDateCalendar,createdBy,lastUpdateCalendar,lastUpdatedBy);
+            Date createDateFormatted = stringToDate(createDate);
+            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            userResult = new User(userId, UserName,password,createDateFormatted,createdBy,lastUpdateFormatted,lastUpdatedBy);
             return userResult;
         }
         DBConnection.closeConnection();

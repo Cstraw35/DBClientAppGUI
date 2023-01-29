@@ -3,13 +3,11 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
-import model.User;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
+import java.util.Date;
 
-import static utilities.TimeConv.stringToCalendar;
+import static utilities.TimeConv.stringToDate;
 
 /**Class for accessing and editing customer data**/
 public class CustomerDAOImp {
@@ -37,9 +35,9 @@ public class CustomerDAOImp {
             String lastUpdate = result.getString("Last_Update");
             String lastUpdatedBy = result.getString("Last_Updated_By");
             int divisionId = result.getInt("Division_ID");
-            Calendar createDateCalendar = stringToCalendar(createDate);
-            Calendar lastUpdateCalendar = stringToCalendar(lastUpdate);
-            customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateCalendar, createdBy,lastUpdateCalendar,lastUpdatedBy,divisionId);
+            Date createDateFormatted = stringToDate(createDate);
+            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateFormatted, createdBy,lastUpdateFormatted,lastUpdatedBy,divisionId);
             return customerResult;
         }
         DBConnection.closeConnection();
@@ -69,13 +67,12 @@ public class CustomerDAOImp {
             String lastUpdate = result.getString("Last_Update");
             String lastUpdatedBy = result.getString("Last_Updated_By");
             int divisionId = result.getInt("Division_ID");
-            Calendar createDateCalendar = stringToCalendar(createDate);
-            Calendar lastUpdateCalendar = stringToCalendar(lastUpdate);
-            Customer customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateCalendar, createdBy, lastUpdateCalendar, lastUpdatedBy, divisionId);
+            Date createDateFormatted = stringToDate(createDate);
+            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            Customer customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, divisionId);
             allCustomers.add(customerResult);
-            DBConnection.closeConnection();
-
         }
+        DBConnection.closeConnection();
         return allCustomers;
     }
 

@@ -1,20 +1,21 @@
 package model;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class User {
     private int userID;
     private String userName;
     private String password;
-    private Calendar createDate;
+    private Date createDate;
     private String createdBy;
-    private Calendar lastUpdate;
+    private Date lastUpdate;
     private String lastUpdatedBy;
 
     public User() {
     }
 
-    public User(int userID, String userName, String password, Calendar createDate, String createdBy, Calendar lastUpdate, String lastUpdatedBy) {
+    public User(int userID, String userName, String password, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -48,7 +49,7 @@ public class User {
     /**
      * @return the create date.
      */
-    public Calendar getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
@@ -62,7 +63,7 @@ public class User {
     /**
      * @return last update
      */
-    public Calendar getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 

@@ -65,7 +65,7 @@ public class mainform_controller implements Initializable{
             stage.show();
 
         }
-
+        @Override
         public void initialize(URL url, ResourceBundle rb) {
 
         }
