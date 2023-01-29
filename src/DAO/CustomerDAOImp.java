@@ -1,5 +1,7 @@
 package DAO;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Customer;
 import model.User;
 
@@ -14,7 +16,7 @@ public class CustomerDAOImp {
     /**
      * Returns customers to fill input fields.
      * @param customerName
-     * @return
+     * @return customer.
      * @throws SQLException
      * @throws Exception
      */
@@ -44,6 +46,53 @@ public class CustomerDAOImp {
         return null;
     }
 
+    /**
+     * Method to get all customers from customers SQL table.
+     * @return all customers
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception {
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+        DBConnection.openConnection();
+        String sqlStatement = "select * from customers";
+        Query.makeQuery(sqlStatement);
+        ResultSet result = Query.getResults();
+        while (result.next()) {
+            int customerId = result.getInt("Customer_ID");
+            String CustomerName = result.getString("Customer_Name");
+            String address = result.getString("Address");
+            String postalCode = result.getString("Postal_Code");
+            String phone = result.getString("Phone");
+            String createDate = result.getString("Create_Date");
+            String createdBy = result.getString("Created_By");
+            String lastUpdate = result.getString("Last_Update");
+            String lastUpdatedBy = result.getString("Last_Updated_By");
+            int divisionId = result.getInt("Division_ID");
+            Calendar createDateCalendar = stringToCalendar(createDate);
+            Calendar lastUpdateCalendar = stringToCalendar(lastUpdate);
+            Customer customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateCalendar, createdBy, lastUpdateCalendar, lastUpdatedBy, divisionId);
+            allCustomers.add(customerResult);
+            DBConnection.closeConnection();
+
+        }
+        return allCustomers;
+    }
+
+    /**
+     * Update statement to update customer in customers table.
+     * @param customerId
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     * @param divisionId
+     * @throws SQLException
+     * @throws Exception
+     */
     public static void updateCustomer(int customerId, String customerName, String address, String postalCode,
                                       String createDate, String createdBy, String lastUpdate,
                                       String lastUpdatedBy, int divisionId) throws SQLException, Exception{
@@ -59,7 +108,12 @@ public class CustomerDAOImp {
         DBConnection.closeConnection();
     }
 
+    /**
+     * Delete customer from customers table.
+     * @param customerId
+     */
     public static void deleteCustomer(int customerId){
+
         DBConnection.openConnection();
         String sqlStatement = "DELETE FROM customers WHERE Customer_ID = '" +customerId+"'";
         Query.makeQuery(sqlStatement);
@@ -67,6 +121,19 @@ public class CustomerDAOImp {
 
     }
 
+    /**
+     * Add customer to customer table.
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     * @param divisionId
+     * @throws SQLException
+     * @throws Exception
+     */
     public static void addCustomer(String customerName, String address, String postalCode,
                                       String createDate, String createdBy, String lastUpdate,
                                       String lastUpdatedBy, int divisionId) throws SQLException, Exception{
