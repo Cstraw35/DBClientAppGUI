@@ -11,4 +11,9 @@ public class TimeConv {
         Date date = sdf.parse(stringDate);
         return date;
     }
+    public static String DateToString(Date date) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String stringDate = sdf.format(date);
+        return stringDate;
+    }
 }

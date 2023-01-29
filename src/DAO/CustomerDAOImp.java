@@ -90,12 +90,12 @@ public class CustomerDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static void updateCustomer(int customerId, String customerName, String address, String postalCode,
+    public static void updateCustomer(int customerId, String customerName, String address, String postalCode, String phone,
                                       String createDate, String createdBy, String lastUpdate,
                                       String lastUpdatedBy, int divisionId) throws SQLException, Exception{
         DBConnection.openConnection();
         String sqlStatement = "UPDATE customers SET Customer_Name = '" + customerName + "'" +
-                ", Address = '" + address + "', Postal_Code = '" + postalCode + "'" +
+                ", Address = '" + address + "', Postal_Code = '" + postalCode + "', '" +phone+ "' "+
                 ", Create_Date  = '" + createDate + "', Created_By = '" + createdBy + "'" +
                 ", Last_Update = '" + lastUpdate + "', Last_Updated_By = '" + lastUpdatedBy + "'" +
                 ", Division_ID = '" + divisionId + "' " +
@@ -131,13 +131,13 @@ public class CustomerDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static void addCustomer(String customerName, String address, String postalCode,
+    public static void addCustomer(String customerName, String address, String postalCode, String phone,
                                       String createDate, String createdBy, String lastUpdate,
                                       String lastUpdatedBy, int divisionId) throws SQLException, Exception{
         DBConnection.openConnection();
-        String sqlStatement = "INSERT INTO customers (Customer_Name, Address, Postal_Code, " +
+        String sqlStatement = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, "+
                 "Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) Values" +
-                "('" + customerName + "', '" + address + "' , '" + postalCode+ "', '" +createDate+ "'" +
+                "('" + customerName + "', '" + address + "' , '" + postalCode+ "', '" +phone+ "', '" +createDate+ "'" +
                 ", '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdatedBy + "', '" + divisionId + "')";
         Query.makeQuery(sqlStatement);
 

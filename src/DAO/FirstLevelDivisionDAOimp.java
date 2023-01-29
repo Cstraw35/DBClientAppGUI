@@ -12,6 +12,23 @@ import java.sql.SQLException;
  * DAO implementation for first level divisions.
  */
 public class FirstLevelDivisionDAOimp {
+    public static FirstLevelDivision getDivision(String inpDivision) throws SQLException, Exception{
+        DBConnection.openConnection();
+        String sqlStatement = "select * from first_level_divisions WHERE Division = '" + inpDivision + "'";
+        Query.makeQuery(sqlStatement);
+        Country countryResult;
+        ResultSet result=Query.getResults();
+        while(result.next()){
+            int divisionId = result.getInt("Division_ID");
+            String division = result.getString("Division");
+            int countryId = result.getInt("Country_ID");
+
+            FirstLevelDivision divisionResult = new FirstLevelDivision(divisionId, division, countryId);
+            return divisionResult;
+        }
+        DBConnection.closeConnection();
+        return null;
+    }
     public static ObservableList<FirstLevelDivision> getCorrelatedFLD(int inpCountryId) throws SQLException, Exception {
         ObservableList<FirstLevelDivision> correlatedFLD = FXCollections.observableArrayList();
         DBConnection.openConnection();

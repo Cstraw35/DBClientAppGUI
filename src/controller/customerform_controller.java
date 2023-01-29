@@ -13,6 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Country;
 import model.Customer;
 import model.FirstLevelDivision;
+import utilities.Alerts;
+import utilities.CheckAddress;
+import utilities.TimeConv;
 
 import java.net.URL;
 import java.util.Date;
@@ -80,6 +83,9 @@ public class customerform_controller implements Initializable {
     @FXML
     private TableColumn<?, ?> tbPostalCode;
 
+    @FXML
+    private TextField customerFormPhoneTxt;
+
     /**
      * Sets up the country division combo box when selecting a country automatically and sets to the first index
      * instead of leaving the division blank.
@@ -109,18 +115,28 @@ public class customerform_controller implements Initializable {
     }
 
     @FXML
-    void addUpdateBtn(ActionEvent event) {
+    void addUpdateBtn(ActionEvent event) throws Exception {
+
         int customerId;
-        String customerName;
-        String address;
-        String postalCode;
-        String phone;
-        Date createDate;
-        String createdBy;
-        Date lastUpdate;
-        String lastUpdatedBy;
-        int divisionID;
+        String customerName = customerFormNameTxt.getText();
+        System.out.println(customerName.length());
+        String address = customerFormAddressTxt.getText();
+        String postalCode = customerFormPostalTxt.getText();
+        String phone = customerFormPhoneTxt.getText();
+        Date createDate = new Date();
+        String createdBy = customerFormUserLbl.getText();
+        Date lastUpdate = new Date();
+        String lastUpdatedBy = customerFormUserLbl.getText();
+        FirstLevelDivision selectedDivision = FirstLevelDivisionDAOimp.getDivision(countryDivision.getValue());
+        int divisionID = selectedDivision.getDivisionId();
         //Check text fields not empty first. Only check Id is not blank if customer already exists.
+        if(customerName == "" || address == "" || postalCode == "" || phone == ""){
+            Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
+        }
+        else if(CheckAddress.formatAddress(address, countryComboBox.getValue()) == true){
+            CustomerDAOImp.addCustomer(customerName, address, postalCode, phone, TimeConv.DateToString(createDate),createdBy,
+                    TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
+        }
 
 
     }
