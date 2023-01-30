@@ -12,27 +12,27 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="403.0" prefWidth="418.0">
+      <AnchorPane prefHeight="465.0" prefWidth="651.0">
          <children>
-            <Text fx:id="loginTitleLbl" layoutX="125.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="191.443359375">
+            <Text fx:id="loginTitleLbl" layoutX="230.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="191.443359375">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="usernameLbl" layoutX="51.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="148.79999999999995">
+            <Text fx:id="usernameLbl" layoutX="179.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="148.79999999999995">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fx:id="passwordLbl" layoutX="51.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="128.443359375">
+            <Text fx:id="passwordLbl" layoutX="179.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="128.443359375">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <PasswordField fx:id="loginPasswordTxt" accessibleRole="TEXT_FIELD" layoutX="204.0" layoutY="175.0" />
-            <TextField fx:id="loginUserTxt" layoutX="204.0" layoutY="96.0" />
-            <Button fx:id="loginBtn" layoutX="269.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="26.0" prefWidth="84.0" text="Login" />
-            <Label fx:id="loginZoneLbl" layoutX="75.0" layoutY="264.0" prefHeight="24.0" prefWidth="122.0" text="Zone" />
+            <PasswordField fx:id="loginPasswordTxt" accessibleRole="TEXT_FIELD" layoutX="289.0" layoutY="175.0" />
+            <TextField fx:id="loginUserTxt" layoutX="289.0" layoutY="96.0" />
+            <Button fx:id="loginBtn" layoutX="386.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="26.0" prefWidth="84.0" text="Login" />
+            <Label fx:id="loginZoneLbl" layoutX="169.0" layoutY="264.0" prefHeight="24.0" prefWidth="122.0" text="Zone" />
          </children>
       </AnchorPane>
    </children>

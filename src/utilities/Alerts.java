@@ -13,4 +13,10 @@ public class Alerts {
         errorAlert.showAndWait();
 
     }
+    public static void actionAlert(String title, String info){
+        Alert actionAlert = new Alert(Alert.AlertType.INFORMATION);
+        actionAlert.setTitle(title);
+        actionAlert.setContentText(info);
+        actionAlert.showAndWait();
+    }
 }

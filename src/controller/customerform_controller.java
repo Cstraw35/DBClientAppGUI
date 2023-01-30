@@ -10,21 +10,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import model.Country;
 import model.Customer;
 import model.FirstLevelDivision;
 import utilities.Alerts;
-import utilities.CheckAddress;
+import utilities.FormatChecks;
 import utilities.TimeConv;
 
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for customer form.
+ */
 public class customerform_controller implements Initializable {
     public void getUser(String userName){
         customerFormUserLbl.setText(userName);
     }
+    @FXML
+    private TextField customerFormCustomerID;
 
     @FXML
     private ComboBox<String> countryComboBox;
@@ -107,6 +113,46 @@ public class customerform_controller implements Initializable {
         }
 
     }
+    @FXML
+    void formMouseClicked(MouseEvent event){
+        customersFormTable.getSelectionModel().clearSelection();
+
+    }
+    @FXML
+    void clearSelection(ActionEvent event) {
+        customerFormNameTxt.clear();
+        customerFormAddressTxt.clear();
+        customerFormPostalTxt.clear();
+        customerFormPhoneTxt.clear();
+        customerFormCustomerID.clear();
+        setupCustomerTable();
+        customersFormTable.getSelectionModel().clearSelection();
+
+    }
+
+    /**
+     * Fill out customer fields based on row selected.
+     * @param event
+     */
+    @FXML
+    void customerFormTableItemSelected(MouseEvent event) throws Exception {
+        Customer selectedCustomer = customersFormTable.getSelectionModel().getSelectedItem();
+        int divisionID = selectedCustomer.getDivisionID();
+        System.out.println(divisionID);
+        FirstLevelDivision selectedDivision = FirstLevelDivisionDAOimp.getDivision(divisionID);
+        Country selectedCountry = CountryDAOImp.getCountry(selectedDivision.getCountryId());
+        customerFormCustomerID.setText(String.valueOf(selectedCustomer.getCustomerId()));
+        customerFormNameTxt.setText(selectedCustomer.getCustomerName());
+        customerFormAddressTxt.setText(selectedCustomer.getAddress());
+        customerFormPostalTxt.setText(selectedCustomer.getPostalCode());
+        customerFormPhoneTxt.setText(selectedCustomer.getPhone());
+        countryComboBox.setValue(selectedCountry.getCountry());
+        countryDivision.setValue(selectedDivision.getDivision());
+
+
+
+
+    }
 
     @FXML
     void countryDivisionSelect(ActionEvent event) {
@@ -114,28 +160,72 @@ public class customerform_controller implements Initializable {
 
     }
 
+    /**
+     * Adds customer or updates if ID already exists.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void addUpdateBtn(ActionEvent event) throws Exception {
-
-        int customerId;
+        String customerId = customerFormCustomerID.getText();
         String customerName = customerFormNameTxt.getText();
         System.out.println(customerName.length());
         String address = customerFormAddressTxt.getText();
         String postalCode = customerFormPostalTxt.getText();
         String phone = customerFormPhoneTxt.getText();
-        Date createDate = new Date();
-        String createdBy = customerFormUserLbl.getText();
         Date lastUpdate = new Date();
         String lastUpdatedBy = customerFormUserLbl.getText();
         FirstLevelDivision selectedDivision = FirstLevelDivisionDAOimp.getDivision(countryDivision.getValue());
         int divisionID = selectedDivision.getDivisionId();
+        if(customerId.equals("")){
+            Date createDate = new Date();
+            String createdBy = customerFormUserLbl.getText();
         //Check text fields not empty first. Only check Id is not blank if customer already exists.
-        if(customerName == "" || address == "" || postalCode == "" || phone == ""){
+            if(customerName == "" || address == "" || postalCode == "" || phone == "" ){
             Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
+            }
+            else if(postalCode.length() != 5){
+            Alerts.errorAlert("Incorrect postal code format", "Make sure postal code is only 5 characters.");
+            }
+            else if(FormatChecks.formatAddress(address, countryComboBox.getValue()) == true && (FormatChecks.checkPhone(
+                phone, countryComboBox.getValue()) == true)) {
+                CustomerDAOImp.addCustomer(customerName, address, postalCode, phone, TimeConv.DateToString(createDate), createdBy,
+                        TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
+                Alerts.actionAlert("Customer Added!", "Customer successfully added to system.");
+                customerFormNameTxt.clear();
+                customerFormAddressTxt.clear();
+                customerFormPostalTxt.clear();
+                customerFormPhoneTxt.clear();
+                setupCustomerTable();
+            }
         }
-        else if(CheckAddress.formatAddress(address, countryComboBox.getValue()) == true){
-            CustomerDAOImp.addCustomer(customerName, address, postalCode, phone, TimeConv.DateToString(createDate),createdBy,
-                    TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
+        else{
+            Customer selectedCustomer = CustomerDAOImp.getCustomer(Integer.parseInt(customerId));
+            Date createDate = selectedCustomer.getCreateDate();
+            String createdBy = selectedCustomer.getCreatedBy();
+
+            if(customerName == "" || address == "" || postalCode == "" || phone == "" ){
+                Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
+            }
+            else if(postalCode.length() != 5){
+                Alerts.errorAlert("Incorrect postal code format", "Make sure postal code is only 5 characters.");
+            }
+            else if(FormatChecks.formatAddress(address, countryComboBox.getValue()) == true && (FormatChecks.checkPhone(
+                    phone, countryComboBox.getValue()) == true)) {
+                CustomerDAOImp.updateCustomer(Integer.parseInt(customerId), customerName, address, postalCode, phone, TimeConv.DateToString(createDate), createdBy,
+                        TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
+                Alerts.actionAlert("Customer Added!", "Customer successfully updated.");
+                customerFormNameTxt.clear();
+                customerFormAddressTxt.clear();
+                customerFormPostalTxt.clear();
+                customerFormPhoneTxt.clear();
+                customerFormCustomerID.clear();
+                setupCustomerTable();
+                customersFormTable.getSelectionModel().clearSelection();
+            }
+
+
+
         }
 
 
@@ -143,6 +233,33 @@ public class customerform_controller implements Initializable {
 
     @FXML
     void deleteCustomer(ActionEvent event) {
+
+
+    }
+
+    /**
+     * Sets up the customer table for customer form.
+     */
+    public void setupCustomerTable(){
+        ObservableList<Customer> customers= FXCollections.observableArrayList();
+        tbID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        tbName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        tbAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        tbPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        tbPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        tbCreateDate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("createDate"));
+        tbCreatedBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+        tbLastUpdate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("lastUpdate"));
+        tbLastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+        tbDivisionId.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+        try {
+            customers.addAll(CustomerDAOImp.getAllCustomers());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        customersFormTable.setItems(customers);
+
 
     }
 
@@ -154,7 +271,6 @@ public class customerform_controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         //Setup lists for combo boxes and customer table.
-        ObservableList<Customer> customers= FXCollections.observableArrayList();
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
         ObservableList<FirstLevelDivision> requiredDivision = FXCollections.observableArrayList();
         try {
@@ -176,26 +292,6 @@ public class customerform_controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-        tbID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        tbName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        tbAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        tbPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        tbPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        tbCreateDate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("createDate"));
-        tbCreatedBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        tbLastUpdate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("lastUpdate"));
-        tbLastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
-        tbDivisionId.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
-        try {
-                customers.addAll(CustomerDAOImp.getAllCustomers());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        customersFormTable.setItems(customers);
-
+        setupCustomerTable();
     }
 }

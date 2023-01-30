@@ -16,19 +16,44 @@ public class FirstLevelDivisionDAOimp {
         DBConnection.openConnection();
         String sqlStatement = "select * from first_level_divisions WHERE Division = '" + inpDivision + "'";
         Query.makeQuery(sqlStatement);
-        Country countryResult;
+        FirstLevelDivision divisionResult;
         ResultSet result=Query.getResults();
         while(result.next()){
             int divisionId = result.getInt("Division_ID");
             String division = result.getString("Division");
             int countryId = result.getInt("Country_ID");
-
-            FirstLevelDivision divisionResult = new FirstLevelDivision(divisionId, division, countryId);
+            divisionResult = new FirstLevelDivision(divisionId, division, countryId);
             return divisionResult;
         }
         DBConnection.closeConnection();
         return null;
     }
+
+    /**
+     * Overload to get divison by ID.
+     * @param inpDivisionID
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static FirstLevelDivision getDivision(int inpDivisionID) throws SQLException, Exception{
+        DBConnection.openConnection();
+        String sqlStatement = "select * from first_level_divisions WHERE Division_ID = '" + inpDivisionID + "'";
+        Query.makeQuery(sqlStatement);
+        ResultSet result=Query.getResults();
+        FirstLevelDivision divisionResult;
+        while(result.next()){
+            int divisionId = result.getInt("Division_ID");
+            String division = result.getString("Division");
+            int countryId = result.getInt("Country_ID");
+            divisionResult = new FirstLevelDivision(divisionId, division, countryId);
+            return divisionResult;
+        }
+        DBConnection.closeConnection();
+        return null;
+    }
+
+
     public static ObservableList<FirstLevelDivision> getCorrelatedFLD(int inpCountryId) throws SQLException, Exception {
         ObservableList<FirstLevelDivision> correlatedFLD = FXCollections.observableArrayList();
         DBConnection.openConnection();

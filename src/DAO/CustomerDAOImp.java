@@ -45,6 +45,39 @@ public class CustomerDAOImp {
     }
 
     /**
+     * Overload for getCustomer using ID instead of name.
+     * @param customerID
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static Customer getCustomer(int customerID) throws SQLException, Exception{
+        DBConnection.openConnection();
+        String sqlStatement = "select * FROM customers WHERE Customer_ID = '" + customerID + "'";
+        Query.makeQuery(sqlStatement);
+        Customer customerResult;
+        ResultSet result=Query.getResults();
+        while(result.next()){
+            int customerId = result.getInt("Customer_ID");
+            String CustomerName = result.getString("Customer_Name");
+            String address= result.getString("Address");
+            String postalCode = result.getString("Postal_Code");
+            String phone = result.getString("Phone");
+            String createDate = result.getString("Create_Date");
+            String createdBy = result.getString("Created_By");
+            String lastUpdate = result.getString("Last_Update");
+            String lastUpdatedBy = result.getString("Last_Updated_By");
+            int divisionId = result.getInt("Division_ID");
+            Date createDateFormatted = stringToDate(createDate);
+            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            customerResult = new Customer(customerId, CustomerName, address, postalCode, phone, createDateFormatted, createdBy,lastUpdateFormatted,lastUpdatedBy,divisionId);
+            return customerResult;
+        }
+        DBConnection.closeConnection();
+        return null;
+    }
+
+    /**
      * Method to get all customers from customers SQL table.
      * @return all customers
      * @throws SQLException
