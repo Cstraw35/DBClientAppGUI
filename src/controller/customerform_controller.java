@@ -113,11 +113,21 @@ public class customerform_controller implements Initializable {
         }
 
     }
+
+    /**
+     * Clear selection if clicking in empty area on the form.
+     * @param event
+     */
     @FXML
     void formMouseClicked(MouseEvent event){
         customersFormTable.getSelectionModel().clearSelection();
 
     }
+
+    /**
+     * Used to clear selection when table value was initially selected.
+     * @param event
+     */
     @FXML
     void clearSelection(ActionEvent event) {
         customerFormNameTxt.clear();
@@ -187,7 +197,7 @@ public class customerform_controller implements Initializable {
             else if(postalCode.length() != 5){
             Alerts.errorAlert("Incorrect postal code format", "Make sure postal code is only 5 characters.");
             }
-            else if(FormatChecks.formatAddress(address, countryComboBox.getValue()) == true && (FormatChecks.checkPhone(
+            else if((FormatChecks.checkPhone(
                 phone, countryComboBox.getValue()) == true)) {
                 CustomerDAOImp.addCustomer(customerName, address, postalCode, phone, TimeConv.DateToString(createDate), createdBy,
                         TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
@@ -210,7 +220,7 @@ public class customerform_controller implements Initializable {
             else if(postalCode.length() != 5){
                 Alerts.errorAlert("Incorrect postal code format", "Make sure postal code is only 5 characters.");
             }
-            else if(FormatChecks.formatAddress(address, countryComboBox.getValue()) == true && (FormatChecks.checkPhone(
+            else if((FormatChecks.checkPhone(
                     phone, countryComboBox.getValue()) == true)) {
                 CustomerDAOImp.updateCustomer(Integer.parseInt(customerId), customerName, address, postalCode, phone, TimeConv.DateToString(createDate), createdBy,
                         TimeConv.DateToString(lastUpdate), lastUpdatedBy, divisionID);
@@ -232,7 +242,11 @@ public class customerform_controller implements Initializable {
     }
 
     @FXML
-    void deleteCustomer(ActionEvent event) {
+    void deleteCustomer(ActionEvent event) throws Exception {
+        String customerId = customerFormCustomerID.getText();
+        Customer selectedCustomer = CustomerDAOImp.getCustomer(Integer.parseInt(customerId));
+
+
 
 
     }
