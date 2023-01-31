@@ -110,6 +110,16 @@ public class mainform_controller implements Initializable{
     }
 
 
+    @FXML
+    void endTimeHourClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void endTimeMinuteClicked(ActionEvent event) {
+
+    }
+
 
     @FXML
     void rowSelection(MouseEvent event) {
@@ -118,6 +128,16 @@ public class mainform_controller implements Initializable{
 
     @FXML
     void startDatePickerClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void startTimeHourClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void startTimeMinuteClicked(ActionEvent event) {
 
     }
 

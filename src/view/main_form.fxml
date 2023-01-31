@@ -55,6 +55,12 @@
             <Label fx:id="mainFormUserlbl11112" layoutX="321.0" layoutY="513.0" prefHeight="24.0" prefWidth="58.0" text="Customer:" />
             <ComboBox fx:id="customerCB" layoutX="389.0" layoutY="512.0" onAction="#customerComboBoxClicked" prefWidth="150.0" />
             <Label fx:id="mainFormUserlbl" layoutX="827.0" layoutY="29.0" prefHeight="24.0" prefWidth="90.0" text="username" />
+            <Label fx:id="mainFormUserlbl111112" layoutX="550.0" layoutY="421.0" prefHeight="24.0" prefWidth="58.0" text="Start Time:" />
+            <ComboBox fx:id="starttimehour" layoutX="621.0" layoutY="420.0" onAction="#startTimeHourClicked" prefHeight="26.0" prefWidth="70.0" promptText="Hour" />
+            <ComboBox fx:id="starttimeminute" layoutX="699.0" layoutY="420.0" onAction="#startTimeMinuteClicked" prefHeight="26.0" prefWidth="90.0" promptText="Minute" />
+            <Label fx:id="mainFormUserlbl1111121" layoutX="550.0" layoutY="464.0" prefHeight="24.0" prefWidth="58.0" text="End Time:" />
+            <ComboBox fx:id="endtimehour" layoutX="621.0" layoutY="463.0" onAction="#endTimeHourClicked" prefHeight="26.0" prefWidth="70.0" promptText="Hour" />
+            <ComboBox fx:id="endtimeminute" layoutX="699.0" layoutY="463.0" onAction="#endTimeMinuteClicked" prefHeight="26.0" prefWidth="90.0" promptText="Minute" />
          </children>
       </AnchorPane>
    </children>
