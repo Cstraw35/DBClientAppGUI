@@ -9,10 +9,12 @@ import java.util.Date;
 public class Appointment {
     private int appointmentId ;
     private String title;
+    private String description;
     private String location;
     private String type;
     private Date start;
     private Date end;
+    private Date createDate;
     private String createdBy;
     private Date lastUpdate;
     private String lastUpdatedBy;
@@ -30,6 +32,7 @@ public class Appointment {
      * Constructor with all variables for appointment object.
      * @param appointmentId
      * @param title
+     * @param description
      * @param location
      * @param type
      * @param start
@@ -41,19 +44,51 @@ public class Appointment {
      * @param userId
      * @param contactId
      */
-    public Appointment(int appointmentId, String title, String location, String type, Date start, Date end, String createdBy, Date lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
+    public Appointment(int appointmentId, String title, String description, String location, String type, Date start, Date end, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
+        this.description = description;
         this.location = location;
         this.type = type;
         this.start = start;
         this.end = end;
+        this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
+    }
+
+    /**
+     * @return create date
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * sets the create date
+     * @param createDate
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
+     * @return description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * sets description
+     * @param description
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**

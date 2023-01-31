@@ -6,9 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,55 +23,132 @@ public class mainform_controller implements Initializable{
             mainFormUserlbl.setText(userName);
         }
 
-        @FXML
-        private Button mainFormAddAppointBtn;
+    @FXML
+    private TableColumn<?, ?> appIdClm;
 
-        @FXML
-        private Button mainFormAddCustBtn;
+    @FXML
+    private TableView<?> appoinmentTbl;
 
-        @FXML
-        private RadioButton mainFormMonthRb;
+    @FXML
+    private ComboBox<?> contactCB;
 
-        @FXML
-        private Label mainFormUserlbl;
+    @FXML
+    private TableColumn<?, ?> contactClm;
 
-        @FXML
-        private RadioButton mainFormWeekRb;
+    @FXML
+    private ComboBox<?> customerCB;
 
-        @FXML
-        private Button mainFormLogoutBtn;
+    @FXML
+    private TableColumn<?, ?> customerIdClm;
 
-        @FXML
-        void addCustomer(ActionEvent event) throws IOException {
-            stage = (Stage)((Button) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/customer_form.fxml"));
-            root = loader.load();
-            scene = new Scene(root);
-            customerform_controller customerFormController = loader.getController();
-            customerFormController.getUser(mainFormUserlbl.getText());
-            stage.setScene(scene);
-            stage.show();
+    @FXML
+    private TableColumn<?, ?> descriptionClm;
 
-       }
+    @FXML
+    private TextField descriptionTxt;
 
-        @FXML
-        void logOut(ActionEvent event) throws IOException {
-            stage = (Stage)((Button) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login_form.fxml"));
-            root = loader.load();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+    @FXML
+    private TableColumn<?, ?> endDateClm;
 
-        }
-        @Override
-        public void initialize(URL url, ResourceBundle rb) {
+    @FXML
+    private DatePicker endDatePicker;
 
-        }
-        @FXML
-        void addApointment(ActionEvent event) {
+    @FXML
+    private TableColumn<?, ?> locationClm;
 
-        }
+    @FXML
+    private TextField locationTxt;
+
+    @FXML
+    private Button mainFormAddCustBtn;
+
+    @FXML
+    private Button mainFormLogoutBtn;
+
+    @FXML
+    private RadioButton mainFormMonthRb;
+
+    @FXML
+    private Label mainFormUserlbl;
+
+    @FXML
+    private RadioButton mainFormWeekRb;
+
+    @FXML
+    private TableColumn<?, ?> startDateClm;
+
+    @FXML
+    private DatePicker startDatePicker;
+
+    @FXML
+    private TableColumn<?, ?> titleClm;
+
+    @FXML
+    private TextField titleTxt;
+
+    @FXML
+    private TableColumn<?, ?> typeClm;
+
+    @FXML
+    private TableColumn<?, ?> userIdClm;
+
+
+
+    @FXML
+    void contactComboBoxClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void customerComboBoxClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void endDatePickerClicked(ActionEvent event) {
+
+    }
+
+
+
+    @FXML
+    void rowSelection(MouseEvent event) {
+
+    }
+
+    @FXML
+    void startDatePickerClicked(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void addCustomer(ActionEvent event) throws IOException {
+        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/customer_form.fxml"));
+        root = loader.load();
+        scene = new Scene(root);
+        customerform_controller customerFormController = loader.getController();
+        customerFormController.getUser(mainFormUserlbl.getText());
+        stage.setScene(scene);
+        stage.show();
+
+    }
+    @FXML
+    void logOut(ActionEvent event) throws IOException {
+        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login_form.fxml"));
+        root = loader.load();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
 
 
 }

@@ -12,26 +12,49 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="502.0" prefWidth="763.0">
+      <AnchorPane accessibleRole="DATE_PICKER" prefHeight="688.0" prefWidth="1027.0">
          <children>
-            <Text layoutX="320.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Form" textAlignment="CENTER" wrappingWidth="122.39999999999992">
+            <Text layoutX="489.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Form" textAlignment="CENTER" wrappingWidth="122.39999999999992">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Label fx:id="mainFormUserlbl" layoutX="566.0" layoutY="31.0" prefHeight="24.0" prefWidth="89.0" text="username" />
+            <Label fx:id="mainFormUserlbl" layoutX="42.0" layoutY="379.0" prefHeight="24.0" prefWidth="90.0" text="Appointment ID:" />
             <RadioButton fx:id="mainFormMonthRb" layoutX="44.0" layoutY="88.0" mnemonicParsing="false" text="Month" />
             <RadioButton fx:id="mainFormWeekRb" layoutX="112.0" layoutY="88.0" mnemonicParsing="false" text="Week" />
-            <TableView layoutX="44.0" layoutY="130.0" prefHeight="314.0" prefWidth="344.0">
+            <TableView fx:id="appoinmentTbl" layoutX="44.0" layoutY="130.0" onMouseClicked="#rowSelection" prefHeight="231.0" prefWidth="942.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="appIdClm" prefWidth="108.5999984741211" text="Appointment ID" />
+                <TableColumn fx:id="titleClm" prefWidth="63.600006103515625" text="Title" />
+                  <TableColumn fx:id="descriptionClm" prefWidth="96.0" text="Description" />
+                  <TableColumn fx:id="locationClm" prefWidth="81.5999755859375" text="Location" />
+                  <TableColumn fx:id="contactClm" prefWidth="97.60003662109375" text="Contact" />
+                  <TableColumn fx:id="typeClm" prefWidth="86.39999389648438" text="Type" />
+                  <TableColumn fx:id="startDateClm" prefWidth="112.0" text="Start Date" />
+                  <TableColumn fx:id="endDateClm" prefWidth="117.20001220703125" text="End Date" />
+                  <TableColumn fx:id="customerIdClm" prefWidth="96.5999755859375" text="Customer ID" />
+                  <TableColumn fx:id="userIdClm" prefWidth="85.5999755859375" text="User ID" />
               </columns>
             </TableView>
-            <Button fx:id="mainFormAddCustBtn" layoutX="477.0" layoutY="117.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="26.0" prefWidth="222.0" text="Customers" />
-            <Button fx:id="mainFormAddAppointBtn" layoutX="477.0" layoutY="171.0" mnemonicParsing="false" onAction="#addApointment" prefHeight="26.0" prefWidth="222.0" text="Add Appointment" />
-            <Button fx:id="mainFormLogoutBtn" layoutX="689.0" layoutY="30.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
-            <Label layoutX="522.0" layoutY="34.0" prefHeight="18.0" prefWidth="43.0" text="User:" />
+            <Button fx:id="mainFormAddCustBtn" layoutX="763.0" layoutY="606.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="26.0" prefWidth="222.0" text="Add Customers" />
+            <Button fx:id="mainFormLogoutBtn" layoutX="944.0" layoutY="28.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
+            <Label layoutX="784.0" layoutY="32.0" prefHeight="18.0" prefWidth="43.0" text="User:" />
+            <TextField editable="false" layoutX="137.0" layoutY="378.0" promptText="Auto-Generated" />
+            <Label fx:id="mainFormUserlbl1" layoutX="43.0" layoutY="421.0" prefHeight="24.0" prefWidth="89.0" text="Title:" />
+            <TextField fx:id="titleTxt" editable="false" layoutX="137.0" layoutY="420.0" promptText="Enter title" />
+            <Label fx:id="mainFormUserlbl11" layoutX="43.0" layoutY="465.0" prefHeight="24.0" prefWidth="96.0" text="Description:" />
+            <TextField fx:id="descriptionTxt" editable="false" layoutX="137.0" layoutY="464.0" promptText="Enter Description" />
+            <Label fx:id="mainFormUserlbl111" layoutX="43.0" layoutY="513.0" prefHeight="24.0" prefWidth="96.0" text="Location:" />
+            <TextField fx:id="locationTxt" editable="false" layoutX="137.0" layoutY="512.0" promptText="Enter Location" />
+            <Label fx:id="mainFormUserlbl1111" layoutX="321.0" layoutY="379.0" prefHeight="24.0" prefWidth="58.0" text="Contact:" />
+            <ComboBox fx:id="contactCB" layoutX="389.0" layoutY="378.0" onAction="#contactComboBoxClicked" prefWidth="150.0" />
+            <DatePicker fx:id="startDatePicker" layoutX="389.0" layoutY="420.0" onAction="#startDatePickerClicked" prefHeight="26.0" prefWidth="150.0" />
+            <Label fx:id="mainFormUserlbl11111" layoutX="321.0" layoutY="421.0" prefHeight="24.0" prefWidth="58.0" text="Start Date:" />
+            <DatePicker fx:id="endDatePicker" layoutX="389.0" layoutY="463.0" onAction="#endDatePickerClicked" prefHeight="26.0" prefWidth="150.0" />
+            <Label fx:id="mainFormUserlbl111111" layoutX="321.0" layoutY="464.0" prefHeight="24.0" prefWidth="58.0" text="End Date:" />
+            <Label fx:id="mainFormUserlbl11112" layoutX="321.0" layoutY="513.0" prefHeight="24.0" prefWidth="58.0" text="Customer:" />
+            <ComboBox fx:id="customerCB" layoutX="389.0" layoutY="512.0" onAction="#customerComboBoxClicked" prefWidth="150.0" />
+            <Label fx:id="mainFormUserlbl" layoutX="827.0" layoutY="29.0" prefHeight="24.0" prefWidth="90.0" text="username" />
          </children>
       </AnchorPane>
    </children>

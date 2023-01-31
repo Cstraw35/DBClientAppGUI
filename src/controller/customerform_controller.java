@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentsDAOImp;
 import DAO.CountryDAOImp;
 import DAO.CustomerDAOImp;
 import DAO.FirstLevelDivisionDAOimp;
@@ -7,10 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import model.Appointment;
 import model.Country;
 import model.Customer;
 import model.FirstLevelDivision;
@@ -18,6 +24,7 @@ import utilities.Alerts;
 import utilities.FormatChecks;
 import utilities.TimeConv;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -29,6 +36,10 @@ public class customerform_controller implements Initializable {
     public void getUser(String userName){
         customerFormUserLbl.setText(userName);
     }
+    Stage stage;
+    Scene scene;
+    Parent root;
+
     @FXML
     private TextField customerFormCustomerID;
 
@@ -241,10 +252,37 @@ public class customerform_controller implements Initializable {
 
     }
 
+    /**
+     * Delete customer from table after checking appointments.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void deleteCustomer(ActionEvent event) throws Exception {
         String customerId = customerFormCustomerID.getText();
-        Customer selectedCustomer = CustomerDAOImp.getCustomer(Integer.parseInt(customerId));
+        if(customerId.equals("")){
+            Alerts.errorAlert("No customer selected", "Please select a customer first");
+        }
+
+        else{
+            Customer selectedCustomer = CustomerDAOImp.getCustomer(Integer.parseInt(customerId));
+            ObservableList<Appointment> checkAppointments = AppointmentsDAOImp.getCustomerAppointments(selectedCustomer.getCustomerId());
+            System.out.println(checkAppointments.size());
+            if(checkAppointments.size() == 0){
+                CustomerDAOImp.deleteCustomer(selectedCustomer.getCustomerId());
+                Alerts.actionAlert("Customer deleted", "Customer successfully deleted.");
+                customerFormNameTxt.clear();
+                customerFormAddressTxt.clear();
+                customerFormPostalTxt.clear();
+                customerFormPhoneTxt.clear();
+                customerFormCustomerID.clear();
+                setupCustomerTable();
+                customersFormTable.getSelectionModel().clearSelection();
+            }
+            else{
+                Alerts.errorAlert("Can't delete customer", "If you want to delete the customer, please delete customer appointments first.");
+            }
+        }
 
 
 
@@ -276,6 +314,24 @@ public class customerform_controller implements Initializable {
 
 
     }
+
+    /**
+     * Go back to previous page.
+     * @param event
+     */
+    @FXML
+    void returnPage(ActionEvent event) throws IOException {
+        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
+        root = loader.load();
+        scene = new Scene(root);
+        mainform_controller mainformController = loader.getController();
+        mainformController.getUser(customerFormUserLbl.getText());
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
 
     /**
      * Sets up customer table for form and auto select country division Id values.
