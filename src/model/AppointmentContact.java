@@ -2,17 +2,18 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
-
 
 /**
  * Class for creating appointment object
  */
-public class Appointment {
+public class AppointmentContact {
     private int appointmentId ;
     private String title;
     private String description;
     private String location;
+    private String contactName;
     private String type;
     private Date start;
     private Date end;
@@ -29,7 +30,7 @@ public class Appointment {
     /**
      * Constructor with no variables for appointment object.
      */
-    public Appointment() {
+    public AppointmentContact() {
     }
 
     /**
@@ -48,11 +49,12 @@ public class Appointment {
      * @param userId
      * @param contactId
      */
-    public Appointment(int appointmentId, String title, String description, String location, String type, Date start, Date end, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
+    public AppointmentContact(int appointmentId, String title, String description, String location, String contactName, String type, Date start, Date end, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
         this.location = location;
+        this.contactName = contactName;
         this.type = type;
         this.start = start;
         this.end = end;
@@ -63,11 +65,41 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        localStart = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        localEnd = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        localStart = LocalDateTime.ofInstant(start.toInstant(), ZoneId.systemDefault());
+        localEnd = LocalDateTime.ofInstant(end.toInstant(), ZoneId.systemDefault());
+
     }
 
+    public LocalDateTime getLocalStart() {
+        return localStart;
+    }
 
+    public void setLocalStart(LocalDateTime localStart) {
+        this.localStart = localStart;
+    }
+
+    public LocalDateTime getLocalEnd() {
+        return localEnd;
+    }
+
+    public void setLocalEnd(LocalDateTime localEnd) {
+        this.localEnd = localEnd;
+    }
+
+    /**
+     * @return contactName
+     */
+    public String getContactName() {
+        return contactName;
+    }
+
+    /**
+     * Set contactName
+     * @param contactName
+     */
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
 
     /**
      * @return create date

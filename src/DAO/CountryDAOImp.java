@@ -63,6 +63,12 @@ public class CountryDAOImp {
         DBConnection.closeConnection();
         return null;
     }
+
+    /**
+     * @return list of all countries.
+     * @throws SQLException
+     * @throws Exception
+     */
     public static ObservableList<Country> getAllCountries() throws SQLException, Exception {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
         DBConnection.openConnection();

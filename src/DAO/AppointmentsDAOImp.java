@@ -3,6 +3,7 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.AppointmentContact;
 import model.Customer;
 
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public class AppointmentsDAOImp {
             String end = result.getString("End");
             String createDate = result.getString("Create_Date");
             String createdBy = result.getString("Created_By");
-            String lastUpdate = result.getString("LastUpdate");
+            String lastUpdate = result.getString("Last_Update");
             String lastUpdatedBy = result.getString("Last_Updated_By");
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
@@ -74,7 +75,7 @@ public class AppointmentsDAOImp {
             String end = result.getString("End");
             String createDate = result.getString("Create_Date");
             String createdBy = result.getString("Created_By");
-            String lastUpdate = result.getString("LastUpdate");
+            String lastUpdate = result.getString("Last_Update");
             String lastUpdatedBy = result.getString("Last_Updated_By");
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
@@ -84,6 +85,48 @@ public class AppointmentsDAOImp {
             Date createDateFormatted = stringToDate(createDate);
             Date lastUpdateFormatted = stringToDate(lastUpdate);
             Appointment appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
+                    createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
+            allAppointments.add(appointmentResult);
+        }
+        DBConnection.closeConnection();
+        return allAppointments;
+    }
+
+    /**
+     * Combine appointment and contact tables.
+     * @return appointment with contact info.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<AppointmentContact> getAllAppointmentsWithContact() throws SQLException, Exception {
+        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
+        DBConnection.openConnection();
+        String sqlStatement = "SELECT  * "+
+                "From appointments a \n" +
+                "join contacts c on c.Contact_ID = a.Contact_ID";
+        Query.makeQuery(sqlStatement);
+        ResultSet result = Query.getResults();
+        while (result.next()) {
+            int appointmentId = result.getInt("Appointment_ID");
+            String title = result.getString("Title");
+            String description = result.getString("Description");
+            String location = result.getString("Location");
+            String contactName = result.getString("Contact_Name");
+            String type = result.getString("Type");
+            String start = result.getString("Start");
+            String end = result.getString("End");
+            String createDate = result.getString("Create_Date");
+            String createdBy = result.getString("Created_By");
+            String lastUpdate = result.getString("Last_Update");
+            String lastUpdatedBy = result.getString("Last_Updated_By");
+            int customerID = result.getInt("Customer_ID");
+            int userID = result.getInt("User_ID");
+            int contactID = result.getInt("Contact_ID");
+            Date startFormatted = stringToDate(start);
+            Date endFormatted = stringToDate(end);
+            Date createDateFormatted = stringToDate(createDate);
+            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            AppointmentContact appointmentResult = new AppointmentContact (appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
         }
@@ -142,6 +185,7 @@ public class AppointmentsDAOImp {
      * @param userID
      * @param contactID
      */
+
     public static void updateAppointment(int appointmentId, String title, String description, String location,
                                          String type, String start, String end, String createDate, String createdBy,
                                          String lastUpdate,String lastUpdatedBy, int customerID,int userID, int contactID){
