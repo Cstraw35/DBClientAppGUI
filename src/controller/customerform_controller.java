@@ -190,7 +190,6 @@ public class customerform_controller implements Initializable {
     void addUpdateBtn(ActionEvent event) throws Exception {
         String customerId = customerFormCustomerID.getText();
         String customerName = customerFormNameTxt.getText();
-        System.out.println(customerName.length());
         String address = customerFormAddressTxt.getText();
         String postalCode = customerFormPostalTxt.getText();
         String phone = customerFormPhoneTxt.getText();

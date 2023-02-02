@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -15,17 +16,17 @@ public class AppointmentContact {
     private String location;
     private String contactName;
     private String type;
-    private Date start;
-    private Date end;
-    private Date createDate;
+    private ZonedDateTime start;
+    private ZonedDateTime end;
+    private ZonedDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private ZonedDateTime lastUpdate;
     private String lastUpdatedBy;
     private int customerId;
     private int userId;
     private int contactId;
-    private LocalDateTime localStart;
-    private LocalDateTime localEnd;
+    private ZonedDateTime localStart;
+    private ZonedDateTime localEnd;
 
     /**
      * Constructor with no variables for appointment object.
@@ -49,7 +50,7 @@ public class AppointmentContact {
      * @param userId
      * @param contactId
      */
-    public AppointmentContact(int appointmentId, String title, String description, String location, String contactName, String type, Date start, Date end, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
+    public AppointmentContact(int appointmentId, String title, String description, String location, String contactName, String type, ZonedDateTime start, ZonedDateTime end, ZonedDateTime createDate, String createdBy, ZonedDateTime lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
@@ -65,24 +66,24 @@ public class AppointmentContact {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        localStart = LocalDateTime.ofInstant(start.toInstant(), ZoneId.systemDefault());
-        localEnd = LocalDateTime.ofInstant(end.toInstant(), ZoneId.systemDefault());
+        localStart = start.toInstant().atZone(ZoneId.systemDefault());
+        localEnd = start.toInstant().atZone(ZoneId.systemDefault());
 
     }
 
-    public LocalDateTime getLocalStart() {
+    public ZonedDateTime getLocalStart() {
         return localStart;
     }
 
-    public void setLocalStart(LocalDateTime localStart) {
+    public void setLocalStart(ZonedDateTime localStart) {
         this.localStart = localStart;
     }
 
-    public LocalDateTime getLocalEnd() {
+    public ZonedDateTime getLocalEnd() {
         return localEnd;
     }
 
-    public void setLocalEnd(LocalDateTime localEnd) {
+    public void setLocalEnd(ZonedDateTime localEnd) {
         this.localEnd = localEnd;
     }
 
@@ -104,7 +105,7 @@ public class AppointmentContact {
     /**
      * @return create date
      */
-    public Date getCreateDate() {
+    public ZonedDateTime getCreateDate() {
         return createDate;
     }
 
@@ -112,7 +113,7 @@ public class AppointmentContact {
      * sets the create date
      * @param createDate
      */
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(ZonedDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -194,7 +195,7 @@ public class AppointmentContact {
     /**
      * @return start date.
      */
-    public Date getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
@@ -202,14 +203,14 @@ public class AppointmentContact {
      * Sets start date.
      * @param start
      */
-    public void setStart(Date start) {
+    public void setStart(ZonedDateTime start) {
         this.start = start;
     }
 
     /**
      * @return end date.
      */
-    public Date getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
@@ -217,7 +218,7 @@ public class AppointmentContact {
      * Set end date.
      * @param end
      */
-    public void setEnd(Date end) {
+    public void setEnd(ZonedDateTime end) {
         this.end = end;
     }
 
@@ -239,7 +240,7 @@ public class AppointmentContact {
     /**
      * @return last update date.
      */
-    public Date getLastUpdate() {
+    public ZonedDateTime getLastUpdate() {
         return lastUpdate;
     }
 
@@ -247,7 +248,7 @@ public class AppointmentContact {
      * Sets last update date.
      * @param lastUpdate
      */
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

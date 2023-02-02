@@ -1,8 +1,6 @@
 package controller;
 
-import DAO.AppointmentsDAOImp;
-import DAO.ContactDAOImp;
-import DAO.CustomerDAOImp;
+import DAO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,17 +13,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Appointment;
-import model.AppointmentContact;
-import model.Contact;
-import model.Customer;
+import model.*;
+import utilities.Alerts;
+import utilities.FormatChecks;
+import utilities.TimeConv;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class mainform_controller implements Initializable{
         Stage stage;
@@ -36,6 +37,9 @@ public class mainform_controller implements Initializable{
         }
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField appointmentIdTxt;
 
     @FXML
     private TableColumn<?, ?> appIdClm;
@@ -113,6 +117,9 @@ public class mainform_controller implements Initializable{
     private TextField titleTxt;
 
     @FXML
+    private TextField typeTxt;
+
+    @FXML
     private TableColumn<?, ?> typeClm;
 
     @FXML
@@ -120,9 +127,67 @@ public class mainform_controller implements Initializable{
 
 
     @FXML
-    void addAppointment(ActionEvent event) {
+    void addAppointment(ActionEvent event) throws Exception {
+        String appointmentId = appointmentIdTxt.getText();
+        if(appointmentId.equals("")){
+            ZonedDateTime createDate = ZonedDateTime.now();
+            String createdBy = mainFormUserlbl.getText();
+            ZonedDateTime lastUpdate = ZonedDateTime.now();
+            String last_updated_by = mainFormUserlbl.getText();
+
+            if (titleTxt.equals("") || descriptionTxt.equals("") || locationTxt.equals("") || typeTxt.equals("")
+            || contactCB.getValue() == null || startDatePicker.getValue() == null || starttimehour.getValue() == null ||
+            starttimeminute.getValue() == null || endDatePicker.getValue() == null || endtimehour.getValue() == null ||
+            endtimeminute.getValue() == null || customerCB.getValue() == null){
+                Alerts.errorAlert("Not all fields filled", "Please make sure to fill all fields and dropdowns.");
+        }
+            else{
+                //Get Customer ID and User ID
+                Customer customer = CustomerDAOImp.getCustomer(customerCB.getValue());
+                User user = UserDAOImp.getUser(mainFormUserlbl.getText());
+                Contact contact = ContactDAOImp.getContact(contactCB.getValue());
+                //Get start times and also convert so it's ready for database
+                LocalDate startDate = startDatePicker.getValue();
+                String startHour = starttimehour.getValue();
+                String startMinute = starttimeminute.getValue();
+                LocalDateTime startLdt = LocalDateTime.of(startDate.getYear(), startDate.getMonth(),
+                        startDate.getDayOfMonth(), Integer.parseInt(startHour), Integer.parseInt(startMinute));
+                ZonedDateTime startLocZdt = ZonedDateTime.of(startLdt, ZoneId.systemDefault());
+                ZonedDateTime startEstZdt = startLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
+                ZonedDateTime startUtcZdt = startLocZdt.withZoneSameInstant(ZoneOffset.UTC);
+
+                //Get end times and also convert so it's ready for database
+                LocalDate endDate = endDatePicker.getValue();
+                String endHour = endtimehour.getValue();
+                String endMinute = endtimeminute.getValue();
+                LocalDateTime endLdt = LocalDateTime.of(endDate.getYear(), endDate.getMonth(),
+                        endDate.getDayOfMonth(), Integer.parseInt(endHour), Integer.parseInt(endMinute));
+                ZonedDateTime endLocZdt = ZonedDateTime.of(endLdt, ZoneId.systemDefault());
+                ZonedDateTime endEstZdt = endLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
+                ZonedDateTime endUtcZdt = endLocZdt.withZoneSameInstant(ZoneOffset.UTC);
+
+
+                AppointmentsDAOImp.addAppointment(titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
+                        typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
+                        TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
+                        mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
+
+
+
+
+
+
+
+
+
+            }
+
+
 
     }
+
+
+}
 
     @FXML
     void deleteAppointment(ActionEvent event) {
@@ -177,7 +242,30 @@ public class mainform_controller implements Initializable{
 
     }
 
+    @FXML
+    void monthButtonClicked(ActionEvent event) {
+        setupAppointmentTable();
+        System.out.println("month" + mainFormMonthRb.isArmed());
+        System.out.println("week" + mainFormWeekRb.isArmed());
 
+    }
+
+    @FXML
+    void weekButtonClicked(ActionEvent event) {
+
+        setupAppointmentTable();
+        System.out.println("month" + mainFormMonthRb.isArmed());
+        System.out.println("week" + mainFormWeekRb.isArmed());
+
+
+    }
+
+
+    /**
+     * Button to go to the add customer form.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void addCustomer(ActionEvent event) throws IOException {
         stage = (Stage)((Button) event.getSource()).getScene().getWindow();
@@ -190,6 +278,12 @@ public class mainform_controller implements Initializable{
         stage.show();
 
     }
+
+    /**
+     * Button to logout and return to the login screen.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void logOut(ActionEvent event) throws IOException {
         stage = (Stage)((Button) event.getSource()).getScene().getWindow();
@@ -201,8 +295,13 @@ public class mainform_controller implements Initializable{
 
     }
 
+    /**
+     * Sets up the appointment table with filters and display in local date time.
+     */
     public void setupAppointmentTable(){
         ObservableList<AppointmentContact> appointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentContact> appointmentsFiltered = FXCollections.observableArrayList();
+        AppointmentContact appointment = new AppointmentContact();
         appIdClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionClm.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -215,12 +314,39 @@ public class mainform_controller implements Initializable{
         userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
         try {
             appointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
-
+            if(mainFormWeekRb.isArmed()){
+                System.out.println("Running");
+                for(int i = 0; i < appointments.size(); i++){
+                    Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
+                    Calendar currentCalendar = Calendar.getInstance();
+                    currentCalendar.setTime(new Date());
+                    if(checkCalendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)){
+                        appointmentsFiltered.add(appointments.get(i));
+                    }
+                }
+            }
+            if(mainFormMonthRb.isArmed()) {
+                for (int i = 0; i < appointments.size(); i++) {
+                    Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
+                    Calendar currentCalendar = Calendar.getInstance();
+                    currentCalendar.setTime(new Date());
+                    if (checkCalendar.get(Calendar.MONTH) == currentCalendar.get(Calendar.MONTH)) {
+                        appointmentsFiltered.add(appointments.get(i));
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        appointmentTbl.setItems(appointments);
+        appointmentTbl.getItems().clear();
+        appointmentTbl.setItems(appointmentsFiltered);
     }
+
+    /**
+     * Sets up the combo boxes and calls the setup table function.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -257,6 +383,7 @@ public class mainform_controller implements Initializable{
         starttimeminute.setItems(minutes);
         endtimehour.setItems(hours);
         endtimeminute.setItems(minutes);
+        mainFormMonthRb.arm();
         setupAppointmentTable();
 
 

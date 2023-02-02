@@ -8,9 +8,11 @@ import model.Customer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import static utilities.TimeConv.stringToDate;
+import static utilities.TimeConv.stringToZoneDate;
 
 public class AppointmentsDAOImp {
     /**
@@ -41,10 +43,10 @@ public class AppointmentsDAOImp {
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
             int contactID = result.getInt("Contact_ID");
-            Date startFormatted = stringToDate(start);
-            Date endFormatted = stringToDate(end);
-            Date createDateFormatted = stringToDate(createDate);
-            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            ZonedDateTime startFormatted = stringToZoneDate(start);
+            ZonedDateTime endFormatted = stringToZoneDate(end);
+            ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
+            ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
             appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
                 createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             return appointmentResult;
@@ -52,6 +54,43 @@ public class AppointmentsDAOImp {
         DBConnection.closeConnection();
         return null;
     }
+    public static AppointmentContact getAppointmentWithContact(int AppointmentId) throws SQLException, Exception {
+        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
+        DBConnection.openConnection();
+        String sqlStatement = "SELECT  * "+
+                "From appointments a \n" +
+                "join contacts c on c.Contact_ID = a.Contact_ID Where Appointment_ID = '" + AppointmentId + "'";
+        Query.makeQuery(sqlStatement);
+        ResultSet result = Query.getResults();
+        AppointmentContact appointmentResult;
+        while (result.next()) {
+            int appointmentId = result.getInt("Appointment_ID");
+            String title = result.getString("Title");
+            String description = result.getString("Description");
+            String location = result.getString("Location");
+            String contactName = result.getString("Contact_Name");
+            String type = result.getString("Type");
+            String start = result.getString("Start");
+            String end = result.getString("End");
+            String createDate = result.getString("Create_Date");
+            String createdBy = result.getString("Created_By");
+            String lastUpdate = result.getString("Last_Update");
+            String lastUpdatedBy = result.getString("Last_Updated_By");
+            int customerID = result.getInt("Customer_ID");
+            int userID = result.getInt("User_ID");
+            int contactID = result.getInt("Contact_ID");
+            ZonedDateTime startFormatted = stringToZoneDate(start);
+            ZonedDateTime endFormatted = stringToZoneDate(end);
+            ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
+            ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
+            appointmentResult = new AppointmentContact (appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
+                    createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
+            return appointmentResult;
+        }
+        DBConnection.closeConnection();
+        return null;
+    }
+
 
     /**
      * Get all appointments to fill table.
@@ -80,10 +119,10 @@ public class AppointmentsDAOImp {
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
             int contactID = result.getInt("Contact_ID");
-            Date startFormatted = stringToDate(start);
-            Date endFormatted = stringToDate(end);
-            Date createDateFormatted = stringToDate(createDate);
-            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            ZonedDateTime startFormatted = stringToZoneDate(start);
+            ZonedDateTime endFormatted = stringToZoneDate(end);
+            ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
+            ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
             Appointment appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
@@ -122,10 +161,10 @@ public class AppointmentsDAOImp {
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
             int contactID = result.getInt("Contact_ID");
-            Date startFormatted = stringToDate(start);
-            Date endFormatted = stringToDate(end);
-            Date createDateFormatted = stringToDate(createDate);
-            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            ZonedDateTime startFormatted = stringToZoneDate(start);
+            ZonedDateTime endFormatted = stringToZoneDate(end);
+            ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
+            ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
             AppointmentContact appointmentResult = new AppointmentContact (appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
@@ -156,10 +195,10 @@ public class AppointmentsDAOImp {
             int customerID = result.getInt("Customer_ID");
             int userID = result.getInt("User_ID");
             int contactID = result.getInt("Contact_ID");
-            Date startFormatted = stringToDate(start);
-            Date endFormatted = stringToDate(end);
-            Date createDateFormatted = stringToDate(createDate);
-            Date lastUpdateFormatted = stringToDate(lastUpdate);
+            ZonedDateTime startFormatted = stringToZoneDate(start);
+            ZonedDateTime endFormatted = stringToZoneDate(end);
+            ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
+            ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
             Appointment appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
