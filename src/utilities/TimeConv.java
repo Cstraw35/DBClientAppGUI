@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 public class TimeConv {
     public static Date stringToDate(String stringDate) throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse(stringDate);
         return date;
     }
@@ -23,13 +23,13 @@ public class TimeConv {
         return zoneDate;
     }
     public static String DateToString(Date date) throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String stringDate = sdf.format(date);
         return stringDate;
     }
 
     public static String zdtToString(ZonedDateTime zonedDateTime){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String dateTime = formatter.format(zonedDateTime);
         return dateTime;
     }
@@ -38,6 +38,7 @@ public class TimeConv {
 
         Calendar checkCalendar = GregorianCalendar.from(localDateTime);
         return checkCalendar;
+
     }
 
 }

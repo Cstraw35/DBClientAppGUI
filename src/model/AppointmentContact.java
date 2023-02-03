@@ -67,7 +67,7 @@ public class AppointmentContact {
         this.userId = userId;
         this.contactId = contactId;
         localStart = start.toInstant().atZone(ZoneId.systemDefault());
-        localEnd = start.toInstant().atZone(ZoneId.systemDefault());
+        localEnd = end.toInstant().atZone(ZoneId.systemDefault());
 
     }
 

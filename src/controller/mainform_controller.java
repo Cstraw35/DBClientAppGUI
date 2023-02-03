@@ -38,6 +38,7 @@ public class mainform_controller implements Initializable{
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
 
+
     @FXML
     private TextField appointmentIdTxt;
 
@@ -142,6 +143,7 @@ public class mainform_controller implements Initializable{
                 Alerts.errorAlert("Not all fields filled", "Please make sure to fill all fields and dropdowns.");
         }
             else{
+                ObservableList<Appointment> allAppointments = AppointmentsDAOImp.getAllAppointments();
                 //Get Customer ID and User ID
                 Customer customer = CustomerDAOImp.getCustomer(customerCB.getValue());
                 User user = UserDAOImp.getUser(mainFormUserlbl.getText());
@@ -166,18 +168,41 @@ public class mainform_controller implements Initializable{
                 ZonedDateTime endEstZdt = endLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
                 ZonedDateTime endUtcZdt = endLocZdt.withZoneSameInstant(ZoneOffset.UTC);
 
+                //Check if appoinment is same time or between hours of another appoinment.
+                Boolean appointmentFlag = false;
+                for(int i = 0; i < allAppointments.size(); i++){
+                    if((!startUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!startUtcZdt.isAfter(allAppointments.get(i).getEnd()))){
+                        appointmentFlag = true;
+                    }
+                    else if((!endUtcZdt.isBefore(allAppointments.get(i).getStart()))&& (!endUtcZdt.isAfter(allAppointments.get(i).getEnd()))){
+                        appointmentFlag = true;
+                    }
 
-                AppointmentsDAOImp.addAppointment(titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
-                        typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
-                        TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
-                        mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
+                }
+
+                if(endEstZdt.isBefore(startEstZdt)){
+                    Alerts.errorAlert("End time wrong", "Please make sure to set end time to a time after start time.");
+                }
+                else if(startEstZdt.getHour() < 8 || startEstZdt.getHour() > 22 || endEstZdt.getHour() > 22 ||
+                        endEstZdt.getDayOfMonth() > startEstZdt.getDayOfMonth() || startDate.getDayOfWeek() ==
+                        DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY){
+                    Alerts.errorAlert("Outside working hours", "Appointment set outside of working hours" +
+                            ", please only schedule between 8am-10pm EST");
+                }
+                else if(appointmentFlag){
+                    Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
+                }
 
 
+                else {
 
-
-
-
-
+                    AppointmentsDAOImp.addAppointment(titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
+                            typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
+                            TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
+                            mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
+                            setupAppointmentTable();
+                            Alerts.actionAlert("Appointment successfully added", "Appoinment successfully scheduled.");
+                }
 
 
             }
@@ -244,6 +269,7 @@ public class mainform_controller implements Initializable{
 
     @FXML
     void monthButtonClicked(ActionEvent event) {
+        mainFormWeekRb.disarm();
         setupAppointmentTable();
         System.out.println("month" + mainFormMonthRb.isArmed());
         System.out.println("week" + mainFormWeekRb.isArmed());
@@ -252,7 +278,7 @@ public class mainform_controller implements Initializable{
 
     @FXML
     void weekButtonClicked(ActionEvent event) {
-
+        mainFormMonthRb.disarm();
         setupAppointmentTable();
         System.out.println("month" + mainFormMonthRb.isArmed());
         System.out.println("week" + mainFormWeekRb.isArmed());
@@ -301,6 +327,7 @@ public class mainform_controller implements Initializable{
     public void setupAppointmentTable(){
         ObservableList<AppointmentContact> appointments = FXCollections.observableArrayList();
         ObservableList<AppointmentContact> appointmentsFiltered = FXCollections.observableArrayList();
+
         AppointmentContact appointment = new AppointmentContact();
         appIdClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -315,6 +342,7 @@ public class mainform_controller implements Initializable{
         try {
             appointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
             if(mainFormWeekRb.isArmed()){
+                appointmentsFiltered.clear();
                 System.out.println("Running");
                 for(int i = 0; i < appointments.size(); i++){
                     Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
@@ -326,6 +354,7 @@ public class mainform_controller implements Initializable{
                 }
             }
             if(mainFormMonthRb.isArmed()) {
+                appointmentsFiltered.clear();
                 for (int i = 0; i < appointments.size(); i++) {
                     Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
                     Calendar currentCalendar = Calendar.getInstance();
@@ -338,7 +367,6 @@ public class mainform_controller implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        appointmentTbl.getItems().clear();
         appointmentTbl.setItems(appointmentsFiltered);
     }
 
