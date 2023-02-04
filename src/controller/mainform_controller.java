@@ -202,6 +202,8 @@ public class mainform_controller implements Initializable{
                             mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
                             setupAppointmentTable();
                             Alerts.actionAlert("Appointment successfully added", "Appoinment successfully scheduled.");
+                            clearFields();
+
                 }
 
 
@@ -213,6 +215,17 @@ public class mainform_controller implements Initializable{
 
 
 }
+
+    /**
+     * Clear all fields on the form.
+     */
+    public void clearFields(){
+        appointmentIdTxt.clear();
+        titleTxt.clear();
+        typeTxt.clear();
+        descriptionTxt.clear();
+        locationTxt.clear();
+    }
 
     @FXML
     void deleteAppointment(ActionEvent event) {
