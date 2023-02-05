@@ -81,6 +81,10 @@ public class loginform_controller implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                 }
+                else{
+                    Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
+
+                }
             } catch (Exception e) {
                 if (Locale.getDefault().getLanguage().equals("fr")) {
                     Alerts.errorAlert(RB.getString("InvalidUser"), RB.getString("UserNameExist"));

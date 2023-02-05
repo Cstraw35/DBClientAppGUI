@@ -227,31 +227,36 @@ public class AppointmentsDAOImp {
 
     public static void updateAppointment(int appointmentId, String title, String description, String location,
                                          String type, String start, String end, String createDate, String createdBy,
-                                         String lastUpdate,String lastUpdatedBy, int customerID,int userID, int contactID){
+                                         String lastUpdate,String lastUpdatedBy, int customerID,int userID, int contactID) throws SQLException, Exception{
             DBConnection.openConnection();
-        String sqlStatement = "UPDATE appointments SET Title = '" + title + "'" +
-                ", Description = '" + description + "', Location = '" + location + "', Type '" +type+ "' "+
-                ", Start  = '" + start + "', end = '" + end + "'" +
+
+
+        String sqlStatement = "update appointments SET Title = '" + title + "'" +
+                ", Description = '" + description + "', Location = '" + location + "', Type = '" +type+ "' "+
+                ", Start  = '" + start + "', End = '" + end + "'" +
                 ", Create_Date = '" + createDate + "', Created_By = '" + createdBy + "'" +
                 ", Last_Update = '" + lastUpdate + "' " +
-                " Last_Updated_By = '" +lastUpdatedBy + ", Customer_ID = '" +customerID+"', User_ID = '" +userID+"'" +
-                ", Contact_ID '" + contactID+ "'";
+                ", Last_Updated_By = '" +lastUpdatedBy + "' , Customer_ID = '" +customerID+"', User_ID = '" +userID+"'" +
+                ", Contact_ID = '" + contactID+ "'" +
+                "WHERE Appointment_ID = '" +appointmentId+"'";
 
         Query.makeQuery(sqlStatement);
+
 
         DBConnection.closeConnection();
     }
 
     /**
      * Delete appointment from DB.
-     * @param appointmentID
+     * @param appointmentId
      */
-    public static void deleteAppointment(int appointmentID){
+    public static void deleteAppointment(int appointmentId) throws SQLException, Exception{
 
         DBConnection.openConnection();
-        String sqlStatement = "DELETE FROM appointments WHERE Customer_ID = '" +appointmentID+"'";
+        String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = '" +appointmentId+"'";
         Query.makeQuery(sqlStatement);
         DBConnection.closeConnection();
+
 
     }
 
