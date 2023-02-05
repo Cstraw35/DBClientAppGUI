@@ -5,16 +5,23 @@ import javafx.collections.ObservableList;
 import model.Appointment;
 import model.AppointmentContact;
 import model.Customer;
+import utilities.Alerts;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import static utilities.TimeConv.stringToDate;
 import static utilities.TimeConv.stringToZoneDate;
 
 public class AppointmentsDAOImp {
+
+
+
+
     /**
      * Gets appointment by id.
      * @param appointmentID

@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -125,6 +126,33 @@ public class mainform_controller implements Initializable{
 
     @FXML
     private TableColumn<?, ?> userIdClm;
+
+    /**
+     * Check if there are appointments in the next 15 minutes.
+     * @throws Exception
+     */
+    public static void appointmentSoonCheck() throws Exception {
+        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        String appointmentsString = "";
+        for(int i = 0; i < allAppointments.size(); i++){
+            LocalDateTime localTime = ZonedDateTime.now().toLocalDateTime();
+            LocalDateTime appointmentTime = allAppointments.get(i).getStart().toLocalDateTime();
+            long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
+            long interval = (timeDelta + -1) * -1;
+            if(interval <= 15 && interval > 0){
+                appointmentsString.concat("/n" + allAppointments.get(i).getAppointmentId() + allAppointments.get(i).getLocalStart());
+
+            }
+
+        }
+        if(appointmentsString.equals("")){
+            Alerts.actionAlert("No upcoming appointments", "There are no upcoming appointments");
+        }
+        else{
+            Alerts.actionAlert("Upcoming appointments", "Here are upcoming appointments" + appointmentsString);
+        }
+
+    }
 
     /**
      * Add appoinment or update appointment depending on if a row is selected in the table and a user ID is present.
@@ -528,6 +556,11 @@ public class mainform_controller implements Initializable{
         endtimeminute.setItems(minutes);
         mainFormMonthRb.arm();
         setupAppointmentTable();
+        try {
+            appointmentSoonCheck();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
