@@ -98,6 +98,22 @@ public class AppointmentsDAOImp {
         return null;
     }
 
+    public static ObservableList<AppointmentContact> getAppointmentTypes() throws SQLException, Exception {
+        ObservableList<AppointmentContact> appointmentTypes = FXCollections.observableArrayList();
+        DBConnection.openConnection();
+        String sqlStatement = "select Distinct Type from appointments";
+        Query.makeQuery(sqlStatement);
+        ResultSet result = Query.getResults();
+        while (result.next()) {
+
+            String type = result.getString("Type");
+            AppointmentContact typeResult = new AppointmentContact(type);
+
+            appointmentTypes.add(typeResult);
+        }
+        DBConnection.closeConnection();
+        return appointmentTypes;
+    }
 
     /**
      * Get all appointments to fill table.

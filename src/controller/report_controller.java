@@ -12,8 +12,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.AppointmentContact;
+import utilities.TimeConv;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class report_controller implements Initializable {
@@ -71,7 +73,7 @@ public class report_controller implements Initializable {
     private TableView<?> totalAppointmentsTableMonth;
 
     @FXML
-    private TableView<String> totalAppointmentsTableType;
+    private TableView<AppointmentContact> totalAppointmentsTableType;
 
     @FXML
     private TableColumn<?, ?> totalAppointmentsTypeClm;
@@ -80,7 +82,7 @@ public class report_controller implements Initializable {
     private TableColumn<?, ?> totalMonthClm;
 
     @FXML
-    private TableColumn<?,?> totalTypeClm;
+    private TableColumn<AppointmentContact, String> totalTypeClm;
 
     @FXML
     private TableColumn<?, ?> userClm;
@@ -110,22 +112,36 @@ public class report_controller implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         //Setup Tables
-        try {
-            ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
-            Set<String> types = getTypes(allAppointments);
-            ObservableList<String> typesList = FXCollections.observableArrayList(types);
-            System.out.println(types);
-            totalAppointmentsTableType.setItems(typesList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObservableList<AppointmentContact> typeAppointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
 
 
 
+        totalTypeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
+        totalAppointmentsTypeClm.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
+            try {
+                allAppointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                typeAppointments = AppointmentsDAOImp.getAppointmentTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
+        totalAppointmentsTableType.setItems(typeAppointments);
 
     }
-
 }
+
+
+
+
+
+
+
+
+

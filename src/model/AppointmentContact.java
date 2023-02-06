@@ -1,5 +1,8 @@
 package model;
 
+import DAO.AppointmentsDAOImp;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -27,11 +30,16 @@ public class AppointmentContact {
     private int contactId;
     private ZonedDateTime localStart;
     private ZonedDateTime localEnd;
+    private int typeCount;
 
     /**
      * Constructor with no variables for appointment object.
      */
     public AppointmentContact() {
+    }
+
+    public AppointmentContact(String type){
+        this.type = type;
     }
 
     /**
@@ -72,10 +80,22 @@ public class AppointmentContact {
 
     }
 
+    public int getTypeCount() throws Exception {
+        typeCount = 0;
+        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        for(int i = 0; i < allAppointments.size(); i++){
+            if(this.type.equals(allAppointments.get(i).getType())){
+                typeCount += 1;
+            }
+        }
+        return typeCount;
+    }
+
     /**
      *
      * @return system default start local time.
      */
+
     public ZonedDateTime getLocalStart() {
         return localStart;
     }
