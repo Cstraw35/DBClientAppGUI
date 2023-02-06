@@ -26,6 +26,7 @@ public class Customer {
 
     /**
      * Constructor for Customer object with all variables.
+     *
      * @param customerId
      * @param customerName
      * @param address
@@ -59,6 +60,7 @@ public class Customer {
 
     /**
      * Sets customer Id.
+     *
      * @param customerId
      */
     public void setCustomerId(int customerId) {
@@ -74,6 +76,7 @@ public class Customer {
 
     /**
      * Sets customer name.
+     *
      * @param customerName
      */
     public void setCustomerName(String customerName) {
@@ -89,6 +92,7 @@ public class Customer {
 
     /**
      * Sets customer address.
+     *
      * @param address
      */
     public void setAddress(String address) {
@@ -104,6 +108,7 @@ public class Customer {
 
     /**
      * Sets customer postal code.
+     *
      * @param postalCode
      */
     public void setPostalCode(String postalCode) {
@@ -119,6 +124,7 @@ public class Customer {
 
     /**
      * Sets customer phone.
+     *
      * @param phone
      */
     public void setPhone(String phone) {
@@ -134,6 +140,7 @@ public class Customer {
 
     /**
      * Sets Create date.
+     *
      * @param createDate
      */
     public void setCreateDate(Date createDate) {
@@ -149,6 +156,7 @@ public class Customer {
 
     /**
      * Sets created by.
+     *
      * @param createdBy
      */
     public void setCreatedBy(String createdBy) {
@@ -164,6 +172,7 @@ public class Customer {
 
     /**
      * Sets last update.
+     *
      * @param lastUpdate
      */
     public void setLastUpdate(Date lastUpdate) {
@@ -179,6 +188,7 @@ public class Customer {
 
     /**
      * Sets last updated by.
+     *
      * @param lastUpdatedBy
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
@@ -194,6 +204,7 @@ public class Customer {
 
     /**
      * Sets division id.
+     *
      * @param divisionID
      */
     public void setDivisionID(int divisionID) {

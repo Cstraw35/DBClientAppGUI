@@ -12,18 +12,21 @@ public class Query {
     private static Statement statement;
     private static ResultSet results;
 
-    public static void makeQuery(String q){
+    public static void makeQuery(String q) {
         query = q;
-        try{
+        try {
             statement = connection.createStatement();
-            if(query.toLowerCase().startsWith("select"))
-                results=statement.executeQuery(q);
-            if(query.toLowerCase().startsWith("delete")||query.toLowerCase().startsWith("insert")||query.startsWith("update"))
-            statement.executeUpdate(q);
+            if (query.toLowerCase().startsWith("select"))
+                results = statement.executeQuery(q);
+            if (query.toLowerCase().startsWith("delete") || query.toLowerCase().startsWith("insert") || query.startsWith("update"))
+                statement.executeUpdate(q);
 
         } catch (Exception e) {
-           System.out.println("Error: "+e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
-    public static ResultSet getResults() {return results;}
+
+    public static ResultSet getResults() {
+        return results;
+    }
 }

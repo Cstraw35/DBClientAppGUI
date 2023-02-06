@@ -18,18 +18,19 @@ import static utilities.TimeConv.stringToDate;
 public class CountryDAOImp {
     /**
      * class to get selected country
+     *
      * @param inpcountry
      * @return country object.
      * @throws SQLException
      * @throws Exception
      */
-    public static Country getCountry(String inpcountry) throws SQLException, Exception{
+    public static Country getCountry(String inpcountry) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM countries WHERE Country = '" + inpcountry + "'";
         Query.makeQuery(sqlStatement);
         Country countryResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int countryId = result.getInt("Country_ID");
             String country = result.getString("Country");
 
@@ -42,18 +43,19 @@ public class CountryDAOImp {
 
     /**
      * Overload to get country by ID.
+     *
      * @param inpCountryID
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public static Country getCountry(int inpCountryID) throws SQLException, Exception{
+    public static Country getCountry(int inpCountryID) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM countries WHERE Country_ID = '" + inpCountryID + "'";
         Query.makeQuery(sqlStatement);
         Country countryResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int countryId = result.getInt("Country_ID");
             String country = result.getString("Country");
 

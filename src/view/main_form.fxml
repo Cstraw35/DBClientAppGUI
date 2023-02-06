@@ -39,7 +39,7 @@
                   <TableColumn fx:id="userIdClm" prefWidth="85.5999755859375" text="User ID" />
               </columns>
             </TableView>
-            <Button fx:id="mainFormAddCustBtn" layoutX="789.0" layoutY="647.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="26.0" prefWidth="222.0" text="Add Customers" />
+            <Button fx:id="mainFormAddCustBtn" layoutX="278.0" layoutY="644.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="32.0" prefWidth="222.0" text="Add Customers" />
             <Button fx:id="mainFormLogoutBtn" layoutX="944.0" layoutY="28.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
             <Label layoutX="784.0" layoutY="32.0" prefHeight="18.0" prefWidth="43.0" text="User:" />
             <TextField fx:id="appointmentIdTxt" editable="false" layoutX="137.0" layoutY="378.0" promptText="Auto-Generated" />
@@ -68,6 +68,7 @@
             <Button layoutX="42.0" layoutY="644.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="32.0" prefWidth="212.0" text="Delete Appointment" />
             <Label fx:id="mainFormUserlbl1112" layoutX="42.0" layoutY="559.0" prefHeight="24.0" prefWidth="96.0" text="Type:" />
             <TextField fx:id="typeTxt" layoutX="136.0" layoutY="558.0" promptText="Enter Type" />
+            <Button layoutX="789.0" layoutY="644.0" mnemonicParsing="false" onAction="#reportsBtnClicked" prefHeight="32.0" prefWidth="212.0" text="Reports" />
          </children>
       </AnchorPane>
    </children>

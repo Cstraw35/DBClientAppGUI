@@ -18,13 +18,13 @@ public class ContactDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static Contact getContact(int inpContactID) throws SQLException, Exception{
+    public static Contact getContact(int inpContactID) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM contacts WHERE Contact_ID = '" + inpContactID + "'";
         Query.makeQuery(sqlStatement);
         Contact contactResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int contactId = result.getInt("Contact_ID");
             String contactName = result.getString("Contact_Name");
             String contactEmail = result.getString("Email");
@@ -38,18 +38,19 @@ public class ContactDAOImp {
 
     /**
      * Overload for getting contact by name.
+     *
      * @param inpContactName
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public static Contact getContact(String inpContactName) throws SQLException, Exception{
+    public static Contact getContact(String inpContactName) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM contacts WHERE Contact_Name = '" + inpContactName + "'";
         Query.makeQuery(sqlStatement);
         Contact contactResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int contactId = result.getInt("Contact_ID");
             String contactName = result.getString("Contact_Name");
             String contactEmail = result.getString("Email");

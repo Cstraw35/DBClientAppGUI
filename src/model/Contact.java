@@ -16,6 +16,7 @@ public class Contact {
 
     /**
      * Constructor with all parameters
+     *
      * @param contactId
      * @param contactName
      * @param contactEmail

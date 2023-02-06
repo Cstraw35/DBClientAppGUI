@@ -50,13 +50,14 @@ public class loginform_controller implements Initializable {
 
     /**
      * Login button action script to check login and load main form if successful.
+     *
      * @param event
      * @throws Exception
      */
     @FXML
     void loginBtnAction(ActionEvent event) throws Exception {
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
-        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
         root = loader.load();
         scene = new Scene(root);
@@ -66,22 +67,19 @@ public class loginform_controller implements Initializable {
         String password = loginPasswordTxt.getText();
         User user = UserDAOImp.getUser(username);
         if (username == "" || password == "") {
-            if(Locale.getDefault().getLanguage().equals("fr")){
-                Alerts.errorAlert(RB.getString("Empty"),RB.getString("FillFields"));
-            }
-            else {
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                Alerts.errorAlert(RB.getString("Empty"), RB.getString("FillFields"));
+            } else {
                 Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
             }
-        }
-        else {
+        } else {
             try {
                 loginUser = user.getUserName();
                 if (user.getPassword().equals(password)) {
                     mainFormController.getUser(loginUser);
                     stage.setScene(scene);
                     stage.show();
-                }
-                else{
+                } else {
                     Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
 
                 }
@@ -99,6 +97,7 @@ public class loginform_controller implements Initializable {
 
     /**
      * Initialize labels based on locale.
+     *
      * @param url
      * @param rb
      */

@@ -10,7 +10,7 @@ import java.util.Date;
  * Class for creating appointment object
  */
 public class Appointment {
-    private int appointmentId ;
+    private int appointmentId;
     private String title;
     private String description;
     private String location;
@@ -35,6 +35,7 @@ public class Appointment {
 
     /**
      * Constructor with all variables for appointment object.
+     *
      * @param appointmentId
      * @param title
      * @param description
@@ -69,7 +70,6 @@ public class Appointment {
     }
 
 
-
     /**
      * @return create date
      */
@@ -79,6 +79,7 @@ public class Appointment {
 
     /**
      * sets the create date
+     *
      * @param createDate
      */
     public void setCreateDate(ZonedDateTime createDate) {
@@ -94,6 +95,7 @@ public class Appointment {
 
     /**
      * sets description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -109,6 +111,7 @@ public class Appointment {
 
     /**
      * Set appointment id.
+     *
      * @param appointmentId
      */
     public void setAppointmentId(int appointmentId) {
@@ -124,6 +127,7 @@ public class Appointment {
 
     /**
      * Sets title.
+     *
      * @param title
      */
     public void setTitle(String title) {
@@ -139,6 +143,7 @@ public class Appointment {
 
     /**
      * Sets location.
+     *
      * @param location
      */
     public void setLocation(String location) {
@@ -154,6 +159,7 @@ public class Appointment {
 
     /**
      * Sets type.
+     *
      * @param type
      */
     public void setType(String type) {
@@ -169,6 +175,7 @@ public class Appointment {
 
     /**
      * Sets start date.
+     *
      * @param start
      */
     public void setStart(ZonedDateTime start) {
@@ -184,6 +191,7 @@ public class Appointment {
 
     /**
      * Set end date.
+     *
      * @param end
      */
     public void setEnd(ZonedDateTime end) {
@@ -199,6 +207,7 @@ public class Appointment {
 
     /**
      * Sets created by.
+     *
      * @param createdBy
      */
     public void setCreatedBy(String createdBy) {
@@ -214,6 +223,7 @@ public class Appointment {
 
     /**
      * Sets last update date.
+     *
      * @param lastUpdate
      */
     public void setLastUpdate(ZonedDateTime lastUpdate) {
@@ -229,6 +239,7 @@ public class Appointment {
 
     /**
      * Sets last updated by.
+     *
      * @param lastUpdatedBy
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
@@ -244,6 +255,7 @@ public class Appointment {
 
     /**
      * Sets customer id.
+     *
      * @param customerId
      */
     public void setCustomerId(int customerId) {
@@ -252,6 +264,7 @@ public class Appointment {
 
     /**
      * gets user id.
+     *
      * @return
      */
     public int getUserId() {
@@ -260,6 +273,7 @@ public class Appointment {
 
     /**
      * sets user id.
+     *
      * @param userId
      */
     public void setUserId(int userId) {
@@ -268,6 +282,7 @@ public class Appointment {
 
     /**
      * Gets contact id.
+     *
      * @return
      */
     public int getContactId() {
@@ -276,6 +291,7 @@ public class Appointment {
 
     /**
      * Sets contact id.
+     *
      * @param contactId
      */
     public void setContactId(int contactId) {

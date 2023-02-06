@@ -10,7 +10,7 @@ import java.util.Date;
  * Class for creating appointment object
  */
 public class AppointmentContact {
-    private int appointmentId ;
+    private int appointmentId;
     private String title;
     private String description;
     private String location;
@@ -36,6 +36,7 @@ public class AppointmentContact {
 
     /**
      * Constructor with all variables for appointment object.
+     *
      * @param appointmentId
      * @param title
      * @param description
@@ -71,6 +72,10 @@ public class AppointmentContact {
 
     }
 
+    /**
+     *
+     * @return system default start local time.
+     */
     public ZonedDateTime getLocalStart() {
         return localStart;
     }
@@ -79,6 +84,11 @@ public class AppointmentContact {
         this.localStart = localStart;
     }
 
+    /**
+     *
+     * @return system default end local time.
+     */
+
     public ZonedDateTime getLocalEnd() {
         return localEnd;
     }
@@ -86,6 +96,9 @@ public class AppointmentContact {
     public void setLocalEnd(ZonedDateTime localEnd) {
         this.localEnd = localEnd;
     }
+
+
+
 
     /**
      * @return contactName
@@ -96,6 +109,7 @@ public class AppointmentContact {
 
     /**
      * Set contactName
+     *
      * @param contactName
      */
     public void setContactName(String contactName) {
@@ -111,6 +125,7 @@ public class AppointmentContact {
 
     /**
      * sets the create date
+     *
      * @param createDate
      */
     public void setCreateDate(ZonedDateTime createDate) {
@@ -126,6 +141,7 @@ public class AppointmentContact {
 
     /**
      * sets description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -141,6 +157,7 @@ public class AppointmentContact {
 
     /**
      * Set appointment id.
+     *
      * @param appointmentId
      */
     public void setAppointmentId(int appointmentId) {
@@ -156,6 +173,7 @@ public class AppointmentContact {
 
     /**
      * Sets title.
+     *
      * @param title
      */
     public void setTitle(String title) {
@@ -171,6 +189,7 @@ public class AppointmentContact {
 
     /**
      * Sets location.
+     *
      * @param location
      */
     public void setLocation(String location) {
@@ -186,6 +205,7 @@ public class AppointmentContact {
 
     /**
      * Sets type.
+     *
      * @param type
      */
     public void setType(String type) {
@@ -201,6 +221,7 @@ public class AppointmentContact {
 
     /**
      * Sets start date.
+     *
      * @param start
      */
     public void setStart(ZonedDateTime start) {
@@ -216,6 +237,7 @@ public class AppointmentContact {
 
     /**
      * Set end date.
+     *
      * @param end
      */
     public void setEnd(ZonedDateTime end) {
@@ -231,6 +253,7 @@ public class AppointmentContact {
 
     /**
      * Sets created by.
+     *
      * @param createdBy
      */
     public void setCreatedBy(String createdBy) {
@@ -246,6 +269,7 @@ public class AppointmentContact {
 
     /**
      * Sets last update date.
+     *
      * @param lastUpdate
      */
     public void setLastUpdate(ZonedDateTime lastUpdate) {
@@ -261,6 +285,7 @@ public class AppointmentContact {
 
     /**
      * Sets last updated by.
+     *
      * @param lastUpdatedBy
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
@@ -276,6 +301,7 @@ public class AppointmentContact {
 
     /**
      * Sets customer id.
+     *
      * @param customerId
      */
     public void setCustomerId(int customerId) {
@@ -284,6 +310,7 @@ public class AppointmentContact {
 
     /**
      * gets user id.
+     *
      * @return
      */
     public int getUserId() {
@@ -292,6 +319,7 @@ public class AppointmentContact {
 
     /**
      * sets user id.
+     *
      * @param userId
      */
     public void setUserId(int userId) {
@@ -300,6 +328,7 @@ public class AppointmentContact {
 
     /**
      * Gets contact id.
+     *
      * @return
      */
     public int getContactId() {
@@ -308,6 +337,7 @@ public class AppointmentContact {
 
     /**
      * Sets contact id.
+     *
      * @param contactId
      */
     public void setContactId(int contactId) {

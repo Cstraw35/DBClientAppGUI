@@ -12,13 +12,13 @@ import java.sql.SQLException;
  * DAO implementation for first level divisions.
  */
 public class FirstLevelDivisionDAOimp {
-    public static FirstLevelDivision getDivision(String inpDivision) throws SQLException, Exception{
+    public static FirstLevelDivision getDivision(String inpDivision) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * from first_level_divisions WHERE Division = '" + inpDivision + "'";
         Query.makeQuery(sqlStatement);
         FirstLevelDivision divisionResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int divisionId = result.getInt("Division_ID");
             String division = result.getString("Division");
             int countryId = result.getInt("Country_ID");
@@ -31,18 +31,19 @@ public class FirstLevelDivisionDAOimp {
 
     /**
      * Overload to get divison by ID.
+     *
      * @param inpDivisionID
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public static FirstLevelDivision getDivision(int inpDivisionID) throws SQLException, Exception{
+    public static FirstLevelDivision getDivision(int inpDivisionID) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * from first_level_divisions WHERE Division_ID = '" + inpDivisionID + "'";
         Query.makeQuery(sqlStatement);
-        ResultSet result=Query.getResults();
+        ResultSet result = Query.getResults();
         FirstLevelDivision divisionResult;
-        while(result.next()){
+        while (result.next()) {
             int divisionId = result.getInt("Division_ID");
             String division = result.getString("Division");
             int countryId = result.getInt("Country_ID");
@@ -64,7 +65,7 @@ public class FirstLevelDivisionDAOimp {
             int divisionId = result.getInt("Division_ID");
             String division = result.getString("Division");
             int countryId = result.getInt("Country_ID");
-            FirstLevelDivision fldResult = new FirstLevelDivision(divisionId,division, countryId);
+            FirstLevelDivision fldResult = new FirstLevelDivision(divisionId, division, countryId);
             correlatedFLD.add(fldResult);
         }
         DBConnection.closeConnection();

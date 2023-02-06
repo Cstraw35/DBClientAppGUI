@@ -20,22 +20,21 @@ import static utilities.TimeConv.stringToZoneDate;
 public class AppointmentsDAOImp {
 
 
-
-
     /**
      * Gets appointment by id.
+     *
      * @param appointmentID
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public static Appointment getAppointment(int appointmentID) throws SQLException, Exception{
+    public static Appointment getAppointment(int appointmentID) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM appointments WHERE Appointment_ID = '" + appointmentID + "'";
         Query.makeQuery(sqlStatement);
         Appointment appointmentResult;
-        ResultSet result=Query.getResults();
-        while(result.next()){
+        ResultSet result = Query.getResults();
+        while (result.next()) {
             int appointmentId = result.getInt("Appointment_ID");
             String title = result.getString("Title");
             String description = result.getString("Description");
@@ -54,17 +53,18 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
-                createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
+            appointmentResult = new Appointment(appointmentId, title, description, location, type, startFormatted, endFormatted,
+                    createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             return appointmentResult;
         }
         DBConnection.closeConnection();
         return null;
     }
+
     public static AppointmentContact getAppointmentWithContact(int AppointmentId) throws SQLException, Exception {
         ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
-        String sqlStatement = "SELECT  * "+
+        String sqlStatement = "SELECT  * " +
                 "From appointments a \n" +
                 "join contacts c on c.Contact_ID = a.Contact_ID Where Appointment_ID = '" + AppointmentId + "'";
         Query.makeQuery(sqlStatement);
@@ -90,7 +90,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            appointmentResult = new AppointmentContact (appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
+            appointmentResult = new AppointmentContact(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             return appointmentResult;
         }
@@ -101,6 +101,7 @@ public class AppointmentsDAOImp {
 
     /**
      * Get all appointments to fill table.
+     *
      * @return
      * @throws SQLException
      * @throws Exception
@@ -130,7 +131,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            Appointment appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
+            Appointment appointmentResult = new Appointment(appointmentId, title, description, location, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
         }
@@ -140,6 +141,7 @@ public class AppointmentsDAOImp {
 
     /**
      * Combine appointment and contact tables.
+     *
      * @return appointment with contact info.
      * @throws SQLException
      * @throws Exception
@@ -147,7 +149,7 @@ public class AppointmentsDAOImp {
     public static ObservableList<AppointmentContact> getAllAppointmentsWithContact() throws SQLException, Exception {
         ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
-        String sqlStatement = "SELECT  * "+
+        String sqlStatement = "SELECT  * " +
                 "From appointments a \n" +
                 "join contacts c on c.Contact_ID = a.Contact_ID";
         Query.makeQuery(sqlStatement);
@@ -172,7 +174,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            AppointmentContact appointmentResult = new AppointmentContact (appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
+            AppointmentContact appointmentResult = new AppointmentContact(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
         }
@@ -206,7 +208,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            Appointment appointmentResult = new Appointment (appointmentId, title, description, location, type, startFormatted, endFormatted,
+            Appointment appointmentResult = new Appointment(appointmentId, title, description, location, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
         }
@@ -216,6 +218,7 @@ public class AppointmentsDAOImp {
 
     /**
      * Update appointment.
+     *
      * @param appointmentId
      * @param title
      * @param description
@@ -234,18 +237,18 @@ public class AppointmentsDAOImp {
 
     public static void updateAppointment(int appointmentId, String title, String description, String location,
                                          String type, String start, String end, String createDate, String createdBy,
-                                         String lastUpdate,String lastUpdatedBy, int customerID,int userID, int contactID) throws SQLException, Exception{
-            DBConnection.openConnection();
+                                         String lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) throws SQLException, Exception {
+        DBConnection.openConnection();
 
 
         String sqlStatement = "update appointments SET Title = '" + title + "'" +
-                ", Description = '" + description + "', Location = '" + location + "', Type = '" +type+ "' "+
+                ", Description = '" + description + "', Location = '" + location + "', Type = '" + type + "' " +
                 ", Start  = '" + start + "', End = '" + end + "'" +
                 ", Create_Date = '" + createDate + "', Created_By = '" + createdBy + "'" +
                 ", Last_Update = '" + lastUpdate + "' " +
-                ", Last_Updated_By = '" +lastUpdatedBy + "' , Customer_ID = '" +customerID+"', User_ID = '" +userID+"'" +
-                ", Contact_ID = '" + contactID+ "'" +
-                "WHERE Appointment_ID = '" +appointmentId+"'";
+                ", Last_Updated_By = '" + lastUpdatedBy + "' , Customer_ID = '" + customerID + "', User_ID = '" + userID + "'" +
+                ", Contact_ID = '" + contactID + "'" +
+                "WHERE Appointment_ID = '" + appointmentId + "'";
 
         Query.makeQuery(sqlStatement);
 
@@ -255,12 +258,13 @@ public class AppointmentsDAOImp {
 
     /**
      * Delete appointment from DB.
+     *
      * @param appointmentId
      */
-    public static void deleteAppointment(int appointmentId) throws SQLException, Exception{
+    public static void deleteAppointment(int appointmentId) throws SQLException, Exception {
 
         DBConnection.openConnection();
-        String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = '" +appointmentId+"'";
+        String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = '" + appointmentId + "'";
         Query.makeQuery(sqlStatement);
         DBConnection.closeConnection();
 
@@ -269,6 +273,7 @@ public class AppointmentsDAOImp {
 
     /**
      * Add appointment to DB.
+     *
      * @param title
      * @param description
      * @param location
@@ -286,14 +291,14 @@ public class AppointmentsDAOImp {
      * @throws Exception
      */
     public static void addAppointment(String title, String description, String location,
-                                   String type, String start, String end, String createDate, String createdBy,
-                                   String lastUpdate,String lastUpdatedBy, int customerID,int userID, int contactID) throws SQLException, Exception{
+                                      String type, String start, String end, String createDate, String createdBy,
+                                      String lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) throws SQLException, Exception {
         DBConnection.openConnection();
-        String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, "+
+        String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, " +
                 "Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) Values" +
-                "('" + title + "', '" + description + "' , '" + location + "', '" +type+ "', '" +start+ "'" +
+                "('" + title + "', '" + description + "' , '" + location + "', '" + type + "', '" + start + "'" +
                 ", '" + end + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdatedBy + "'," +
-                "'" + customerID + "', '" + userID+ "', '" + contactID + "')";
+                "'" + customerID + "', '" + userID + "', '" + contactID + "')";
 
         Query.makeQuery(sqlStatement);
 

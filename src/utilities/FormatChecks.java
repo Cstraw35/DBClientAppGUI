@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 public class FormatChecks {
     /**
      * check if address meets format requirements.
+     *
      * @param inpAddress
      * @param inpcountry
      * @return boolean.
@@ -43,6 +44,7 @@ public class FormatChecks {
 
     /**
      * Check phone number is in the correct format for country.
+     *
      * @param phone
      * @param inpcountry
      * @return
@@ -68,7 +70,6 @@ public class FormatChecks {
             }
         }
     }
-
 
 
 }

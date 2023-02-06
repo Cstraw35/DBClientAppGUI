@@ -12,6 +12,7 @@ public class Country {
 
     /**
      * Constructor with all variables for Country object.
+     *
      * @param id
      * @param country
      */
@@ -22,6 +23,7 @@ public class Country {
 
     /**
      * Getter for country id.
+     *
      * @return
      */
     public int getId() {
@@ -30,6 +32,7 @@ public class Country {
 
     /**
      * Getter for country.
+     *
      * @return
      */
     public String getCountry() {

@@ -29,134 +29,111 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-public class mainform_controller implements Initializable{
-        Stage stage;
-        Scene scene;
-        Parent root;
-        public void getUser(String userName){
-            mainFormUserlbl.setText(userName);
-        }
+public class mainform_controller implements Initializable {
+    Stage stage;
+    Scene scene;
+    Parent root;
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
-
-
     @FXML
     private TextField appointmentIdTxt;
-
     @FXML
     private TableColumn<?, ?> appIdClm;
-
     @FXML
     private TableView<AppointmentContact> appointmentTbl;
-
     @FXML
     private ComboBox<String> contactCB;
-
     @FXML
     private TableColumn<?, ?> contactClm;
-
     @FXML
     private ComboBox<String> customerCB;
-
     @FXML
     private TableColumn<?, ?> customerIdClm;
-
     @FXML
     private TableColumn<?, ?> descriptionClm;
-
     @FXML
     private TextField descriptionTxt;
-
     @FXML
     private TableColumn<AppointmentContact, LocalDateTime> endDateClm;
-
     @FXML
     private DatePicker endDatePicker;
-
     @FXML
     private ComboBox<String> endtimehour;
-
     @FXML
     private ComboBox<String> endtimeminute;
-
     @FXML
     private ComboBox<String> starttimehour;
-
     @FXML
     private ComboBox<String> starttimeminute;
-
     @FXML
     private TableColumn<?, ?> locationClm;
-
     @FXML
     private TextField locationTxt;
-
     @FXML
     private Button mainFormAddCustBtn;
-
     @FXML
     private Button mainFormLogoutBtn;
-
     @FXML
     private RadioButton mainFormMonthRb;
-
     @FXML
     private Label mainFormUserlbl;
-
     @FXML
     private RadioButton mainFormWeekRb;
-
     @FXML
     private TableColumn<AppointmentContact, LocalDateTime> startDateClm;
-
     @FXML
     private DatePicker startDatePicker;
-
     @FXML
     private TableColumn<?, ?> titleClm;
-
     @FXML
     private TextField titleTxt;
-
     @FXML
     private TextField typeTxt;
-
     @FXML
     private TableColumn<?, ?> typeClm;
-
     @FXML
     private TableColumn<?, ?> userIdClm;
 
     /**
      * Check if there are appointments in the next 15 minutes.
+     *
      * @throws Exception
      */
     public static void appointmentSoonCheck() throws Exception {
         ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
         String appointmentsString = "";
-        for(int i = 0; i < allAppointments.size(); i++){
+        for (int i = 0; i < allAppointments.size(); i++) {
             LocalDateTime localTime = ZonedDateTime.now().toLocalDateTime();
-            LocalDateTime appointmentTime = allAppointments.get(i).getStart().toLocalDateTime();
+            LocalDateTime appointmentTime = allAppointments.get(i).getLocalStart().toLocalDateTime();
+            System.out.println(appointmentTime + "  " + localTime);
             long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
-            long interval = (timeDelta + -1) * -1;
-            if(interval <= 15 && interval > 0){
-                appointmentsString.concat("/n" + allAppointments.get(i).getAppointmentId() + allAppointments.get(i).getLocalStart());
+            long interval = (timeDelta) * -1;
+            if (interval <= 15 && interval > 0) {
+                System.out.println("found interval");
+                appointmentsString = ("  Appointment ID: " + allAppointments.get(i).getAppointmentId()
+                        + " Time  " + allAppointments.get(i).getLocalStart().toString());
+                System.out.println(appointmentsString);
 
             }
+            System.out.println(interval);
 
         }
-        if(appointmentsString.equals("")){
+        if (appointmentsString.equals("")) {
             Alerts.actionAlert("No upcoming appointments", "There are no upcoming appointments");
-        }
-        else{
-            Alerts.actionAlert("Upcoming appointments", "Here are upcoming appointments" + appointmentsString);
+        } else {
+            Alerts.actionAlert("Upcoming appointments", "You have an upcoming appointment" + appointmentsString);
         }
 
+    }
+
+    public void getUser(String userName) {
+        mainFormUserlbl.setText(userName);
     }
 
     /**
      * Add appoinment or update appointment depending on if a row is selected in the table and a user ID is present.
      * Checks time conflicts and sets timezones for display, vs updating the sql database and EST for work hours.
+     *
      * @param event
      * @throws Exception
      */
@@ -164,132 +141,122 @@ public class mainform_controller implements Initializable{
     void addAppointment(ActionEvent event) throws Exception {
         String appointmentId = appointmentIdTxt.getText();
         if (titleTxt.equals("") || descriptionTxt.equals("") || locationTxt.equals("") || typeTxt.equals("")
-                    || contactCB.getValue() == null || startDatePicker.getValue() == null || starttimehour.getValue() == null ||
-                    starttimeminute.getValue() == null || endDatePicker.getValue() == null || endtimehour.getValue() == null ||
-                    endtimeminute.getValue() == null || customerCB.getValue() == null) {
-                Alerts.errorAlert("Not all fields filled", "Please make sure to fill all fields and dropdowns.");
-            }
-        else {
-                ObservableList<Appointment> allAppointments = AppointmentsDAOImp.getAllAppointments();
-                //Get Customer ID and User ID
-                Customer customer = CustomerDAOImp.getCustomer(customerCB.getValue());
-                User user = UserDAOImp.getUser(mainFormUserlbl.getText());
-                Contact contact = ContactDAOImp.getContact(contactCB.getValue());
-                //Get start times and also convert so it's ready for database
-                LocalDate startDate = startDatePicker.getValue();
-                String startHour = starttimehour.getValue();
-                String startMinute = starttimeminute.getValue();
-                LocalDateTime startLdt = LocalDateTime.of(startDate.getYear(), startDate.getMonth(),
-                        startDate.getDayOfMonth(), Integer.parseInt(startHour), Integer.parseInt(startMinute));
-                ZonedDateTime startLocZdt = ZonedDateTime.of(startLdt, ZoneId.systemDefault());
-                ZonedDateTime startEstZdt = startLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
-                ZonedDateTime startUtcZdt = startLocZdt.withZoneSameInstant(ZoneOffset.UTC);
+                || contactCB.getValue() == null || startDatePicker.getValue() == null || starttimehour.getValue() == null ||
+                starttimeminute.getValue() == null || endDatePicker.getValue() == null || endtimehour.getValue() == null ||
+                endtimeminute.getValue() == null || customerCB.getValue() == null) {
+            Alerts.errorAlert("Not all fields filled", "Please make sure to fill all fields and dropdowns.");
+        } else {
+            ObservableList<Appointment> allAppointments = AppointmentsDAOImp.getAllAppointments();
+            //Get Customer ID and User ID
+            Customer customer = CustomerDAOImp.getCustomer(customerCB.getValue());
+            User user = UserDAOImp.getUser(mainFormUserlbl.getText());
+            Contact contact = ContactDAOImp.getContact(contactCB.getValue());
+            //Get start times and also convert so it's ready for database
+            LocalDate startDate = startDatePicker.getValue();
+            String startHour = starttimehour.getValue();
+            String startMinute = starttimeminute.getValue();
+            LocalDateTime startLdt = LocalDateTime.of(startDate.getYear(), startDate.getMonth(),
+                    startDate.getDayOfMonth(), Integer.parseInt(startHour), Integer.parseInt(startMinute));
+            ZonedDateTime startLocZdt = ZonedDateTime.of(startLdt, ZoneId.systemDefault());
+            ZonedDateTime startEstZdt = startLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
+            ZonedDateTime startUtcZdt = startLocZdt.withZoneSameInstant(ZoneOffset.UTC);
 
-                //Get end times and also convert so it's ready for database
-                LocalDate endDate = endDatePicker.getValue();
-                String endHour = endtimehour.getValue();
-                String endMinute = endtimeminute.getValue();
-                LocalDateTime endLdt = LocalDateTime.of(endDate.getYear(), endDate.getMonth(),
-                        endDate.getDayOfMonth(), Integer.parseInt(endHour), Integer.parseInt(endMinute));
-                ZonedDateTime endLocZdt = ZonedDateTime.of(endLdt, ZoneId.systemDefault());
-                ZonedDateTime endEstZdt = endLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
-                ZonedDateTime endUtcZdt = endLocZdt.withZoneSameInstant(ZoneOffset.UTC);
+            //Get end times and also convert so it's ready for database
+            LocalDate endDate = endDatePicker.getValue();
+            String endHour = endtimehour.getValue();
+            String endMinute = endtimeminute.getValue();
+            LocalDateTime endLdt = LocalDateTime.of(endDate.getYear(), endDate.getMonth(),
+                    endDate.getDayOfMonth(), Integer.parseInt(endHour), Integer.parseInt(endMinute));
+            ZonedDateTime endLocZdt = ZonedDateTime.of(endLdt, ZoneId.systemDefault());
+            ZonedDateTime endEstZdt = endLocZdt.withZoneSameInstant(ZoneId.of("America/New_York"));
+            ZonedDateTime endUtcZdt = endLocZdt.withZoneSameInstant(ZoneOffset.UTC);
 
-                //Check if appoinment is same time or between hours of another appoinment.
+            //Check if appoinment is same time or between hours of another appoinment.
 
-                if(appointmentId == ""){
-                    Boolean appointmentFlag = false;
-                    for (int i = 0; i < allAppointments.size(); i++) {
-                        if ((!startUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!startUtcZdt.isAfter(allAppointments.get(i).getEnd()))) {
-                            appointmentFlag = true;
-                        } else if ((!endUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!endUtcZdt.isAfter(allAppointments.get(i).getEnd()))) {
-                            appointmentFlag = true;
-                        }
-
-                    }
-
-                    if (endEstZdt.isBefore(startEstZdt)) {
-                        Alerts.errorAlert("End time wrong", "Please make sure to set end time to a time after start time.");
-                    }
-                    else if (startEstZdt.getHour() < 8 || startEstZdt.getHour() > 22 || endEstZdt.getHour() > 22 ||
-                            endEstZdt.getDayOfMonth() > startEstZdt.getDayOfMonth() || startDate.getDayOfWeek() ==
-                            DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                            Alerts.errorAlert("Outside working hours", "Appointment set outside of working hours" +
-                                    ", please only schedule between 8am-10pm EST");
-                        }
-                    else if (appointmentFlag) {
-                        Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
-                        }
-                    else {
-                        ZonedDateTime createDate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
-                        String createdBy = mainFormUserlbl.getText();
-                        ZonedDateTime lastUpdate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
-                        String last_updated_by = mainFormUserlbl.getText();
-
-                        AppointmentsDAOImp.addAppointment(titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
-                                typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
-                                TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
-                                mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
-                        setupAppointmentTable();
-                        Alerts.actionAlert("Appointment successfully added", "Appoinment successfully scheduled.");
-                        clearFields();
+            if (appointmentId == "") {
+                Boolean appointmentFlag = false;
+                for (int i = 0; i < allAppointments.size(); i++) {
+                    if ((!startUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!startUtcZdt.isAfter(allAppointments.get(i).getEnd()))) {
+                        appointmentFlag = true;
+                    } else if ((!endUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!endUtcZdt.isAfter(allAppointments.get(i).getEnd()))) {
+                        appointmentFlag = true;
                     }
 
                 }
-                    else{
-                        Boolean appointmentFlag = false;
-                        for (int i = 0; i < allAppointments.size(); i++) {
-                            String appointmentIdCheck = String.valueOf(allAppointments.get(i).getAppointmentId());
-                        if ((!startUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!startUtcZdt.isAfter(allAppointments.get(i).getEnd())
-                        && !appointmentIdCheck.equals(appointmentId))) {
-                            appointmentFlag = true;
-                        } else if ((!endUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!endUtcZdt.isAfter(allAppointments.get(i).getEnd()))
-                                && !appointmentIdCheck.equals(appointmentId)) {
-                            appointmentFlag = true;
-                        }
 
-                        }
+                if (endEstZdt.isBefore(startEstZdt)) {
+                    Alerts.errorAlert("End time wrong", "Please make sure to set end time to a time after start time.");
+                } else if (startEstZdt.getHour() < 8 || startEstZdt.getHour() > 22 || endEstZdt.getHour() > 22 ||
+                        endEstZdt.getDayOfMonth() > startEstZdt.getDayOfMonth() || startDate.getDayOfWeek() ==
+                        DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                    Alerts.errorAlert("Outside working hours", "Appointment set outside of working hours" +
+                            ", please only schedule between 8am-10pm EST");
+                } else if (appointmentFlag) {
+                    Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
+                } else {
+                    ZonedDateTime createDate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
+                    String createdBy = mainFormUserlbl.getText();
+                    ZonedDateTime lastUpdate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
+                    String last_updated_by = mainFormUserlbl.getText();
 
-                        if (endEstZdt.isBefore(startEstZdt)) {
-                         Alerts.errorAlert("End time wrong", "Please make sure to set end time to a time after start time.");
-                        }
-                        else if (startEstZdt.getHour() < 8 || startEstZdt.getHour() > 22 || endEstZdt.getHour() > 22 ||
-                            endEstZdt.getDayOfMonth() > startEstZdt.getDayOfMonth() || startDate.getDayOfWeek() ==
-                            DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                        Alerts.errorAlert("Outside working hours", "Appointment set outside of working hours" +
-                                ", please only schedule between 8am-10pm EST");
-                        }
-                        else if (appointmentFlag) {
-                            Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
-                        }
-                        else{
-                                System.out.println("Updating appointment");
-                                AppointmentContact checkAppointment = AppointmentsDAOImp.getAppointmentWithContact(Integer.parseInt(appointmentId));
-                                ZonedDateTime createDate = checkAppointment.getCreateDate();
-                                String createdBy = checkAppointment.getCreatedBy();
-                                ZonedDateTime lastUpdate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
-                                String last_updated_by = mainFormUserlbl.getText();
-                                AppointmentsDAOImp.updateAppointment(Integer.parseInt(appointmentIdTxt.getText()), titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
-                                        typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
-                                        TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
-                                        mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
-                                setupAppointmentTable();
-                                Alerts.actionAlert("Appointment successfully updated", "Appoinment successfully updated.");
-                                clearFields();
-                            }
+                    AppointmentsDAOImp.addAppointment(titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
+                            typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
+                            TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
+                            mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
+                    setupAppointmentTable();
+                    Alerts.actionAlert("Appointment successfully added", "Appoinment successfully scheduled.");
+                    clearFields();
+                }
 
+            } else {
+                Boolean appointmentFlag = false;
+                for (int i = 0; i < allAppointments.size(); i++) {
+                    String appointmentIdCheck = String.valueOf(allAppointments.get(i).getAppointmentId());
+                    if ((!startUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!startUtcZdt.isAfter(allAppointments.get(i).getEnd())
+                            && !appointmentIdCheck.equals(appointmentId))) {
+                        appointmentFlag = true;
+                    } else if ((!endUtcZdt.isBefore(allAppointments.get(i).getStart())) && (!endUtcZdt.isAfter(allAppointments.get(i).getEnd()))
+                            && !appointmentIdCheck.equals(appointmentId)) {
+                        appointmentFlag = true;
                     }
+
+                }
+
+                if (endEstZdt.isBefore(startEstZdt)) {
+                    Alerts.errorAlert("End time wrong", "Please make sure to set end time to a time after start time.");
+                } else if (startEstZdt.getHour() < 8 || startEstZdt.getHour() > 22 || endEstZdt.getHour() > 22 ||
+                        endEstZdt.getDayOfMonth() > startEstZdt.getDayOfMonth() || startDate.getDayOfWeek() ==
+                        DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                    Alerts.errorAlert("Outside working hours", "Appointment set outside of working hours" +
+                            ", please only schedule between 8am-10pm EST");
+                } else if (appointmentFlag) {
+                    Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
+                } else {
+                    System.out.println("Updating appointment");
+                    AppointmentContact checkAppointment = AppointmentsDAOImp.getAppointmentWithContact(Integer.parseInt(appointmentId));
+                    ZonedDateTime createDate = checkAppointment.getCreateDate();
+                    String createdBy = checkAppointment.getCreatedBy();
+                    ZonedDateTime lastUpdate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
+                    String last_updated_by = mainFormUserlbl.getText();
+                    AppointmentsDAOImp.updateAppointment(Integer.parseInt(appointmentIdTxt.getText()), titleTxt.getText(), descriptionTxt.getText(), locationTxt.getText(),
+                            typeTxt.getText(), TimeConv.zdtToString(startUtcZdt), TimeConv.zdtToString(endUtcZdt),
+                            TimeConv.zdtToString(createDate), mainFormUserlbl.getText(), TimeConv.zdtToString(lastUpdate),
+                            mainFormUserlbl.getText(), customer.getCustomerId(), user.getUserID(), contact.getContactId());
+                    setupAppointmentTable();
+                    Alerts.actionAlert("Appointment successfully updated", "Appoinment successfully updated.");
+                    clearFields();
+                }
+
             }
-
-
-
-
         }
+
+
+    }
 
     /**
      * Clear all fields on the form.
      */
-    public void clearFields(){
+    public void clearFields() {
         appointmentIdTxt.clear();
         titleTxt.clear();
         typeTxt.clear();
@@ -298,23 +265,25 @@ public class mainform_controller implements Initializable{
         appointmentTbl.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Delete appointment
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void deleteAppointment(ActionEvent event) throws Exception {
         String appointmentId = appointmentIdTxt.getText();
-        if(appointmentId.equals("")){
+        if (appointmentId.equals("")) {
             Alerts.errorAlert("No appointment selected", "Please select an appointment first");
-        }
-
-        else{
+        } else {
             Appointment selectedAppointment = AppointmentsDAOImp.getAppointment(Integer.parseInt(appointmentId));
             AppointmentsDAOImp.deleteAppointment(selectedAppointment.getAppointmentId());
             Alerts.actionAlert("Appointment deleted", "Appointment successfully deleted.");
             setupAppointmentTable();
             clearFields();
-            }
-
         }
 
+    }
 
 
     @FXML
@@ -345,6 +314,7 @@ public class mainform_controller implements Initializable{
 
     /**
      * Sets up text fields if row is selected in table to update the appointment.
+     *
      * @param event
      * @throws Exception
      */
@@ -366,31 +336,26 @@ public class mainform_controller implements Initializable{
         customerCB.setValue(customer.getCustomerName());
         startDatePicker.setValue(start.toLocalDate());
         endDatePicker.setValue(end.toLocalDate());
-        if(start.getHour() == 0){
+        if (start.getHour() == 0) {
             starttimehour.setValue("00");
-        }
-        else{
+        } else {
             starttimehour.setValue(String.valueOf(start.getHour()));
         }
-        if(start.getMinute() == 0){
+        if (start.getMinute() == 0) {
             starttimeminute.setValue("00");
-        }
-        else{
+        } else {
             starttimeminute.setValue(String.valueOf(start.getMinute()));
         }
-        if(end.getHour() == 0){
+        if (end.getHour() == 0) {
             endtimehour.setValue("00");
-        }
-        else{
+        } else {
             endtimehour.setValue(String.valueOf(end.getHour()));
         }
-        if(end.getMinute() == 0){
+        if (end.getMinute() == 0) {
             endtimeminute.setValue("00");
-        }
-        else{
+        } else {
             endtimeminute.setValue(String.valueOf(end.getMinute()));
         }
-
 
 
     }
@@ -410,34 +375,37 @@ public class mainform_controller implements Initializable{
 
     }
 
+    /**
+     * Setup table with month button clicked.
+     * @param event
+     */
     @FXML
     void monthButtonClicked(ActionEvent event) {
         mainFormWeekRb.disarm();
         setupAppointmentTable();
-        System.out.println("month" + mainFormMonthRb.isArmed());
-        System.out.println("week" + mainFormWeekRb.isArmed());
 
     }
 
+    /**
+     * Setup table with week button clicked.
+     * @param event
+     */
     @FXML
     void weekButtonClicked(ActionEvent event) {
         mainFormMonthRb.disarm();
         setupAppointmentTable();
-        System.out.println("month" + mainFormMonthRb.isArmed());
-        System.out.println("week" + mainFormWeekRb.isArmed());
-
-
     }
 
 
     /**
      * Button to go to the add customer form.
+     *
      * @param event
      * @throws IOException
      */
     @FXML
     void addCustomer(ActionEvent event) throws IOException {
-        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/customer_form.fxml"));
         root = loader.load();
         scene = new Scene(root);
@@ -450,12 +418,13 @@ public class mainform_controller implements Initializable{
 
     /**
      * Button to logout and return to the login screen.
+     *
      * @param event
      * @throws IOException
      */
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login_form.fxml"));
         root = loader.load();
         scene = new Scene(root);
@@ -467,7 +436,7 @@ public class mainform_controller implements Initializable{
     /**
      * Sets up the appointment table with filters and display in local date time.
      */
-    public void setupAppointmentTable(){
+    public void setupAppointmentTable() {
         ObservableList<AppointmentContact> appointments = FXCollections.observableArrayList();
         ObservableList<AppointmentContact> appointmentsFiltered = FXCollections.observableArrayList();
 
@@ -484,19 +453,19 @@ public class mainform_controller implements Initializable{
         userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
         try {
             appointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
-            if(mainFormWeekRb.isArmed()){
+            if (mainFormWeekRb.isArmed()) {
                 appointmentsFiltered.clear();
                 System.out.println("Running");
-                for(int i = 0; i < appointments.size(); i++){
+                for (int i = 0; i < appointments.size(); i++) {
                     Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
                     Calendar currentCalendar = Calendar.getInstance();
                     currentCalendar.setTime(new Date());
-                    if(checkCalendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)){
+                    if (checkCalendar.get(Calendar.WEEK_OF_YEAR) == currentCalendar.get(Calendar.WEEK_OF_YEAR)) {
                         appointmentsFiltered.add(appointments.get(i));
                     }
                 }
             }
-            if(mainFormMonthRb.isArmed()) {
+            if (mainFormMonthRb.isArmed()) {
                 appointmentsFiltered.clear();
                 for (int i = 0; i < appointments.size(); i++) {
                     Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
@@ -514,7 +483,26 @@ public class mainform_controller implements Initializable{
     }
 
     /**
+     * Open reports form
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    public void reportsBtnClicked(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/report_form.fxml"));
+        root = loader.load();
+        scene = new Scene(root);
+        report_controller reportController = loader.getController();
+        reportController.getUser(mainFormUserlbl.getText());
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    /**
      * Sets up the combo boxes and calls the setup table function.
+     *
      * @param url
      * @param rb
      */
@@ -535,7 +523,7 @@ public class mainform_controller implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < allContacts.size(); ++i){
+        for (int i = 0; i < allContacts.size(); ++i) {
             contactCB.getItems().add(allContacts.get(i).getContactName());
         }
         try {
@@ -543,7 +531,7 @@ public class mainform_controller implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < allCustomers.size(); ++i){
+        for (int i = 0; i < allCustomers.size(); ++i) {
             customerCB.getItems().add(allCustomers.get(i).getCustomerName());
         }
 
@@ -564,7 +552,6 @@ public class mainform_controller implements Initializable{
 
 
     }
-
 
 
 }

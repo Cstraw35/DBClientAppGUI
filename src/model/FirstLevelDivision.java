@@ -13,6 +13,7 @@ public class FirstLevelDivision {
 
     /**
      * Constructor for first level division with all params.
+     *
      * @param divisionId
      * @param division
      * @param countryId
