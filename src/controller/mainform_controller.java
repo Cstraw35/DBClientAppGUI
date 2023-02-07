@@ -511,14 +511,6 @@ public class mainform_controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            Appointment test = AppointmentsDAOImp.getAppointment(1);
-            System.out.println(test.getStart());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         try {
