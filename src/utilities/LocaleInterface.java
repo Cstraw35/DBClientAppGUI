@@ -3,6 +3,9 @@ package utilities;
 import javafx.collections.ObservableList;
 import model.AppointmentContact;
 
-public interface CountInterface {
+import java.time.Month;
+
+public interface LocaleInterface {
+ Boolean appointment(Month month);
 
 }

@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+import java.util.function.Predicate;
 
 public class mainform_controller implements Initializable {
     Stage stage;
@@ -96,6 +97,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Check if there are appointments in the next 15 minutes.
+     * Uses lambda expression for timeCheck.
      *
      * @throws Exception
      */
@@ -106,9 +108,10 @@ public class mainform_controller implements Initializable {
             LocalDateTime localTime = ZonedDateTime.now().toLocalDateTime();
             LocalDateTime appointmentTime = allAppointments.get(i).getLocalStart().toLocalDateTime();
             System.out.println(appointmentTime + "  " + localTime);
-            long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
-            long interval = (timeDelta) * -1;
-            if (interval <= 15 && interval > 0) {
+            Long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
+            Long interval = (timeDelta) * -1;
+            Predicate<Long> timeCheck = check -> (check <= 15 && check >= 0);
+                if (timeCheck.test(interval)) {
                 System.out.println("found interval");
                 appointmentsString = ("  Appointment ID: " + allAppointments.get(i).getAppointmentId()
                         + " Time  " + allAppointments.get(i).getLocalStart().toString());

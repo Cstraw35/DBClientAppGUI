@@ -18,6 +18,7 @@ import model.Appointment;
 import model.AppointmentContact;
 import model.Contact;
 import model.Customer;
+import utilities.LocaleInterface;
 import utilities.TimeConv;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class report_controller implements Initializable {
     Stage stage;
