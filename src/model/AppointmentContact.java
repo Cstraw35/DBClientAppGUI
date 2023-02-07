@@ -3,10 +3,7 @@ package model;
 import DAO.AppointmentsDAOImp;
 import javafx.collections.ObservableList;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Date;
 
 /**
@@ -31,6 +28,8 @@ public class AppointmentContact {
     private ZonedDateTime localStart;
     private ZonedDateTime localEnd;
     private int typeCount;
+    private Month month;
+    private int monthCount;
 
     /**
      * Constructor with no variables for appointment object.
@@ -80,6 +79,11 @@ public class AppointmentContact {
 
     }
 
+    /**
+     * Gets the count for type from all appointments.
+     * @return
+     * @throws Exception
+     */
     public int getTypeCount() throws Exception {
         typeCount = 0;
         ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
@@ -89,6 +93,32 @@ public class AppointmentContact {
             }
         }
         return typeCount;
+    }
+
+    /**
+     * Gets the current appointments month.
+     * @return
+     */
+    public Month getMonth(){
+        this.month = getStart().getMonth();
+        return month;
+
+    }
+
+    /**
+     *
+     * @return number of appointments for each month.
+     */
+    public int getMonthCount() throws Exception {
+
+        monthCount = 0;
+        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        for(int i = 0; i < allAppointments.size(); i++){
+            if(this.month.equals(allAppointments.get(i).getStart().getMonth())){
+                monthCount += 1;
+            }
+        }
+        return monthCount;
     }
 
     /**

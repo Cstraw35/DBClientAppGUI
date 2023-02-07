@@ -61,6 +61,13 @@ public class AppointmentsDAOImp {
         return null;
     }
 
+    /**
+     * gets appointments back with contact name.
+     * @param AppointmentId
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public static AppointmentContact getAppointmentWithContact(int AppointmentId) throws SQLException, Exception {
         ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
@@ -98,6 +105,36 @@ public class AppointmentsDAOImp {
         return null;
     }
 
+    /**
+     * Get distinct months for appointments.
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<AppointmentContact> getAppointmentMonths() throws SQLException, Exception {
+        ObservableList<AppointmentContact> appointmentMonths = FXCollections.observableArrayList();
+        DBConnection.openConnection();
+        String sqlStatement = "select Distinct month(start) from appointments";
+        Query.makeQuery(sqlStatement);
+        ResultSet result = Query.getResults();
+        while (result.next()) {
+
+            String month = result.getString("month(start)");
+            AppointmentContact monthResult = new AppointmentContact(month);
+
+            appointmentMonths.add(monthResult);
+        }
+        DBConnection.closeConnection();
+        return appointmentMonths;
+    }
+
+
+    /**
+     * Gets Distinct appointment types.
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public static ObservableList<AppointmentContact> getAppointmentTypes() throws SQLException, Exception {
         ObservableList<AppointmentContact> appointmentTypes = FXCollections.observableArrayList();
         DBConnection.openConnection();

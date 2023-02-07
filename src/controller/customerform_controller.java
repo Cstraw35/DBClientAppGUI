@@ -79,6 +79,10 @@ public class customerform_controller implements Initializable {
     @FXML
     private TextField customerFormPhoneTxt;
 
+    /**
+     * Get user to set on main form.
+     * @param userName
+     */
     public void getUser(String userName) {
         customerFormUserLbl.setText(userName);
     }
