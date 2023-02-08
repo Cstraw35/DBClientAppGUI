@@ -106,7 +106,7 @@ public class AppointmentContact {
     }
 
     /**
-     *
+     * Gets the number of appointments for each month.
      * @return number of appointments for each month.
      */
     public int getMonthCount() throws Exception {
@@ -122,7 +122,7 @@ public class AppointmentContact {
     }
 
     /**
-     *
+     * gets default local time.
      * @return system default start local time.
      */
 
@@ -135,7 +135,7 @@ public class AppointmentContact {
     }
 
     /**
-     *
+     * gets system default end time.
      * @return system default end local time.
      */
 
@@ -151,6 +151,7 @@ public class AppointmentContact {
 
 
     /**
+     * gets contact name.
      * @return contactName
      */
     public String getContactName() {
@@ -167,6 +168,7 @@ public class AppointmentContact {
     }
 
     /**
+     * gets creation date for appointment.
      * @return create date
      */
     public ZonedDateTime getCreateDate() {
@@ -183,6 +185,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets description for appointment.
      * @return description
      */
     public String getDescription() {
@@ -199,6 +202,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment id.
      * @return id.
      */
     public int getAppointmentId() {
@@ -215,6 +219,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment title.
      * @return title.
      */
     public String getTitle() {
@@ -231,6 +236,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment location.
      * @return location.
      */
     public String getLocation() {
@@ -247,6 +253,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment type.
      * @return type.
      */
     public String getType() {
@@ -263,6 +270,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment start.
      * @return start date.
      */
     public ZonedDateTime getStart() {
@@ -279,6 +287,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets appointment end.
      * @return end date.
      */
     public ZonedDateTime getEnd() {
@@ -295,6 +304,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets user that created appointment.
      * @return created by.
      */
     public String getCreatedBy() {
@@ -311,6 +321,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets last update time.
      * @return last update date.
      */
     public ZonedDateTime getLastUpdate() {
@@ -327,6 +338,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets last user that updated.
      * @return last updated by.
      */
     public String getLastUpdatedBy() {
@@ -343,6 +355,7 @@ public class AppointmentContact {
     }
 
     /**
+     * Gets customer id for appointment.
      * @return customer id.
      */
     public int getCustomerId() {

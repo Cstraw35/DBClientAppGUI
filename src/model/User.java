@@ -26,6 +26,7 @@ public class User {
     }
 
     /**
+     * Gets the user id.
      * @return the userID
      */
     public int getUserID() {
@@ -33,6 +34,7 @@ public class User {
     }
 
     /**
+     * Gets the user name.
      * @return the userName
      */
     public String getUserName() {
@@ -40,6 +42,7 @@ public class User {
     }
 
     /**
+     * gets the password.
      * @return the password
      */
     public String getPassword() {
@@ -47,6 +50,7 @@ public class User {
     }
 
     /**
+     * gets the create date.
      * @return the create date.
      */
     public Date getCreateDate() {
@@ -54,6 +58,7 @@ public class User {
     }
 
     /**
+     * gets created by.
      * @return created by
      */
     public String getCreatedBy() {
@@ -61,6 +66,7 @@ public class User {
     }
 
     /**
+     * gets last update.
      * @return last update
      */
     public Date getLastUpdate() {
@@ -68,6 +74,7 @@ public class User {
     }
 
     /**
+     * gets last updated by.
      * @return last updated by
      */
     public String getLastUpdatedBy() {

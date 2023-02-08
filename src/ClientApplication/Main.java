@@ -12,6 +12,9 @@ import model.AppointmentContact;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Calls the main function to open the login form.
+ */
 public class Main extends Application {
 
     public Main() throws Exception {

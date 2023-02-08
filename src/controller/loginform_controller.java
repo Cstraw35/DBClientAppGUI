@@ -12,9 +12,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import utilities.Alerts;
+import utilities.LoginFile;
 
 import java.net.URL;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -56,16 +59,12 @@ public class loginform_controller implements Initializable {
     @FXML
     void loginBtnAction(ActionEvent event) throws Exception {
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
-        stage = (Stage)((Button) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
-        root = loader.load();
-        scene = new Scene(root);
-        mainform_controller mainFormController = loader.getController();
         String loginUser;
         String username = loginUserTxt.getText();
         String password = loginPasswordTxt.getText();
         User user = UserDAOImp.getUser(username);
         if (username == "" || password == "") {
+            LoginFile.userLoginAttempt("No userName", ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Fail");
             if(Locale.getDefault().getLanguage().equals("fr")){
                 Alerts.errorAlert(RB.getString("Empty"),RB.getString("FillFields"));
             }
@@ -77,15 +76,28 @@ public class loginform_controller implements Initializable {
             try {
                 loginUser = user.getUserName();
                 if (user.getPassword().equals(password)) {
+                    LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Pass");
+                    stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
+                    root = loader.load();
+                    scene = new Scene(root);
+                    mainform_controller mainFormController = loader.getController();
                     mainFormController.getUser(loginUser);
                     stage.setScene(scene);
                     stage.show();
                 }
                 else{
-                    Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
+                    LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
+                    if (Locale.getDefault().getLanguage().equals("fr")) {
+                        Alerts.errorAlert(RB.getString("InvalidPassword"),RB.getString("WrongPassword"));
 
+                    }
+                    else {
+                        Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
+                    }
                 }
             } catch (Exception e) {
+                LoginFile.userLoginAttempt(user.getUserName(), ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
                 if (Locale.getDefault().getLanguage().equals("fr")) {
                     Alerts.errorAlert(RB.getString("InvalidUser"), RB.getString("UserNameExist"));
                 } else {

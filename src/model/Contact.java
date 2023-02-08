@@ -28,6 +28,7 @@ public class Contact {
     }
 
     /**
+     * Gets contact id.
      * @return contact id
      */
     public int getContactId() {
@@ -35,6 +36,7 @@ public class Contact {
     }
 
     /**
+     * Gets contact name.
      * @return contact name
      */
     public String getContactName() {
@@ -42,6 +44,7 @@ public class Contact {
     }
 
     /**
+     * Gets contact email.
      * @return contact email
      */
     public String getContactEmail() {

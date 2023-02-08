@@ -17,6 +17,9 @@ public class DBConnection {
     public static Connection connection;  // Connection Interface
     private static String password = "Passw0rd!"; // Password
 
+    /**
+     * Opens DB connection.
+     */
     public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver
@@ -27,6 +30,9 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Closes DB connection.
+     */
     public static void closeConnection() {
         try {
             connection.close();

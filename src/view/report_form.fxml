@@ -48,16 +48,15 @@
             <TableColumn fx:id="customerIDClm" prefWidth="102.40010986328127" text="Customer ID" />
          </columns>
       </TableView>
-      <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="247.0" text="User Login Attempts">
+      <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="326.0" text="Appointments per customer">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="loginAttemptsTbl" layoutX="14.0" layoutY="677.0" prefHeight="192.0" prefWidth="482.0">
+      <TableView fx:id="customerAppTbl" layoutX="9.0" layoutY="671.0" prefHeight="192.0" prefWidth="482.0">
          <columns>
-            <TableColumn fx:id="userClm" prefWidth="158.19997882843018" text="User" />
-            <TableColumn fx:id="successfulLoginAttemptsClm" prefWidth="161.00001525878906" text="Successful Attempts" />
-            <TableColumn fx:id="failedLoginAttemptsClm" prefWidth="161.00001525878906" text="Failed Attempts" />
+            <TableColumn fx:id="appcustomerIDclm" prefWidth="158.19997882843018" text="Customer ID" />
+            <TableColumn fx:id="numberofappointmentsClm" prefWidth="323.1999877929687" text="Number of appointments" />
          </columns>
       </TableView>
       <Button layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="26.0" prefWidth="103.0" text="Back" />

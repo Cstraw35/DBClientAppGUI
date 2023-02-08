@@ -7,6 +7,9 @@ import java.util.Locale;
 
 import static DAO.DBConnection.connection;
 
+/**
+ * Generic query class.
+ */
 public class Query {
     private static String query;
     private static Statement statement;

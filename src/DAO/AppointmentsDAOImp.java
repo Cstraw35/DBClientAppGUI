@@ -17,6 +17,9 @@ import java.util.Date;
 import static utilities.TimeConv.stringToDate;
 import static utilities.TimeConv.stringToZoneDate;
 
+/**
+ * DAO for connecting with SQL appointments table.
+ */
 public class AppointmentsDAOImp {
 
 

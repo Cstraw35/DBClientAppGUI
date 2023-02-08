@@ -30,6 +30,9 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.function.Predicate;
 
+/**
+ * Controller for the main form.
+ */
 public class mainform_controller implements Initializable {
     Stage stage;
     Scene scene;
@@ -96,8 +99,9 @@ public class mainform_controller implements Initializable {
     private TableColumn<?, ?> userIdClm;
 
     /**
+     * Uses lambda expression for timeCheck to both simplify the code and make the intention of the logic more clear to
+     * anyone that might look at the program.
      * Check if there are appointments in the next 15 minutes.
-     * Uses lambda expression for timeCheck.
      *
      * @throws Exception
      */
@@ -110,6 +114,9 @@ public class mainform_controller implements Initializable {
             System.out.println(appointmentTime + "  " + localTime);
             Long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
             Long interval = (timeDelta) * -1;
+            /**
+             * Lambdas expression to check time.
+             */
             Predicate<Long> timeCheck = check -> (check <= 15 && check >= 0);
                 if (timeCheck.test(interval)) {
                 System.out.println("found interval");
@@ -129,6 +136,10 @@ public class mainform_controller implements Initializable {
 
     }
 
+    /**
+     * Get user from login.
+     * @param userName
+     */
     public void getUser(String userName) {
         mainFormUserlbl.setText(userName);
     }

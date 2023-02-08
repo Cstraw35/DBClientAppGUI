@@ -13,6 +13,7 @@ import java.sql.SQLException;
  */
 public class ContactDAOImp {
     /**
+     * Get contact based on ID.
      * @param inpContactID
      * @return contact based on Id.
      * @throws SQLException
@@ -63,6 +64,7 @@ public class ContactDAOImp {
     }
 
     /**
+     * Get all contacts.
      * @return list of contacts.
      * @throws SQLException
      * @throws Exception

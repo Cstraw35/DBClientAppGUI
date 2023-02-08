@@ -14,6 +14,13 @@ import static utilities.TimeConv.stringToDate;
  * class for accessing user data. This is read only data per specifications
  **/
 public class UserDAOImp {
+    /**
+     * Gets user from DB.
+     * @param userName
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public static User getUser(String userName) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * FROM users WHERE User_Name = '" + userName + "'";

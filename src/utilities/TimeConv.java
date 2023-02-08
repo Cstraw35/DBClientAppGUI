@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 public class TimeConv {
     /**
-     *
+     * Gets Date from a string
      * @param stringDate
      * @return Date from a string
      * @throws ParseException
@@ -25,7 +25,7 @@ public class TimeConv {
     }
 
     /**
-     *
+     * Gets zone date time from a string.
      * @param stringDate
      * @return ZonedDateTime from string
      * @throws ParseException
@@ -37,7 +37,7 @@ public class TimeConv {
     }
 
     /**
-     *
+     * gets a string from a date.
      * @param date
      * @return String from Date
      * @throws ParseException
@@ -49,7 +49,7 @@ public class TimeConv {
     }
 
     /**
-     *
+     * Gets a string from zoned date time.
      * @param zonedDateTime
      * @return String from ZonedDateTime
      */
@@ -60,7 +60,7 @@ public class TimeConv {
     }
 
     /**
-     *
+     * gets a calendar for local date time.
      * @param localDateTime
      * @return Calendar for local date time.
      */

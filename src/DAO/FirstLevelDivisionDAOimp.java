@@ -54,7 +54,13 @@ public class FirstLevelDivisionDAOimp {
         return null;
     }
 
-
+    /**
+     * Get first level division by country id.
+     * @param inpCountryId
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public static ObservableList<FirstLevelDivision> getCorrelatedFLD(int inpCountryId) throws SQLException, Exception {
         ObservableList<FirstLevelDivision> correlatedFLD = FXCollections.observableArrayList();
         DBConnection.openConnection();

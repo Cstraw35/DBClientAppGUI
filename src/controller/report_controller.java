@@ -2,6 +2,7 @@ package controller;
 
 import DAO.AppointmentsDAOImp;
 import DAO.ContactDAOImp;
+import DAO.CustomerDAOImp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,20 +15,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Appointment;
 import model.AppointmentContact;
 import model.Contact;
 import model.Customer;
-import utilities.LocaleInterface;
-import utilities.TimeConv;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
-import java.util.function.Predicate;
 
+/**
+ * Class for functions to put together the 3 required reports.
+ */
 public class report_controller implements Initializable {
     Stage stage;
     Scene scene;
@@ -39,6 +39,15 @@ public class report_controller implements Initializable {
     public void getUser(String userName) {
         reportFormUserLbl.setText(userName);
     }
+
+    @FXML
+    private TableColumn<?, ?> appcustomerIDclm;
+
+    @FXML
+    private TableColumn<?, ?> numberofappointmentsClm;
+
+    @FXML
+    private TableView<Customer> customerAppTbl;
 
     @FXML
     private TableColumn<?, ?> appoinmentIDClm;
@@ -68,16 +77,7 @@ public class report_controller implements Initializable {
     private TableColumn<?, ?> customerIDClm;
 
     @FXML
-    private TableColumn<?, ?> failedLoginAttemptsClm;
-
-    @FXML
-    private TableView<?> loginAttemptsTbl;
-
-    @FXML
     private Label reportFormUserLbl;
-
-    @FXML
-    private TableColumn<?, ?> successfulLoginAttemptsClm;
 
     @FXML
     private TableColumn<AppointmentContact, ?> totalAppointmentsClm;
@@ -97,9 +97,6 @@ public class report_controller implements Initializable {
     @FXML
     private TableColumn<AppointmentContact, String> totalTypeClm;
 
-    @FXML
-    private TableColumn<?, ?> userClm;
-
     /**
      * Goes back to main form.
      * @param event
@@ -118,7 +115,8 @@ public class report_controller implements Initializable {
     }
 
     /**
-     * Uses lambda expression to filter by contact.
+     * Uses lambda expression to filter by contact. Used a lambda expression here because otherwise I would have
+     * had to use a for loop for a very simple filter. The lambda expression gets the job done faster with less code.
      * @param event
      * @throws Exception
      */
@@ -129,7 +127,9 @@ public class report_controller implements Initializable {
         ObservableList<AppointmentContact> contactAppointments = FXCollections.observableArrayList();
         FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments);
         allAppointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
-
+        /**
+         * Lambdas expression to filter appointments by contact.
+         */
         filteredAppointments.setPredicate(appointment -> {
                 String contactName = appointment.getContactName();
                 return contactName.equals(contactSelectCB.getValue());
@@ -230,6 +230,20 @@ public class report_controller implements Initializable {
         }
         totalAppointmentsTableMonth.setItems(monthAppointments);
         totalAppointmentsTableMonth.sort();
+
+        //Customer table
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+        try {
+            allCustomers = CustomerDAOImp.getAllCustomers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        appcustomerIDclm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        numberofappointmentsClm.setCellValueFactory(new PropertyValueFactory<>("appointmentCount"));
+        customerAppTbl.setItems(allCustomers);
+
+
+
     }
 }
 

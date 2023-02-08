@@ -1,0 +1,6 @@
+User: test  Date and Time: 2023-02-08T00:34:13.354474700Z  Login attempt result: fail
+User: test  Date and Time: 2023-02-08T00:34:14.923438400Z  Login attempt result: fail
+User: admin  Date and Time: 2023-02-08T00:34:24.217679900Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-08T00:47:05.834656400Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-08T00:47:38.498842700Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-08T00:48:27.127779900Z  Login attempt result: Pass

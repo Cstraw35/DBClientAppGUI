@@ -71,6 +71,7 @@ public class Appointment {
 
 
     /**
+     * Gets create date.
      * @return create date
      */
     public ZonedDateTime getCreateDate() {
@@ -87,6 +88,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appointment description.
      * @return description
      */
     public String getDescription() {
@@ -103,6 +105,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appointment ID.
      * @return id.
      */
     public int getAppointmentId() {
@@ -119,6 +122,7 @@ public class Appointment {
     }
 
     /**
+     * Gets Appointment title.
      * @return title.
      */
     public String getTitle() {
@@ -135,6 +139,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appointment location.
      * @return location.
      */
     public String getLocation() {
@@ -151,6 +156,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appoinment type.
      * @return type.
      */
     public String getType() {
@@ -167,6 +173,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appointment start time.
      * @return start date.
      */
     public ZonedDateTime getStart() {
@@ -183,6 +190,7 @@ public class Appointment {
     }
 
     /**
+     * Gets appointment end time.
      * @return end date.
      */
     public ZonedDateTime getEnd() {
@@ -199,6 +207,7 @@ public class Appointment {
     }
 
     /**
+     * Gets user that created appointment.
      * @return created by.
      */
     public String getCreatedBy() {
@@ -215,6 +224,7 @@ public class Appointment {
     }
 
     /**
+     * Gets when appointment was last updated.
      * @return last update date.
      */
     public ZonedDateTime getLastUpdate() {
@@ -231,6 +241,7 @@ public class Appointment {
     }
 
     /**
+     * Gets last user to update appointment.
      * @return last updated by.
      */
     public String getLastUpdatedBy() {
@@ -247,6 +258,7 @@ public class Appointment {
     }
 
     /**
+     * Gets customer id for appointment.
      * @return customer id.
      */
     public int getCustomerId() {
@@ -254,6 +266,7 @@ public class Appointment {
     }
 
     /**
+     *
      * Sets customer id.
      *
      * @param customerId
