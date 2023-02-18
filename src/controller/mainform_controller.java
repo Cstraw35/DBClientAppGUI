@@ -420,12 +420,11 @@ public class mainform_controller implements Initializable {
     @FXML
     void searchingBox(KeyEvent event) throws Exception {
         ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
-        FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments, appointment -> true);
+        FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments);
         filteredAppointments.setPredicate(appointment -> {
             if (searchField.getText() == null || searchField.getText().isEmpty()) {
                 return true;
             }
-
             String bringToLowerCase = searchField.getText().toLowerCase();
             if (appointment.getContactName().toLowerCase().indexOf(bringToLowerCase) != -1) {
                 return true;
@@ -448,7 +447,6 @@ public class mainform_controller implements Initializable {
             else if (String.valueOf(appointment.getCustomerId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
                 return true;
             }
-
             else {
                 return false;
             }
