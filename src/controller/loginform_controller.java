@@ -97,7 +97,7 @@ public class loginform_controller implements Initializable {
                     }
                 }
             } catch (Exception e) {
-                LoginFile.userLoginAttempt(user.getUserName(), ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
+                LoginFile.userLoginAttempt(loginUserTxt.getText(), ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
                 if (Locale.getDefault().getLanguage().equals("fr")) {
                     Alerts.errorAlert(RB.getString("InvalidUser"), RB.getString("UserNameExist"));
                 } else {

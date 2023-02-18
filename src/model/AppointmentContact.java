@@ -14,7 +14,6 @@ public class AppointmentContact {
     private String title;
     private String description;
     private String location;
-    private String contactName;
     private String type;
     private ZonedDateTime start;
     private ZonedDateTime end;
@@ -25,6 +24,7 @@ public class AppointmentContact {
     private int customerId;
     private int userId;
     private int contactId;
+    private String contactName;
     private ZonedDateTime localStart;
     private ZonedDateTime localEnd;
     private int typeCount;
@@ -37,9 +37,9 @@ public class AppointmentContact {
     public AppointmentContact() {
     }
 
-    public AppointmentContact(String type){
-        this.type = type;
-    }
+
+
+
 
     /**
      * Constructor with all variables for appointment object.
@@ -77,6 +77,9 @@ public class AppointmentContact {
         localStart = start.toInstant().atZone(ZoneId.systemDefault());
         localEnd = end.toInstant().atZone(ZoneId.systemDefault());
 
+    }
+    public AppointmentContact(String type){
+        this.type = type;
     }
 
     /**

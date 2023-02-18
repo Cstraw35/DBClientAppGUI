@@ -3,6 +3,7 @@ package controller;
 import DAO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
@@ -24,10 +26,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -410,6 +409,90 @@ public class mainform_controller implements Initializable {
         setupAppointmentTable();
     }
 
+    @FXML
+    private TextField searchField;
+
+    /**
+     * Uses predicate and filtered list to search all columns except for dates.
+     * @param event
+     * @throws Exception
+     */
+    @FXML
+    void searchingBox(KeyEvent event) throws Exception {
+        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments, appointment -> true);
+        filteredAppointments.setPredicate(appointment -> {
+            if (searchField.getText() == null || searchField.getText().isEmpty()) {
+                return true;
+            }
+
+            String bringToLowerCase = searchField.getText().toLowerCase();
+            if (appointment.getContactName().toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            } else if (appointment.getTitle().toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            } else if (appointment.getDescription().toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+
+            } else if (appointment.getType().toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            } else if (appointment.getLocation().toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            }
+            else if (String.valueOf(appointment.getAppointmentId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            }
+            else if (String.valueOf(appointment.getUserId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            }
+            else if (String.valueOf(appointment.getCustomerId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
+                return true;
+            }
+
+            else {
+                return false;
+            }
+        });
+        appIdClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionClm.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationClm.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactClm.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+       typeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
+       startDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localStart"));
+      endDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localEnd"));
+      customerIdClm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+      userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
+      appointmentTbl.setItems(filteredAppointments);
+
+    }
+
+    @FXML
+    private Button addUserBtn;
+
+    /**
+     * Goes to the add user form. Only available if login is admin.
+     * @param event
+     */
+    @FXML
+    void addUser(ActionEvent event) throws IOException {
+        if(mainFormUserlbl.getText().equals("admin")){
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/user_form.fxml"));
+            root = loader.load();
+            scene = new Scene(root);
+            userform_controller userController = loader.getController();
+            userController.getUser(mainFormUserlbl.getText());
+            stage.setScene(scene);
+            stage.show();
+
+        }
+        else{
+            Alerts.errorAlert("Not permitted", "Only the Admin account may edit users.");
+        }
+
+    }
+
 
     /**
      * Button to go to the add customer form.
@@ -514,6 +597,7 @@ public class mainform_controller implements Initializable {
 
     }
 
+
     /**
      * Sets up the combo boxes and calls the setup table function.
      *
@@ -555,7 +639,6 @@ public class mainform_controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
