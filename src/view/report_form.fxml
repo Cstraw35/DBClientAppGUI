@@ -3,63 +3,91 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="883.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report_controller">
-   <children>
-      <ComboBox fx:id="contactSelectCB" layoutX="9.0" layoutY="389.0" onAction="#contactSelectedCBAction" prefWidth="150.0" promptText="Select a Contact" />
-      <Label layoutX="599.0" layoutY="22.0" prefHeight="18.0" prefWidth="38.0" text="User:" />
-      <Label fx:id="reportFormUserLbl" layoutX="637.0" layoutY="22.0" prefHeight="18.0" prefWidth="75.0" text="userName" />
-      <TableView fx:id="totalAppointmentsTableType" layoutX="14.0" layoutY="105.0" prefHeight="192.0" prefWidth="319.0">
-        <columns>
-          <TableColumn fx:id="totalTypeClm" prefWidth="158.19997882843018" text="Type" />
-            <TableColumn fx:id="totalAppointmentsTypeClm" prefWidth="161.00001525878906" text="Total" />
-        </columns>
-      </TableView>
-      <Label layoutX="14.0" layoutY="61.0" prefHeight="35.0" prefWidth="247.0" text="Total Appointments">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <TableView fx:id="totalAppointmentsTableMonth" layoutX="356.0" layoutY="105.0" prefHeight="192.0" prefWidth="319.0">
-         <columns>
-            <TableColumn fx:id="totalMonthClm" prefWidth="158.19997882843018" text="Month" />
-            <TableColumn fx:id="totalAppointmentsClm" prefWidth="161.00001525878906" text="Total" />
-         </columns>
-      </TableView>
-      <Label layoutX="14.0" layoutY="326.0" prefHeight="35.0" prefWidth="140.0" text="Schedule">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="361.0" text="Select Contact:" />
-      <TableView fx:id="contactScheduleTbl" layoutX="9.0" layoutY="422.0" prefHeight="192.0" prefWidth="725.0">
-         <columns>
-            <TableColumn fx:id="appoinmentIDClm" prefWidth="109.59997844696045" text="Appointment ID" />
-            <TableColumn fx:id="appointmentTitleClm" prefWidth="87.9998779296875" text="Title" />
-            <TableColumn fx:id="appointmentTypeClm" prefWidth="85.59996032714844" text="Type" />
-            <TableColumn fx:id="appointmentDescriptionClm" prefWidth="116.0" text="Description" />
-            <TableColumn fx:id="appointmentStartClm" prefWidth="112.0001220703125" text="Start" />
-            <TableColumn fx:id="appointmentEndClm" prefWidth="113.599853515625" text="End" />
-            <TableColumn fx:id="customerIDClm" prefWidth="102.40010986328127" text="Customer ID" />
-         </columns>
-      </TableView>
-      <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="326.0" text="Appointments per customer">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <TableView fx:id="customerAppTbl" layoutX="9.0" layoutY="671.0" prefHeight="192.0" prefWidth="482.0">
-         <columns>
-            <TableColumn fx:id="appcustomerIDclm" prefWidth="158.19997882843018" text="Customer ID" />
-            <TableColumn fx:id="numberofappointmentsClm" prefWidth="323.1999877929687" text="Number of appointments" />
-         </columns>
-      </TableView>
-      <Button layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="26.0" prefWidth="103.0" text="Back" />
-      <Slider orientation="VERTICAL" />
-   </children>
-</AnchorPane>
+
+<TitledPane collapsible="false" text="Engineering Specialists" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report_controller">
+   <content>
+      <AnchorPane prefHeight="883.0" prefWidth="954.0" style="-fx-background-color: lightblue;">
+         <children>
+            <ComboBox fx:id="contactSelectCB" layoutX="9.0" layoutY="389.0" onAction="#contactSelectedCBAction" prefWidth="150.0" promptText="Select a Contact" />
+            <Label layoutX="658.0" layoutY="23.0" prefHeight="18.0" prefWidth="38.0" text="User:">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="reportFormUserLbl" layoutX="697.0" layoutY="23.0" prefHeight="18.0" prefWidth="75.0" text="userName">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="totalAppointmentsTableType" layoutX="12.0" layoutY="87.0" prefHeight="192.0" prefWidth="319.0">
+              <columns>
+                <TableColumn fx:id="totalTypeClm" prefWidth="158.19997882843018" text="Type" />
+                  <TableColumn fx:id="totalAppointmentsTypeClm" prefWidth="161.00001525878906" text="Total" />
+              </columns>
+            </TableView>
+            <Label layoutX="9.0" layoutY="52.0" prefHeight="35.0" prefWidth="247.0" text="Total Appointments">
+               <font>
+                  <Font name="Centaur" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="totalAppointmentsTableMonth" layoutX="343.0" layoutY="87.0" prefHeight="192.0" prefWidth="319.0">
+               <columns>
+                  <TableColumn fx:id="totalMonthClm" prefWidth="158.19997882843018" text="Month" />
+                  <TableColumn fx:id="totalAppointmentsClm" prefWidth="161.00001525878906" text="Total" />
+               </columns>
+            </TableView>
+            <Label layoutX="14.0" layoutY="326.0" prefHeight="35.0" prefWidth="140.0" text="Schedule">
+               <font>
+                  <Font name="Centaur" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="371.0" text="Select Contact:">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="contactScheduleTbl" layoutX="9.0" layoutY="422.0" prefHeight="192.0" prefWidth="725.0">
+               <columns>
+                  <TableColumn fx:id="appoinmentIDClm" prefWidth="109.59997844696045" text="Appointment ID" />
+                  <TableColumn fx:id="appointmentTitleClm" prefWidth="87.9998779296875" text="Title" />
+                  <TableColumn fx:id="appointmentTypeClm" prefWidth="85.59996032714844" text="Type" />
+                  <TableColumn fx:id="appointmentDescriptionClm" prefWidth="116.0" text="Description" />
+                  <TableColumn fx:id="appointmentStartClm" prefWidth="112.0001220703125" text="Start" />
+                  <TableColumn fx:id="appointmentEndClm" prefWidth="113.599853515625" text="End" />
+                  <TableColumn fx:id="customerIDClm" prefWidth="102.40010986328127" text="Customer ID" />
+               </columns>
+            </TableView>
+            <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="326.0" text="Appointments per customer">
+               <font>
+                  <Font name="Centaur" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="customerAppTbl" layoutX="9.0" layoutY="671.0" prefHeight="192.0" prefWidth="482.0">
+               <columns>
+                  <TableColumn fx:id="appcustomerIDclm" prefWidth="158.19997882843018" text="Customer ID" />
+                  <TableColumn fx:id="numberofappointmentsClm" prefWidth="323.1999877929687" text="Number of appointments" />
+               </columns>
+            </TableView>
+            <Button layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="26.0" prefWidth="103.0" text="Go Back" underline="true">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="382.0" layoutY="8.0" prefHeight="18.0" prefWidth="217.0" text="Reports">
+               <font>
+                  <Font name="Centaur" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+   <font>
+      <Font name="Centaur" size="15.0" />
+   </font>
+</TitledPane>

@@ -47,3 +47,11 @@ User: test  Date and Time: 2023-02-19T17:30:33.035651500Z  Login attempt result:
 User: admin  Date and Time: 2023-02-19T17:34:05.514734400Z  Login attempt result: fail
 User: admin  Date and Time: 2023-02-19T17:34:11.390393200Z  Login attempt result: Pass
 User: test  Date and Time: 2023-02-19T17:41:05.576935100Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T18:32:57.580444800Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T18:33:32.451963100Z  Login attempt result: Pass
+User: admin  Date and Time: 2023-02-19T19:07:03.414206400Z  Login attempt result: Pass
+User: admin  Date and Time: 2023-02-19T19:14:29.681187300Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T19:44:07.833812800Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T19:44:28.575736300Z  Login attempt result: Pass
+User: admin  Date and Time: 2023-02-19T19:47:30.937275300Z  Login attempt result: Pass
+User: dakota  Date and Time: 2023-02-19T19:47:59.282624700Z  Login attempt result: Pass
