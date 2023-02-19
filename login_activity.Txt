@@ -43,3 +43,7 @@ User: test  Date and Time: 2023-02-18T01:40:58.220177300Z  Login attempt result:
 User: test  Date and Time: 2023-02-18T01:47:50.095414400Z  Login attempt result: Pass
 User: test  Date and Time: 2023-02-18T01:48:34.388836600Z  Login attempt result: Pass
 User: test  Date and Time: 2023-02-18T01:55:56.927122300Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T17:30:33.035651500Z  Login attempt result: Pass
+User: admin  Date and Time: 2023-02-19T17:34:05.514734400Z  Login attempt result: fail
+User: admin  Date and Time: 2023-02-19T17:34:11.390393200Z  Login attempt result: Pass
+User: test  Date and Time: 2023-02-19T17:41:05.576935100Z  Login attempt result: Pass

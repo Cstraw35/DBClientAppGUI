@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * DAO implementation for first level divisions.
  */
 public class FirstLevelDivisionDAOimp {
-    public static FirstLevelDivision getDivision(String inpDivision) throws SQLException, Exception {
+    public static FirstLevelDivision getDivision(String inpDivision) throws Exception {
         DBConnection.openConnection();
         String sqlStatement = "select * from first_level_divisions WHERE Division = '" + inpDivision + "'";
         Query.makeQuery(sqlStatement);
@@ -56,6 +56,7 @@ public class FirstLevelDivisionDAOimp {
 
     /**
      * Get first level division by country id.
+     *
      * @param inpCountryId
      * @return
      * @throws SQLException

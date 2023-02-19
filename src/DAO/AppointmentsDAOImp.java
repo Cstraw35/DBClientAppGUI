@@ -3,18 +3,12 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
-import model.AppointmentContact;
-import model.Customer;
-import utilities.Alerts;
+import model.AppointmentReporting;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
-import static utilities.TimeConv.stringToDate;
 import static utilities.TimeConv.stringToZoneDate;
 
 /**
@@ -71,15 +65,15 @@ public class AppointmentsDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static AppointmentContact getAppointmentWithContact(int AppointmentId) throws SQLException, Exception {
-        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
+    public static AppointmentReporting getAppointmentWithContact(int AppointmentId) throws SQLException, Exception {
+        ObservableList<AppointmentReporting> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "SELECT  * " +
                 "From appointments a \n" +
                 "join contacts c on c.Contact_ID = a.Contact_ID Where Appointment_ID = '" + AppointmentId + "'";
         Query.makeQuery(sqlStatement);
         ResultSet result = Query.getResults();
-        AppointmentContact appointmentResult;
+        AppointmentReporting appointmentResult;
         while (result.next()) {
             int appointmentId = result.getInt("Appointment_ID");
             String title = result.getString("Title");
@@ -100,7 +94,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            appointmentResult = new AppointmentContact(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
+            appointmentResult = new AppointmentReporting(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             return appointmentResult;
         }
@@ -114,8 +108,8 @@ public class AppointmentsDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static ObservableList<AppointmentContact> getAppointmentMonths() throws SQLException, Exception {
-        ObservableList<AppointmentContact> appointmentMonths = FXCollections.observableArrayList();
+    public static ObservableList<AppointmentReporting> getAppointmentMonths() throws SQLException, Exception {
+        ObservableList<AppointmentReporting> appointmentMonths = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "select Distinct month(start) from appointments";
         Query.makeQuery(sqlStatement);
@@ -123,7 +117,7 @@ public class AppointmentsDAOImp {
         while (result.next()) {
 
             String month = result.getString("month(start)");
-            AppointmentContact monthResult = new AppointmentContact(month);
+            AppointmentReporting monthResult = new AppointmentReporting(month);
 
             appointmentMonths.add(monthResult);
         }
@@ -138,8 +132,8 @@ public class AppointmentsDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static ObservableList<AppointmentContact> getAppointmentTypes() throws SQLException, Exception {
-        ObservableList<AppointmentContact> appointmentTypes = FXCollections.observableArrayList();
+    public static ObservableList<AppointmentReporting> getAppointmentTypes() throws SQLException, Exception {
+        ObservableList<AppointmentReporting> appointmentTypes = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "select Distinct Type from appointments";
         Query.makeQuery(sqlStatement);
@@ -147,7 +141,7 @@ public class AppointmentsDAOImp {
         while (result.next()) {
 
             String type = result.getString("Type");
-            AppointmentContact typeResult = new AppointmentContact(type);
+            AppointmentReporting typeResult = new AppointmentReporting(type);
 
             appointmentTypes.add(typeResult);
         }
@@ -202,8 +196,8 @@ public class AppointmentsDAOImp {
      * @throws SQLException
      * @throws Exception
      */
-    public static ObservableList<AppointmentContact> getAllAppointmentsWithContact() throws SQLException, Exception {
-        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<AppointmentReporting> getAllAppointmentsWithContact() throws SQLException, Exception {
+        ObservableList<AppointmentReporting> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "SELECT  * " +
                 "From appointments a \n" +
@@ -230,7 +224,7 @@ public class AppointmentsDAOImp {
             ZonedDateTime endFormatted = stringToZoneDate(end);
             ZonedDateTime createDateFormatted = stringToZoneDate(createDate);
             ZonedDateTime lastUpdateFormatted = stringToZoneDate(lastUpdate);
-            AppointmentContact appointmentResult = new AppointmentContact(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
+            AppointmentReporting appointmentResult = new AppointmentReporting(appointmentId, title, description, location, contactName, type, startFormatted, endFormatted,
                     createDateFormatted, createdBy, lastUpdateFormatted, lastUpdatedBy, customerID, userID, contactID);
             allAppointments.add(appointmentResult);
         }
@@ -238,7 +232,7 @@ public class AppointmentsDAOImp {
         return allAppointments;
     }
 
-    public static ObservableList<Appointment> getCustomerAppointments(int customerId) throws SQLException, Exception {
+    public static ObservableList<Appointment> getCustomerAppointments(int customerId) throws Exception {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "select * from appointments Where Customer_ID = '" + customerId + "'";
@@ -293,7 +287,7 @@ public class AppointmentsDAOImp {
 
     public static void updateAppointment(int appointmentId, String title, String description, String location,
                                          String type, String start, String end, String createDate, String createdBy,
-                                         String lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) throws SQLException, Exception {
+                                         String lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) throws Exception {
         DBConnection.openConnection();
 
 
@@ -317,7 +311,7 @@ public class AppointmentsDAOImp {
      *
      * @param appointmentId
      */
-    public static void deleteAppointment(int appointmentId) throws SQLException, Exception {
+    public static void deleteAppointment(int appointmentId) throws Exception {
 
         DBConnection.openConnection();
         String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = '" + appointmentId + "'";

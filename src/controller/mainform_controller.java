@@ -17,13 +17,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
 import utilities.Alerts;
-import utilities.FormatChecks;
 import utilities.TimeConv;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -43,7 +40,7 @@ public class mainform_controller implements Initializable {
     @FXML
     private TableColumn<?, ?> appIdClm;
     @FXML
-    private TableView<AppointmentContact> appointmentTbl;
+    private TableView<AppointmentReporting> appointmentTbl;
     @FXML
     private ComboBox<String> contactCB;
     @FXML
@@ -57,7 +54,7 @@ public class mainform_controller implements Initializable {
     @FXML
     private TextField descriptionTxt;
     @FXML
-    private TableColumn<AppointmentContact, LocalDateTime> endDateClm;
+    private TableColumn<AppointmentReporting, LocalDateTime> endDateClm;
     @FXML
     private DatePicker endDatePicker;
     @FXML
@@ -83,7 +80,7 @@ public class mainform_controller implements Initializable {
     @FXML
     private RadioButton mainFormWeekRb;
     @FXML
-    private TableColumn<AppointmentContact, LocalDateTime> startDateClm;
+    private TableColumn<AppointmentReporting, LocalDateTime> startDateClm;
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -96,6 +93,10 @@ public class mainform_controller implements Initializable {
     private TableColumn<?, ?> typeClm;
     @FXML
     private TableColumn<?, ?> userIdClm;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button addUserBtn;
 
     /**
      * Uses lambda expression for timeCheck to both simplify the code and make the intention of the logic more clear to
@@ -105,26 +106,21 @@ public class mainform_controller implements Initializable {
      * @throws Exception
      */
     public static void appointmentSoonCheck() throws Exception {
-        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        ObservableList<AppointmentReporting> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
         String appointmentsString = "";
         for (int i = 0; i < allAppointments.size(); i++) {
             LocalDateTime localTime = ZonedDateTime.now().toLocalDateTime();
             LocalDateTime appointmentTime = allAppointments.get(i).getLocalStart().toLocalDateTime();
-            System.out.println(appointmentTime + "  " + localTime);
             Long timeDelta = ChronoUnit.MINUTES.between(appointmentTime, localTime);
             Long interval = (timeDelta) * -1;
             /**
              * Lambdas expression to check time.
              */
             Predicate<Long> timeCheck = check -> (check <= 15 && check >= 0);
-                if (timeCheck.test(interval)) {
-                System.out.println("found interval");
+            if (timeCheck.test(interval)) {
                 appointmentsString = ("  Appointment ID: " + allAppointments.get(i).getAppointmentId()
                         + " Time  " + allAppointments.get(i).getLocalStart().toString());
-                System.out.println(appointmentsString);
-
             }
-            System.out.println(interval);
 
         }
         if (appointmentsString.equals("")) {
@@ -137,6 +133,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Get user from login.
+     *
      * @param userName
      */
     public void getUser(String userName) {
@@ -246,7 +243,7 @@ public class mainform_controller implements Initializable {
                     Alerts.errorAlert("Conflicting appointment", "Time conflicts with other appointments. Please choose a different time.");
                 } else {
                     System.out.println("Updating appointment");
-                    AppointmentContact checkAppointment = AppointmentsDAOImp.getAppointmentWithContact(Integer.parseInt(appointmentId));
+                    AppointmentReporting checkAppointment = AppointmentsDAOImp.getAppointmentWithContact(Integer.parseInt(appointmentId));
                     ZonedDateTime createDate = checkAppointment.getCreateDate();
                     String createdBy = checkAppointment.getCreatedBy();
                     ZonedDateTime lastUpdate = ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC);
@@ -280,6 +277,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Delete appointment
+     *
      * @param event
      * @throws Exception
      */
@@ -298,7 +296,6 @@ public class mainform_controller implements Initializable {
 
     }
 
-
     @FXML
     void contactComboBoxClicked(ActionEvent event) {
 
@@ -313,7 +310,6 @@ public class mainform_controller implements Initializable {
     void endDatePickerClicked(ActionEvent event) {
 
     }
-
 
     @FXML
     void endTimeHourClicked(ActionEvent event) {
@@ -333,9 +329,8 @@ public class mainform_controller implements Initializable {
      */
     @FXML
     void rowSelection(MouseEvent event) throws Exception {
-        AppointmentContact selectedAppointment = appointmentTbl.getSelectionModel().getSelectedItem();
+        AppointmentReporting selectedAppointment = appointmentTbl.getSelectionModel().getSelectedItem();
         int appointmentID = selectedAppointment.getAppointmentId();
-        System.out.println(appointmentID);
         ZonedDateTime start = selectedAppointment.getLocalStart();
         ZonedDateTime end = selectedAppointment.getLocalEnd();
         Contact contact = ContactDAOImp.getContact(selectedAppointment.getContactId());
@@ -390,6 +385,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Setup table with month button clicked.
+     *
      * @param event
      */
     @FXML
@@ -401,6 +397,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Setup table with week button clicked.
+     *
      * @param event
      */
     @FXML
@@ -409,18 +406,16 @@ public class mainform_controller implements Initializable {
         setupAppointmentTable();
     }
 
-    @FXML
-    private TextField searchField;
-
     /**
      * Uses predicate and filtered list to search all columns except for dates.
+     *
      * @param event
      * @throws Exception
      */
     @FXML
     void searchingBox(KeyEvent event) throws Exception {
-        ObservableList<AppointmentContact> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
-        FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments);
+        ObservableList<AppointmentReporting> allAppointments = AppointmentsDAOImp.getAllAppointmentsWithContact();
+        FilteredList<AppointmentReporting> filteredAppointments = new FilteredList<>(allAppointments);
         filteredAppointments.setPredicate(appointment -> {
             if (searchField.getText() == null || searchField.getText().isEmpty()) {
                 return true;
@@ -437,44 +432,34 @@ public class mainform_controller implements Initializable {
                 return true;
             } else if (appointment.getLocation().toLowerCase().indexOf(bringToLowerCase) != -1) {
                 return true;
-            }
-            else if (String.valueOf(appointment.getAppointmentId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
+            } else if (String.valueOf(appointment.getAppointmentId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
                 return true;
-            }
-            else if (String.valueOf(appointment.getUserId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
+            } else if (String.valueOf(appointment.getUserId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
                 return true;
-            }
-            else if (String.valueOf(appointment.getCustomerId()).toLowerCase().indexOf(bringToLowerCase) != -1) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            } else return String.valueOf(appointment.getCustomerId()).toLowerCase().indexOf(bringToLowerCase) != -1;
         });
         appIdClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionClm.setCellValueFactory(new PropertyValueFactory<>("description"));
         locationClm.setCellValueFactory(new PropertyValueFactory<>("location"));
         contactClm.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-       typeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
-       startDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localStart"));
-      endDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localEnd"));
-      customerIdClm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-      userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
-      appointmentTbl.setItems(filteredAppointments);
+        typeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localStart"));
+        endDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localEnd"));
+        customerIdClm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        appointmentTbl.setItems(filteredAppointments);
 
     }
 
-    @FXML
-    private Button addUserBtn;
-
     /**
      * Goes to the add user form. Only available if login is admin.
+     *
      * @param event
      */
     @FXML
     void addUser(ActionEvent event) throws IOException {
-        if(mainFormUserlbl.getText().equals("admin")){
+        if (mainFormUserlbl.getText().equals("admin")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/user_form.fxml"));
             root = loader.load();
@@ -484,8 +469,7 @@ public class mainform_controller implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-        }
-        else{
+        } else {
             Alerts.errorAlert("Not permitted", "Only the Admin account may edit users.");
         }
 
@@ -532,25 +516,24 @@ public class mainform_controller implements Initializable {
      * Sets up the appointment table with filters and display in local date time.
      */
     public void setupAppointmentTable() {
-        ObservableList<AppointmentContact> appointments = FXCollections.observableArrayList();
-        ObservableList<AppointmentContact> appointmentsFiltered = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> appointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> appointmentsFiltered = FXCollections.observableArrayList();
 
-        AppointmentContact appointment = new AppointmentContact();
+        AppointmentReporting appointment = new AppointmentReporting();
         appIdClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionClm.setCellValueFactory(new PropertyValueFactory<>("description"));
         locationClm.setCellValueFactory(new PropertyValueFactory<>("location"));
         contactClm.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         typeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localStart"));
-        endDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localEnd"));
+        startDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localStart"));
+        endDateClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localEnd"));
         customerIdClm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIdClm.setCellValueFactory(new PropertyValueFactory<>("userId"));
         try {
             appointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
             if (mainFormWeekRb.isArmed()) {
                 appointmentsFiltered.clear();
-                System.out.println("Running");
                 for (int i = 0; i < appointments.size(); i++) {
                     Calendar checkCalendar = TimeConv.ldtToCalendar(appointments.get(i).getLocalStart());
                     Calendar currentCalendar = Calendar.getInstance();
@@ -579,6 +562,7 @@ public class mainform_controller implements Initializable {
 
     /**
      * Open reports form
+     *
      * @param event
      * @throws IOException
      */

@@ -1,13 +1,10 @@
 package ClientApplication;
 
-import DAO.AppointmentsDAOImp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Appointment;
-import model.AppointmentContact;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

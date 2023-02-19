@@ -19,6 +19,7 @@ import static utilities.TimeConv.stringToDate;
 public class UserDAOImp {
     /**
      * Gets user from DB.
+     *
      * @param userName
      * @return
      * @throws SQLException
@@ -47,7 +48,7 @@ public class UserDAOImp {
         return null;
     }
 
-    public static ObservableList<User> getAllUsers() throws SQLException, Exception {
+    public static ObservableList<User> getAllUsers() throws Exception {
         ObservableList<User> allUsers = FXCollections.observableArrayList();
         DBConnection.openConnection();
         String sqlStatement = "select * from users";
@@ -72,6 +73,7 @@ public class UserDAOImp {
 
     /**
      * Add a new user. (Only going to be allowed if admin is logged in.)
+     *
      * @param userName
      * @param password
      * @param createDate
@@ -82,8 +84,8 @@ public class UserDAOImp {
      * @throws Exception
      */
     public static void addUser(String userName, String password,
-                                   String createDate, String createdBy, String lastUpdate,
-                                   String lastUpdatedBy) throws SQLException, Exception {
+                               String createDate, String createdBy, String lastUpdate,
+                               String lastUpdatedBy) throws SQLException, Exception {
         DBConnection.openConnection();
         String sqlStatement = "INSERT INTO users (User_Name, Password, " +
                 "Create_Date, Created_By, Last_Update, Last_Updated_By) Values('" + userName + "', '" + password + "' , '" + createDate + "'" +
@@ -95,6 +97,7 @@ public class UserDAOImp {
 
     /**
      * Delete user by user ID.(Only allowed by Admin.)
+     *
      * @param userName
      */
     public static void deleteUser(String userName) {

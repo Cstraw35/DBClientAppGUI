@@ -14,7 +14,7 @@ public class Appointment {
     private String title;
     private String description;
     private String location;
-    private String type;
+    public  String type;
     private ZonedDateTime start;
     private ZonedDateTime end;
     private ZonedDateTime createDate;
@@ -24,8 +24,8 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
-    private LocalDateTime localStart;
-    private LocalDateTime localEnd;
+    private ZonedDateTime localStart;
+    private ZonedDateTime localEnd;
 
     /**
      * Constructor with no variables for appointment object.
@@ -65,10 +65,25 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        localStart = start.toLocalDateTime();
-        localEnd = end.toLocalDateTime();
+        localStart = start.toInstant().atZone(ZoneId.systemDefault());
+        localEnd = end.toInstant().atZone(ZoneId.systemDefault());
     }
 
+    public ZonedDateTime getLocalStart() {
+        return localStart;
+    }
+
+    public void setLocalStart(ZonedDateTime localStart) {
+        this.localStart = localStart;
+    }
+
+    public ZonedDateTime getLocalEnd() {
+        return localEnd;
+    }
+
+    public void setLocalEnd(ZonedDateTime localEnd) {
+        this.localEnd = localEnd;
+    }
 
     /**
      * Gets create date.

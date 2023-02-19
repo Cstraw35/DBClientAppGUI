@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.AppointmentContact;
+import model.AppointmentReporting;
 import model.Contact;
 import model.Customer;
 
@@ -32,73 +32,57 @@ public class report_controller implements Initializable {
     Stage stage;
     Scene scene;
     Parent root;
+    @FXML
+    private TableColumn<?, ?> appcustomerIDclm;
+    @FXML
+    private TableColumn<?, ?> numberofappointmentsClm;
+    @FXML
+    private TableView<Customer> customerAppTbl;
+    @FXML
+    private TableColumn<?, ?> appoinmentIDClm;
+    @FXML
+    private TableColumn<?, ?> appointmentDescriptionClm;
+    @FXML
+    private TableColumn<AppointmentReporting, LocalDateTime> appointmentEndClm;
+    @FXML
+    private TableColumn<AppointmentReporting, LocalDateTime> appointmentStartClm;
+    @FXML
+    private TableColumn<?, ?> appointmentTitleClm;
+    @FXML
+    private TableColumn<?, ?> appointmentTypeClm;
+    @FXML
+    private TableView<AppointmentReporting> contactScheduleTbl;
+    @FXML
+    private ComboBox<String> contactSelectCB;
+    @FXML
+    private TableColumn<?, ?> customerIDClm;
+    @FXML
+    private Label reportFormUserLbl;
+    @FXML
+    private TableColumn<AppointmentReporting, ?> totalAppointmentsClm;
+    @FXML
+    private TableView<AppointmentReporting> totalAppointmentsTableMonth;
+    @FXML
+    private TableView<AppointmentReporting> totalAppointmentsTableType;
+    @FXML
+    private TableColumn<?, ?> totalAppointmentsTypeClm;
+    @FXML
+    private TableColumn<AppointmentReporting, Month> totalMonthClm;
+    @FXML
+    private TableColumn<AppointmentReporting, String> totalTypeClm;
+
     /**
      * Get user from main form.
+     *
      * @param userName
      */
     public void getUser(String userName) {
         reportFormUserLbl.setText(userName);
     }
 
-    @FXML
-    private TableColumn<?, ?> appcustomerIDclm;
-
-    @FXML
-    private TableColumn<?, ?> numberofappointmentsClm;
-
-    @FXML
-    private TableView<Customer> customerAppTbl;
-
-    @FXML
-    private TableColumn<?, ?> appoinmentIDClm;
-
-    @FXML
-    private TableColumn<?, ?> appointmentDescriptionClm;
-
-    @FXML
-    private TableColumn<AppointmentContact, LocalDateTime> appointmentEndClm;
-
-    @FXML
-    private TableColumn<AppointmentContact, LocalDateTime> appointmentStartClm;
-
-    @FXML
-    private TableColumn<?, ?> appointmentTitleClm;
-
-    @FXML
-    private TableColumn<?, ?> appointmentTypeClm;
-
-    @FXML
-    private TableView<AppointmentContact> contactScheduleTbl;
-
-    @FXML
-    private ComboBox<String> contactSelectCB;
-
-    @FXML
-    private TableColumn<?, ?> customerIDClm;
-
-    @FXML
-    private Label reportFormUserLbl;
-
-    @FXML
-    private TableColumn<AppointmentContact, ?> totalAppointmentsClm;
-
-    @FXML
-    private TableView<AppointmentContact> totalAppointmentsTableMonth;
-
-    @FXML
-    private TableView<AppointmentContact> totalAppointmentsTableType;
-
-    @FXML
-    private TableColumn<?, ?> totalAppointmentsTypeClm;
-
-    @FXML
-    private TableColumn<AppointmentContact, Month> totalMonthClm;
-
-    @FXML
-    private TableColumn<AppointmentContact, String> totalTypeClm;
-
     /**
      * Goes back to main form.
+     *
      * @param event
      */
     @FXML
@@ -117,30 +101,31 @@ public class report_controller implements Initializable {
     /**
      * Uses lambda expression to filter by contact. Used a lambda expression here because otherwise I would have
      * had to use a for loop for a very simple filter. The lambda expression gets the job done faster with less code.
+     *
      * @param event
      * @throws Exception
      */
     @FXML
     void contactSelectedCBAction(ActionEvent event) throws Exception {
         System.out.println("Selected");
-        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
-        ObservableList<AppointmentContact> contactAppointments = FXCollections.observableArrayList();
-        FilteredList<AppointmentContact> filteredAppointments = new FilteredList<>(allAppointments);
+        ObservableList<AppointmentReporting> allAppointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> contactAppointments = FXCollections.observableArrayList();
+        FilteredList<AppointmentReporting> filteredAppointments = new FilteredList<>(allAppointments);
         allAppointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
         /**
          * Lambdas expression to filter appointments by contact.
          */
         filteredAppointments.setPredicate(appointment -> {
-                String contactName = appointment.getContactName();
-                return contactName.equals(contactSelectCB.getValue());
+            String contactName = appointment.getContactName();
+            return contactName.equals(contactSelectCB.getValue());
         });
 
         appoinmentIDClm.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitleClm.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionClm.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentTypeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
-        appointmentStartClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localStart"));
-        appointmentEndClm.setCellValueFactory(new PropertyValueFactory<AppointmentContact, LocalDateTime>("localEnd"));
+        appointmentStartClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localStart"));
+        appointmentEndClm.setCellValueFactory(new PropertyValueFactory<AppointmentReporting, LocalDateTime>("localEnd"));
         customerIDClm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         contactScheduleTbl.setItems(filteredAppointments);
@@ -150,12 +135,13 @@ public class report_controller implements Initializable {
 
     /**
      * Gets unique months to avoid duplicates in month report.
+     *
      * @param allAppointments
      * @return
      */
-    public Set<Month> getUniqueMonths(ObservableList<AppointmentContact> allAppointments) {
+    public Set<Month> getUniqueMonths(ObservableList<AppointmentReporting> allAppointments) {
         List<Month> months = new ArrayList<>();
-        for(int i = 0; i < allAppointments.size(); ++i){
+        for (int i = 0; i < allAppointments.size(); ++i) {
             months.add(allAppointments.get(i).getMonth());
         }
         Set<Month> monthsHash = new HashSet<Month>(months);
@@ -166,31 +152,31 @@ public class report_controller implements Initializable {
 
     /**
      * Initialize report tables.
+     *
      * @param url
      * @param rb
      */
     public void initialize(URL url, ResourceBundle rb) {
         //Setup Tables
-        ObservableList<AppointmentContact> typeAppointments = FXCollections.observableArrayList();
-        ObservableList<AppointmentContact> allAppointments = FXCollections.observableArrayList();
-        ObservableList<AppointmentContact> monthAppointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> typeAppointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> allAppointments = FXCollections.observableArrayList();
+        ObservableList<AppointmentReporting> monthAppointments = FXCollections.observableArrayList();
 
 
         //Type Table
         totalTypeClm.setCellValueFactory(new PropertyValueFactory<>("type"));
         totalAppointmentsTypeClm.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
-            try {
-                allAppointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                typeAppointments = AppointmentsDAOImp.getAppointmentTypes();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            totalAppointmentsTableType.setItems(typeAppointments);
+        try {
+            allAppointments.addAll(AppointmentsDAOImp.getAllAppointmentsWithContact());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            typeAppointments = AppointmentsDAOImp.getAppointmentTypes();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        totalAppointmentsTableType.setItems(typeAppointments);
 
         //Month Table
         Set<Month> months = new HashSet<>(getUniqueMonths(allAppointments));
@@ -199,11 +185,11 @@ public class report_controller implements Initializable {
         totalAppointmentsClm.setCellValueFactory(new PropertyValueFactory<>("monthCount"));
         try {
             Boolean added = false;
-            for(int j = 0; j < monthsList.size(); j++){
+            for (int j = 0; j < monthsList.size(); j++) {
                 added = false;
                 System.out.println(j);
-                for(int i = 0; i < allAppointments.size(); ++i){
-                    if(monthsList.get(j) == allAppointments.get(i).getMonth() && added == false){
+                for (int i = 0; i < allAppointments.size(); ++i) {
+                    if (monthsList.get(j) == allAppointments.get(i).getMonth() && added == false) {
                         monthAppointments.add(allAppointments.get(i));
                         added = true;
 
@@ -211,7 +197,6 @@ public class report_controller implements Initializable {
 
                 }
             }
-
 
 
         } catch (Exception e) {
@@ -241,7 +226,6 @@ public class report_controller implements Initializable {
         appcustomerIDclm.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         numberofappointmentsClm.setCellValueFactory(new PropertyValueFactory<>("appointmentCount"));
         customerAppTbl.setItems(allCustomers);
-
 
 
     }

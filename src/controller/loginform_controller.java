@@ -53,6 +53,7 @@ public class loginform_controller implements Initializable {
 
     /**
      * Login button action script to check login and load main form if successful.
+     *
      * @param event
      * @throws Exception
      */
@@ -65,19 +66,17 @@ public class loginform_controller implements Initializable {
         User user = UserDAOImp.getUser(username);
         if (username == "" || password == "") {
             LoginFile.userLoginAttempt("No userName", ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Fail");
-            if(Locale.getDefault().getLanguage().equals("fr")){
-                Alerts.errorAlert(RB.getString("Empty"),RB.getString("FillFields"));
-            }
-            else {
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                Alerts.errorAlert(RB.getString("Empty"), RB.getString("FillFields"));
+            } else {
                 Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
             }
-        }
-        else {
+        } else {
             try {
                 loginUser = user.getUserName();
                 if (user.getPassword().equals(password)) {
                     LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Pass");
-                    stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+                    stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
                     root = loader.load();
                     scene = new Scene(root);
@@ -85,14 +84,12 @@ public class loginform_controller implements Initializable {
                     mainFormController.getUser(loginUser);
                     stage.setScene(scene);
                     stage.show();
-                }
-                else{
+                } else {
                     LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
                     if (Locale.getDefault().getLanguage().equals("fr")) {
-                        Alerts.errorAlert(RB.getString("InvalidPassword"),RB.getString("WrongPassword"));
+                        Alerts.errorAlert(RB.getString("InvalidPassword"), RB.getString("WrongPassword"));
 
-                    }
-                    else {
+                    } else {
                         Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
                     }
                 }
@@ -111,6 +108,7 @@ public class loginform_controller implements Initializable {
 
     /**
      * Initialize labels based on locale.
+     *
      * @param url
      * @param rb
      */
