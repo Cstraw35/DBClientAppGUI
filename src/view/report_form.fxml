@@ -9,50 +9,49 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <TitledPane collapsible="false" text="Engineering Specialists" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report_controller">
    <content>
       <AnchorPane prefHeight="883.0" prefWidth="954.0" style="-fx-background-color: lightblue;">
          <children>
-            <ComboBox fx:id="contactSelectCB" layoutX="9.0" layoutY="389.0" onAction="#contactSelectedCBAction" prefWidth="150.0" promptText="Select a Contact" />
-            <Label layoutX="658.0" layoutY="23.0" prefHeight="18.0" prefWidth="38.0" text="User:">
+            <ComboBox fx:id="contactSelectCB" layoutX="9.0" layoutY="389.0" onAction="#contactSelectedCBAction" prefWidth="150.0" promptText="Select a Contact" AnchorPane.bottomAnchor="485.0" AnchorPane.leftAnchor="1.0" />
+            <Label layoutX="658.0" layoutY="23.0" prefHeight="18.0" prefWidth="38.0" text="User:" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="Centaur" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="reportFormUserLbl" layoutX="697.0" layoutY="23.0" prefHeight="18.0" prefWidth="75.0" text="userName">
+            <Label fx:id="reportFormUserLbl" layoutX="697.0" layoutY="23.0" prefHeight="18.0" prefWidth="75.0" text="userName" AnchorPane.rightAnchor="183.00000000000006" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="Centaur" size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="totalAppointmentsTableType" layoutX="12.0" layoutY="87.0" prefHeight="192.0" prefWidth="319.0">
+            <TableView fx:id="totalAppointmentsTableType" layoutX="37.0" layoutY="111.0" prefHeight="194.0" prefWidth="431.0" AnchorPane.bottomAnchor="596.0" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="99.0">
               <columns>
                 <TableColumn fx:id="totalTypeClm" prefWidth="158.19997882843018" text="Type" />
                   <TableColumn fx:id="totalAppointmentsTypeClm" prefWidth="161.00001525878906" text="Total" />
               </columns>
             </TableView>
-            <Label layoutX="9.0" layoutY="52.0" prefHeight="35.0" prefWidth="247.0" text="Total Appointments">
+            <Label layoutX="9.0" layoutY="52.0" prefHeight="35.0" prefWidth="247.0" text="Total Appointments" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="40.0">
                <font>
                   <Font name="Centaur" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="totalAppointmentsTableMonth" layoutX="343.0" layoutY="87.0" prefHeight="192.0" prefWidth="319.0">
+            <TableView fx:id="totalAppointmentsTableMonth" layoutX="525.0" layoutY="123.0" prefHeight="194.0" prefWidth="418.0" AnchorPane.bottomAnchor="596.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="99.0">
                <columns>
                   <TableColumn fx:id="totalMonthClm" prefWidth="158.19997882843018" text="Month" />
                   <TableColumn fx:id="totalAppointmentsClm" prefWidth="161.00001525878906" text="Total" />
                </columns>
             </TableView>
-            <Label layoutX="14.0" layoutY="326.0" prefHeight="35.0" prefWidth="140.0" text="Schedule">
+            <Label layoutX="13.0" layoutY="320.0" prefHeight="35.0" prefWidth="140.0" text="Schedule" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="1.0">
                <font>
                   <Font name="Centaur" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="12.0" layoutY="371.0" text="Select Contact:">
+            <Label layoutX="12.0" layoutY="371.0" text="Select Contact:" AnchorPane.bottomAnchor="515.0" AnchorPane.leftAnchor="1.0">
                <font>
                   <Font name="Centaur" size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="contactScheduleTbl" layoutX="9.0" layoutY="422.0" prefHeight="192.0" prefWidth="725.0">
+            <TableView fx:id="contactScheduleTbl" layoutX="9.0" layoutY="422.0" prefHeight="192.0" prefWidth="725.0" AnchorPane.bottomAnchor="282.79999999999995" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="216.60000000000002">
                <columns>
                   <TableColumn fx:id="appoinmentIDClm" prefWidth="109.59997844696045" text="Appointment ID" />
                   <TableColumn fx:id="appointmentTitleClm" prefWidth="87.9998779296875" text="Title" />
@@ -63,23 +62,23 @@
                   <TableColumn fx:id="customerIDClm" prefWidth="102.40010986328127" text="Customer ID" />
                </columns>
             </TableView>
-            <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="326.0" text="Appointments per customer">
+            <Label layoutX="9.0" layoutY="636.0" prefHeight="35.0" prefWidth="326.0" text="Appointments per customer" AnchorPane.bottomAnchor="236.59999999999997" AnchorPane.leftAnchor="1.0">
                <font>
                   <Font name="Centaur" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="customerAppTbl" layoutX="9.0" layoutY="671.0" prefHeight="192.0" prefWidth="482.0">
+            <TableView fx:id="customerAppTbl" layoutX="9.0" layoutY="671.0" prefHeight="192.0" prefWidth="482.0" AnchorPane.bottomAnchor="33.799999999999955" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="459.80000000000007">
                <columns>
                   <TableColumn fx:id="appcustomerIDclm" prefWidth="158.19997882843018" text="Customer ID" />
                   <TableColumn fx:id="numberofappointmentsClm" prefWidth="323.1999877929687" text="Number of appointments" />
                </columns>
             </TableView>
-            <Button layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="26.0" prefWidth="103.0" text="Go Back" underline="true">
+            <Button layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="26.0" prefWidth="103.0" text="Go Back" underline="true" AnchorPane.rightAnchor="59.00000000000004" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="Centaur" size="14.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" layoutX="382.0" layoutY="8.0" prefHeight="18.0" prefWidth="217.0" text="Reports">
+            <Label alignment="CENTER" layoutX="382.0" layoutY="8.0" prefHeight="18.0" prefWidth="217.0" text="Reports" AnchorPane.bottomAnchor="837.6" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="355.6" AnchorPane.topAnchor="8.0">
                <font>
                   <Font name="Centaur" size="24.0" />
                </font>

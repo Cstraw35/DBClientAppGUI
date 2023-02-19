@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.UserDAOImp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import utilities.Alerts;
 import utilities.LoginFile;
 
+import javax.swing.*;
 import java.net.URL;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -28,6 +32,7 @@ public class loginform_controller implements Initializable {
     Stage stage;
     Scene scene;
     Parent root;
+    ObservableList<Double> scale = FXCollections.observableArrayList();
 
     @FXML
     private Button loginBtn;
@@ -49,6 +54,9 @@ public class loginform_controller implements Initializable {
 
     @FXML
     private Text usernameLbl;
+
+
+
 
 
     /**
@@ -122,7 +130,13 @@ public class loginform_controller implements Initializable {
             usernameLbl.setText(RB.getString("Username"));
             loginBtn.setText(RB.getString("Login"));
         }
+        scale.addAll(.5, .75, 1.00, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0);
+
+
+
+
     }
+
 
 
 }
