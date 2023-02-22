@@ -23,10 +23,10 @@ public class Main extends Application {
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
         Parent root = FXMLLoader.load(getClass().getResource("../view/login_form.fxml"));
         if(Locale.getDefault().getLanguage().equals("fr")){
-            primaryStage.setTitle(RB.getString("Login"));
+            primaryStage.setTitle(RB.getString("Consulty App"));
         }
         else {
-            primaryStage.setTitle("Login");
+            primaryStage.setTitle("Consulty App");
         }
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
