@@ -40,11 +40,11 @@ public class userform_controller implements Initializable {
     @FXML
     private TableView<User> usersFormTable;
     @FXML
-    private TextField passwordTxt;
+    public TextField passwordTxt;
     @FXML
-    private Button userAddBtn;
+    public Button userAddBtn;
     @FXML
-    private Button userDeleteBtn;
+    public Button userDeleteBtn;
     @FXML
     private Label userFormUserLbl;
     @FXML
@@ -52,7 +52,7 @@ public class userform_controller implements Initializable {
     @FXML
     private TableColumn<?, ?> userName;
     @FXML
-    private TextField userNameTxt;
+    public TextField userNameTxt;
     @FXML
     private TableColumn<?, ?> userPassword;
 
@@ -66,13 +66,29 @@ public class userform_controller implements Initializable {
     }
 
     /**
+     * Checks if user already exists in system.
+     */
+    public boolean userCheck(String userName) throws Exception {
+        ObservableList<User> allUsers = UserDAOImp.getAllUsers();
+        Boolean nameCheck = false;
+        for (int i = 0; i < allUsers.size(); ++i) {
+            if (allUsers.get(i).getUserName().equals(userName)) {
+                nameCheck = true;
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
      * Add users to system.
      *
      * @param event
      * @throws Exception
      */
     @FXML
-    void addUpdateBtn(ActionEvent event) throws Exception {
+    public void addUpdateBtn(ActionEvent event) throws Exception {
         String userName = userNameTxt.getText();
         String password = passwordTxt.getText();
         Date lastUpdate = new Date();
@@ -84,12 +100,8 @@ public class userform_controller implements Initializable {
         if (userName == "" || password == "") {
             Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
         } else {
-            Boolean nameCheck = false;
-            for (int i = 0; i < allUsers.size(); ++i) {
-                if (allUsers.get(i).getUserName().equals(userName)) {
-                    nameCheck = true;
-                }
-            }
+            Boolean nameCheck = userCheck(userName);
+
             if (nameCheck) {
                 Alerts.errorAlert("Username invalid", "That username is already in use.");
             } else {

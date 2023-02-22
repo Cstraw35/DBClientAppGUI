@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TitledPane collapsible="false" text="Engineering Specialists" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report_controller">
+<TitledPane collapsible="false" text="Consulty" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report_controller">
    <content>
       <AnchorPane prefHeight="883.0" prefWidth="954.0" style="-fx-background-color: lightblue;">
          <children>
