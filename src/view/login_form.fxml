@@ -1,39 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.loginform_controller">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <AnchorPane prefHeight="465.0" prefWidth="651.0">
+<TitledPane fx:id="titlePane" alignment="TOP_LEFT" cache="true" cacheHint="SCALE" collapsible="false" contentDisplay="CENTER" snapToPixel="false" style="-fx-min-width: 100%;" text="Consulty" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.loginform_controller">
+  <content>
+    <AnchorPane fx:id="loginAnchor" layoutX="1.0" layoutY="1.0" snapToPixel="false" style="-fx-background-color: lightblue;">
          <children>
-            <Text fx:id="loginTitleLbl" layoutX="230.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="191.443359375">
+            <Text fx:id="loginTitleLbl" boundsType="LOGICAL_VERTICAL_CENTER" cache="true" cacheHint="SCALE" layoutX="104.0" layoutY="40.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="true" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="316.24336290359497" AnchorPane.bottomAnchor="373.6" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="142.95663709640507" AnchorPane.topAnchor="21.0">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Centaur" size="30.0" />
                </font>
             </Text>
-            <Text fx:id="usernameLbl" layoutX="179.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="148.79999999999995">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text fx:id="passwordLbl" layoutX="179.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="128.443359375">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <PasswordField fx:id="loginPasswordTxt" accessibleRole="TEXT_FIELD" layoutX="289.0" layoutY="175.0" />
-            <TextField fx:id="loginUserTxt" layoutX="289.0" layoutY="96.0" />
-            <Button fx:id="loginBtn" layoutX="386.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="26.0" prefWidth="84.0" text="Login" />
-            <Label fx:id="loginZoneLbl" layoutX="169.0" layoutY="264.0" prefHeight="24.0" prefWidth="122.0" text="Zone" />
+            <GridPane layoutX="80.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="11.199993896484386" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="118.80000000000001" AnchorPane.topAnchor="105.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.79995727539062" minWidth="10.0" prefWidth="161.3999755859375" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="316.6000793457032" minWidth="10.0" prefWidth="203.00002441406252" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                <RowConstraints maxHeight="192.1999725341797" minHeight="10.0" prefHeight="68.40000610351562" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="254.60000457763672" minHeight="10.0" prefHeight="79.99997558593749" vgrow="SOMETIMES" />
+                  <RowConstraints fillHeight="false" maxHeight="335.2" minHeight="10.0" prefHeight="173.6000244140625" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="loginZoneLbl" prefHeight="24.0" prefWidth="118.0" text="Zone" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Centaur" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="loginUserTxt" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Text fx:id="usernameLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="99.19999389648433" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Centaur" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Button fx:id="loginBtn" alignment="CENTER" mnemonicParsing="false" onAction="#loginBtnAction" prefHeight="28.0" prefWidth="150.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </Button>
+                  <PasswordField fx:id="loginPasswordTxt" accessibleRole="TEXT_FIELD" prefHeight="18.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Centaur" size="13.0" />
+                     </font>
+                  </PasswordField>
+                  <Text fx:id="passwordLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="98.84323120117188" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Centaur" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Text>
+               </children>
+            </GridPane>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </AnchorPane>
-   </children>
-</GridPane>
+  </content>
+   <font>
+      <Font name="Centaur" size="15.0" />
+   </font>
+   <effect>
+      <Blend />
+   </effect>
+</TitledPane>

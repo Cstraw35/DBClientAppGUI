@@ -1,13 +1,10 @@
 package ClientApplication;
 
-import DAO.AppointmentsDAOImp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Appointment;
-import model.AppointmentContact;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -22,6 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        double SCALE_FACTOR = 0.8;
         ResourceBundle RB = ResourceBundle.getBundle("Languages/ResourceBundle_RB", Locale.getDefault());
         Parent root = FXMLLoader.load(getClass().getResource("../view/login_form.fxml"));
         if(Locale.getDefault().getLanguage().equals("fr")){
@@ -30,7 +28,7 @@ public class Main extends Application {
         else {
             primaryStage.setTitle("Login");
         }
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

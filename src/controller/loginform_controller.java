@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.UserDAOImp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import utilities.Alerts;
 import utilities.LoginFile;
 
+import javax.swing.*;
 import java.net.URL;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -28,6 +32,7 @@ public class loginform_controller implements Initializable {
     Stage stage;
     Scene scene;
     Parent root;
+    ObservableList<Double> scale = FXCollections.observableArrayList();
 
     @FXML
     private Button loginBtn;
@@ -51,8 +56,12 @@ public class loginform_controller implements Initializable {
     private Text usernameLbl;
 
 
+
+
+
     /**
      * Login button action script to check login and load main form if successful.
+     *
      * @param event
      * @throws Exception
      */
@@ -65,19 +74,17 @@ public class loginform_controller implements Initializable {
         User user = UserDAOImp.getUser(username);
         if (username == "" || password == "") {
             LoginFile.userLoginAttempt("No userName", ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Fail");
-            if(Locale.getDefault().getLanguage().equals("fr")){
-                Alerts.errorAlert(RB.getString("Empty"),RB.getString("FillFields"));
-            }
-            else {
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                Alerts.errorAlert(RB.getString("Empty"), RB.getString("FillFields"));
+            } else {
                 Alerts.errorAlert("Fields Empty", "Please make sure to fill user and password fields");
             }
-        }
-        else {
+        } else {
             try {
                 loginUser = user.getUserName();
                 if (user.getPassword().equals(password)) {
                     LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "Pass");
-                    stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+                    stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main_form.fxml"));
                     root = loader.load();
                     scene = new Scene(root);
@@ -85,14 +92,12 @@ public class loginform_controller implements Initializable {
                     mainFormController.getUser(loginUser);
                     stage.setScene(scene);
                     stage.show();
-                }
-                else{
+                } else {
                     LoginFile.userLoginAttempt(loginUser, ZonedDateTime.now().withZoneSameInstant(ZoneOffset.UTC), "fail");
                     if (Locale.getDefault().getLanguage().equals("fr")) {
-                        Alerts.errorAlert(RB.getString("InvalidPassword"),RB.getString("WrongPassword"));
+                        Alerts.errorAlert(RB.getString("InvalidPassword"), RB.getString("WrongPassword"));
 
-                    }
-                    else {
+                    } else {
                         Alerts.errorAlert("Wrong password", "Wrong password for user " + user.getUserName());
                     }
                 }
@@ -111,6 +116,7 @@ public class loginform_controller implements Initializable {
 
     /**
      * Initialize labels based on locale.
+     *
      * @param url
      * @param rb
      */
@@ -124,7 +130,13 @@ public class loginform_controller implements Initializable {
             usernameLbl.setText(RB.getString("Username"));
             loginBtn.setText(RB.getString("Login"));
         }
+        scale.addAll(.5, .75, 1.00, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0);
+
+
+
+
     }
+
 
 
 }

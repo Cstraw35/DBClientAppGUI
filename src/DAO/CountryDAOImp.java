@@ -68,6 +68,7 @@ public class CountryDAOImp {
 
     /**
      * Gets all countries.
+     *
      * @return list of all countries.
      * @throws SQLException
      * @throws Exception

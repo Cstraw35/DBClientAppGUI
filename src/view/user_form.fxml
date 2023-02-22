@@ -5,31 +5,97 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseClicked="#formMouseClicked" prefHeight="479.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.userform_controller">
-   <children>
-      <Label fx:id="userFormUserLbl" layoutX="455.0" layoutY="22.0" prefHeight="18.0" prefWidth="70.0" text="username" />
-      <Label layoutX="14.0" layoutY="12.0" prefHeight="38.0" prefWidth="266.0" text="Users">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font></Label>
-      <TableView fx:id="usersFormTable" layoutX="14.0" layoutY="50.0" onMouseClicked="#usersFormTableItemSelected" prefHeight="246.0" prefWidth="322.0">
-        <columns>
-          <TableColumn fx:id="userID" prefWidth="48.20001220703125" text="ID" />
-          <TableColumn fx:id="userName" prefWidth="136.4000015258789" text="User Name" />
-            <TableColumn fx:id="userPassword" prefWidth="136.39999389648438" text="Password" />
-        </columns>
-      </TableView>
-      <Label layoutX="14.0" layoutY="321.0" prefHeight="18.0" prefWidth="70.0" text="Name:" />
-      <TextField fx:id="userNameTxt" layoutX="58.0" layoutY="317.0" promptText="Enter name here" />
-      <Label layoutX="245.0" layoutY="319.0" prefHeight="18.0" prefWidth="70.0" text="Password:" />
-      <TextField fx:id="passwordTxt" layoutX="315.0" layoutY="315.0" promptText="Enter users password" />
-      <Button fx:id="userAddBtn" layoutX="413.0" layoutY="50.0" mnemonicParsing="false" onAction="#addUpdateBtn" prefHeight="26.0" prefWidth="149.0" text="Add User" />
-      <Button fx:id="userDeleteBtn" layoutX="413.0" layoutY="88.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="26.0" prefWidth="149.0" text="Delete" />
-      <Label layoutX="413.0" layoutY="23.0" prefHeight="18.0" prefWidth="38.0" text="User:" />
-      <Button fx:id="clearSelectionBtn" layoutX="413.0" layoutY="126.0" mnemonicParsing="false" onAction="#clearSelection" prefHeight="26.0" prefWidth="149.0" text="Clear Selection" />
-      <Button fx:id="backBtn" layoutX="413.0" layoutY="166.0" mnemonicParsing="false" onAction="#returnPage" prefHeight="26.0" prefWidth="149.0" text="Go Back" underline="true" />
-   </children>
-</AnchorPane>
+<TitledPane collapsible="false" text="Consulty" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.userform_controller">
+   <content>
+      <AnchorPane onMouseClicked="#formMouseClicked" prefHeight="556.0" prefWidth="384.0" style="-fx-background-color: lightblue;">
+         <children>
+            <Label fx:id="userFormUserLbl" layoutX="261.0" layoutY="22.0" prefHeight="18.0" prefWidth="70.0" text="username" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="12.0" prefHeight="38.0" prefWidth="66.0" text="Users" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="2.0">
+               <font>
+                  <Font name="Centaur" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="usersFormTable" layoutX="17.0" layoutY="50.0" onMouseClicked="#usersFormTableItemSelected" prefHeight="246.0" prefWidth="322.0" AnchorPane.bottomAnchor="250.79999999999993" AnchorPane.leftAnchor="10.599999999999966" AnchorPane.rightAnchor="26.200000000000045" AnchorPane.topAnchor="50.0">
+              <columns>
+                <TableColumn fx:id="userID" prefWidth="48.20001220703125" text="ID" />
+                <TableColumn fx:id="userName" prefWidth="136.4000015258789" text="User Name" />
+                  <TableColumn fx:id="userPassword" prefWidth="136.39999389648438" text="Password" />
+              </columns>
+            </TableView>
+            <GridPane hgap="10.0" layoutX="54.0" layoutY="307.0" prefHeight="70.0" prefWidth="252.0" vgap="10.0" AnchorPane.bottomAnchor="179.39999999999995" AnchorPane.leftAnchor="44.39999999999998" AnchorPane.rightAnchor="59.60000000000002">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="51.2" minHeight="10.0" prefHeight="29.6000244140625" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="24.7999755859375" minHeight="3.1999999999999957" prefHeight="24.7999755859375" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="70.0" text="Name:">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userNameTxt" promptText="Enter name here" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="18.0" prefWidth="70.0" text="Password:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="passwordTxt" prefHeight="17.0" prefWidth="181.0" promptText="Enter users password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+            <Button fx:id="userAddBtn" layoutX="32.0" layoutY="401.0" mnemonicParsing="false" onAction="#addUpdateBtn" prefHeight="26.0" prefWidth="149.0" text="Add User" AnchorPane.bottomAnchor="128.59999999999997" AnchorPane.rightAnchor="184.00000000000003">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="userDeleteBtn" layoutX="186.0" layoutY="401.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="26.0" prefWidth="149.0" text="Delete" AnchorPane.bottomAnchor="128.5" AnchorPane.rightAnchor="25.0">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="230.0" layoutY="22.0" prefHeight="18.0" prefWidth="38.0" text="User:" AnchorPane.rightAnchor="97.20000000000002">
+               <font>
+                  <Font name="Centaur" size="14.0" />
+               </font>
+            </Label>
+            <ToolBar layoutX="26.0" layoutY="436.0" prefHeight="40.0" prefWidth="319.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="15.0">
+              <items>
+                  <Button fx:id="clearSelectionBtn" mnemonicParsing="false" onAction="#clearSelection" prefHeight="26.0" prefWidth="149.0" text="Clear Selection">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#returnPage" prefHeight="26.0" prefWidth="149.0" text="Go Back" underline="true">
+                     <font>
+                        <Font name="Centaur" size="14.0" />
+                     </font>
+                  </Button>
+              </items>
+            </ToolBar>
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>

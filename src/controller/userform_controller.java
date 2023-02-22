@@ -1,4 +1,5 @@
 package controller;
+
 import DAO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,47 +31,64 @@ public class userform_controller implements Initializable {
     Stage stage;
     Scene scene;
     Parent root;
-    public void getUser(String userName) {
-        userFormUserLbl.setText(userName);
-    }
     @FXML
     private Button backBtn;
-
     @FXML
     private Button clearSelectionBtn;
-
     @FXML
     private TextField userFormUserID;
-
     @FXML
     private TableView<User> usersFormTable;
-
     @FXML
-    private TextField passwordTxt;
-
+    public TextField passwordTxt;
     @FXML
-    private Button userAddBtn;
-
+    public Button userAddBtn;
     @FXML
-    private Button userDeleteBtn;
-
+    public Button userDeleteBtn;
     @FXML
     private Label userFormUserLbl;
-
     @FXML
     private TableColumn<?, ?> userID;
-
     @FXML
     private TableColumn<?, ?> userName;
-
     @FXML
-    private TextField userNameTxt;
-
+    public TextField userNameTxt;
     @FXML
     private TableColumn<?, ?> userPassword;
 
+    /**
+     * Gets username from previous form.
+     *
+     * @param userName
+     */
+    public void getUser(String userName) {
+        userFormUserLbl.setText(userName);
+    }
+
+    /**
+     * Checks if user already exists in system.
+     */
+    public boolean userCheck(String userName) throws Exception {
+        ObservableList<User> allUsers = UserDAOImp.getAllUsers();
+        Boolean nameCheck = false;
+        for (int i = 0; i < allUsers.size(); ++i) {
+            if (allUsers.get(i).getUserName().equals(userName)) {
+                nameCheck = true;
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * Add users to system.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
-    void addUpdateBtn(ActionEvent event) throws Exception {
+    public void addUpdateBtn(ActionEvent event) throws Exception {
         String userName = userNameTxt.getText();
         String password = passwordTxt.getText();
         Date lastUpdate = new Date();
@@ -78,29 +96,27 @@ public class userform_controller implements Initializable {
         ObservableList<User> allUsers = UserDAOImp.getAllUsers();
         Date createDate = new Date();
         String createdBy = userFormUserLbl.getText();
-            //Check text fields not empty first. Only check Id is not blank if customer already exists.
+        //Check text fields not empty first. Only check Id is not blank if customer already exists.
         if (userName == "" || password == "") {
-                Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
-        }
-        else{
-            Boolean nameCheck = false;
-            for(int i = 0; i < allUsers.size(); ++i){
-                if(allUsers.get(i).getUserName().equals(userName)){
-                    nameCheck = true;
-                }
-            }
-            if(nameCheck){
-                    Alerts.errorAlert("Username invalid", "That username is already in use.");
-            }
-            else {
-                    UserDAOImp.addUser(userName, password, TimeConv.DateToString(createDate), createdBy, TimeConv.DateToString(lastUpdate), lastUpdatedBy);
-                    Alerts.actionAlert("User Added!", "User successfully added to system.");
-                    setupUserTable();
+            Alerts.errorAlert("Missing information", "Please make sure to fill all fields.");
+        } else {
+            Boolean nameCheck = userCheck(userName);
+
+            if (nameCheck) {
+                Alerts.errorAlert("Username invalid", "That username is already in use.");
+            } else {
+                UserDAOImp.addUser(userName, password, TimeConv.DateToString(createDate), createdBy, TimeConv.DateToString(lastUpdate), lastUpdatedBy);
+                Alerts.actionAlert("User Added!", "User successfully added to system.");
+                setupUserTable();
             }
         }
     }
 
-
+    /**
+     * Clear mouse selection from table.
+     *
+     * @param event
+     */
     @FXML
     void clearSelection(ActionEvent event) {
         userNameTxt.clear();
@@ -111,6 +127,7 @@ public class userform_controller implements Initializable {
 
     /**
      * User selected in table. Fills fields.
+     *
      * @param event
      */
     @FXML
@@ -121,22 +138,26 @@ public class userform_controller implements Initializable {
 
     }
 
+    /**
+     * Delete selected user. Cannot delete admin account.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void deleteUser(ActionEvent event) throws Exception {
         String userName = userNameTxt.getText();
         if (userName.equals("")) {
             Alerts.errorAlert("No user selected", "Please select a user first");
-        }
-        else if(userName.equals("admin")) {
+        } else if (userName.equals("admin")) {
             Alerts.errorAlert("Error", "Cannot delete admin user.");
-        }
-        else {
-                UserDAOImp.deleteUser(userName);
-                Alerts.actionAlert("User deleted", "User successfully deleted.");
-                setupUserTable();
-                userNameTxt.clear();
-                passwordTxt.clear();
-                usersFormTable.getSelectionModel().clearSelection();
+        } else {
+            UserDAOImp.deleteUser(userName);
+            Alerts.actionAlert("User deleted", "User successfully deleted.");
+            setupUserTable();
+            userNameTxt.clear();
+            passwordTxt.clear();
+            usersFormTable.getSelectionModel().clearSelection();
 
         }
 
@@ -148,6 +169,12 @@ public class userform_controller implements Initializable {
 
     }
 
+    /**
+     * Return to the main form.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void returnPage(ActionEvent event) throws IOException {
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -163,10 +190,11 @@ public class userform_controller implements Initializable {
 
     /**
      * Sets up columns with all user values.
+     *
      * @throws Exception
      */
     public void setupUserTable() throws Exception {
-        ObservableList<User> allUsers  =UserDAOImp.getAllUsers();
+        ObservableList<User> allUsers = UserDAOImp.getAllUsers();
         userID.setCellValueFactory(new PropertyValueFactory<>("userID"));
         userName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         userPassword.setCellValueFactory(new PropertyValueFactory<>("Password"));
@@ -175,6 +203,12 @@ public class userform_controller implements Initializable {
 
     }
 
+    /**
+     * Sets up the user table.
+     *
+     * @param url
+     * @param rb
+     */
     public void initialize(URL url, ResourceBundle rb) {
         try {
             setupUserTable();

@@ -59,17 +59,9 @@ public class customerform_controller implements Initializable {
     @FXML
     private TableColumn<?, ?> tbAddress;
     @FXML
-    private TableColumn<Customer, Date> tbCreateDate;
-    @FXML
-    private TableColumn<?, ?> tbCreatedBy;
-    @FXML
     private TableColumn<?, ?> tbDivisionId;
     @FXML
     private TableColumn<?, ?> tbID;
-    @FXML
-    private TableColumn<Customer, Date> tbLastUpdate;
-    @FXML
-    private TableColumn<?, ?> tbLastUpdatedBy;
     @FXML
     private TableColumn<?, ?> tbName;
     @FXML
@@ -275,10 +267,6 @@ public class customerform_controller implements Initializable {
         tbAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         tbPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         tbPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        tbCreateDate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("createDate"));
-        tbCreatedBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        tbLastUpdate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("lastUpdate"));
-        tbLastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         tbDivisionId.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
         try {
             customers.addAll(CustomerDAOImp.getAllCustomers());

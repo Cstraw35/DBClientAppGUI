@@ -61,6 +61,7 @@ public class Customer {
 
     /**
      * Gets customer ID.
+     *
      * @return customer id.
      */
     public int getCustomerId() {
@@ -78,6 +79,7 @@ public class Customer {
 
     /**
      * Gets customer name.
+     *
      * @return customer name.
      */
     public String getCustomerName() {
@@ -95,6 +97,7 @@ public class Customer {
 
     /**
      * Gets customer address.
+     *
      * @return address.
      */
     public String getAddress() {
@@ -112,6 +115,7 @@ public class Customer {
 
     /**
      * Gets postal code.
+     *
      * @return postal code.
      */
     public String getPostalCode() {
@@ -129,6 +133,7 @@ public class Customer {
 
     /**
      * Gets customer phone.
+     *
      * @return phone.
      */
     public String getPhone() {
@@ -164,6 +169,7 @@ public class Customer {
 
     /**
      * Gets which user created.
+     *
      * @return created by.
      */
     public String getCreatedBy() {
@@ -181,6 +187,7 @@ public class Customer {
 
     /**
      * Gets last time updated.
+     *
      * @return last update date.
      */
     public Date getLastUpdate() {
@@ -214,6 +221,7 @@ public class Customer {
 
     /**
      * Returns customer division id.
+     *
      * @return division id.
      */
     public int getDivisionID() {
