@@ -1,7 +1,6 @@
 Title: Appointment Application
 Purpose: App is intended to be used as an appointment and customer tracking system.
 Author: Charles Straw
-Contact info: cstraw@wgu.edu, 7753153667
 Application Version: 1
 Date: 02/07/23
 IDE: Intellij 2021.1.3
